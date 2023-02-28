@@ -1,0 +1,50 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<DashboardContainer>
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var name = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value;
+            }
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Dashboard</h3>
+
+                    Welcome, @name
+
+
+                </div>
+            </div>
+
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+
+
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var hasClaim = state.User.HasClaim(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+        if (!hasClaim)
+        {
+            NavManager.NavigateTo("/Account/Login",true);
+
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

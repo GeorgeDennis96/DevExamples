@@ -1,0 +1,92 @@
+﻿@*@page "/support/faqs"
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+
+<DashboardContainer ContainerTitle="Frequently Asked Questions">
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var nameIdentifier = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+            }
+            @if (FaqList != null)
+            {
+                if (FaqList.Count >= 1)
+                {
+                    <MudExpansionPanels MultiExpansion="true">
+
+                        @foreach (var faq in FaqList)
+                        {
+                            <MudExpansionPanel>
+                                <TitleContent>
+                                    <h6>@faq.Title</h6>
+                                </TitleContent>
+                                <ChildContent>
+                                    @faq.Content
+                                    <hr>
+                                    <div class="col">
+                                        @if (GetIsLiked(nameIdentifier, faq.Id))
+                                        {
+                                            <div class="row">
+                                                <MudRating SelectedValue="0" Class="p-1" MaxValue="1" FullIcon="@Icons.Material.Filled.ThumbUp" onclick="@(() => ToggleLike(nameIdentifier, faq.Id))" EmptyIcon="@Icons.Material.Filled.ThumbUp" Color="Color.Info" />
+                                                <p class="pt-2">@faq.LikeCount.ToString()</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                <MudRating SelectedValue="1" Class="p-1" MaxValue="1" FullIcon="@Icons.Material.Outlined.ThumbUp" onclick="@(() => ToggleLike(nameIdentifier, faq.Id))" EmptyIcon="@Icons.Material.Outlined.ThumbUp" Color="Color.Info" />
+                                                <p class="pt-2">@faq.LikeCount.ToString()</p>
+                                            </div>
+                                        }
+                                    </div>
+                                </ChildContent>
+                            </MudExpansionPanel>
+                        }
+                    </MudExpansionPanels>
+                }
+                else
+                {
+                    <div class="media-body pt-3">
+                        <p class=""><MudAlert Severity="Severity.Info">No FAQs could be found right now.</MudAlert></p>
+                    </div>
+                }
+            }
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+    public List<UserFAQModel> FaqList = new List<UserFAQModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        FaqList = FAQService.Instance.GetAllUserFaqModels();
+
+        await base.OnInitializedAsync();
+    }
+
+    public async Task ToggleLike(string nameIdentifier, string faqID)
+    {
+        if (FAQService.Instance.HasUserLiked(nameIdentifier,faqID))
+        {
+            FAQService.Instance.UnlikeFAQ(nameIdentifier, faqID);
+        }
+        else
+        {
+            FAQService.Instance.LikeFAQ(nameIdentifier, faqID);
+        }
+
+        await OnInitializedAsync();
+        StateHasChanged();
+    }
+
+    public bool GetIsLiked(string nameIdentifier, string faqID)
+    {
+        return FAQService.Instance.HasUserLiked(nameIdentifier, faqID);
+    }
+
+}
+*@

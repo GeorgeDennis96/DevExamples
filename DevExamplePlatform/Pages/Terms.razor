@@ -1,0 +1,100 @@
+﻿@page "/terms" 
+@using Microsoft.AspNetCore.Authentication 
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+
+<DashboardContainer>
+<AuthorizeView>
+    <Authorized> 
+@IdentityRegistration(@context)
+<h3>DevExample - Terms and Conditions</h3>
+<p>The following terms and conditions apply to DevExample services:</p>
+<div class="row h-50 overflow-auto">
+    <div id="termsContainer" class="p-5" style="height:50vh">
+        <div class="alert alert-secondary" role="alert">
+        <div id=terms class=""><p class="overflow-auto h-75"><h6><small>DevExample Terms - December 2021</small></h6> <br /> ipsum dolor amet nostrud ad nisi lorem jowl, spare ribs irure eiusmod magna pork loin meatloaf shoulder id bresaola swine.  Bresaola shank nisi, prosciutto leberkas turducken chicken.  Alcatra sausage cow beef ribs quis doner laboris tail.  Reprehenderit magna porchetta beef ribs ham hock frankfurter ipsum.  Salami alcatra excepteur reprehenderit, prosciutto ut meatball commodo swine pork chop.</p><p>Fatback landjaeger shank officia sirloin biltong lorem anim labore est cillum in velit proident.  Pork loin drumstick landjaeger salami hamburger ham.  Pork belly dolore quis, bacon labore chuck lorem tongue.  Ribeye tongue picanha magna dolore occaecat ea pork jowl beef ribs.  Velit rump reprehenderit, consequat deserunt venison eu irure ea fatback shank nulla biltong landjaeger.</p><p>Jerky pastrami pork chop sint excepteur sirloin aliquip nisi labore dolore jowl in andouille.  Nulla meatball turkey burgdoggen proident.  Pork belly mollit in eiusmod quis.  Aliquip ham hock duis, excepteur laboris irure adipisicing.  Ut burgdoggen salami ex.</p><p>Duis shankle ullamco quis spare ribs occaecat voluptate velit.  Consectetur jowl filet mignon ham.  Occaecat reprehenderit et, chicken officia excepteur cillum t-bone sint chuck aliqua veniam fugiat flank.  Irure esse dolore, sint ut shoulder prosciutto kielbasa.  Qui ribeye alcatra voluptate mollit, pork t-bone ut leberkas tempor in ullamco shankle.  Brisket pork ut kevin.  Veniam picanha pork salami dolore commodo sed tongue.</p><p>Reprehenderit ground round landjaeger cillum sausage consequat jowl.  Picanha labore buffalo beef magna jowl pancetta eu.  Lorem proident biltong, sirloin ut velit in landjaeger beef ut dolore kielbasa.  Commodo ut aliqua ex, t-bone et biltong aliquip enim.</p><p>Meatball jerky est, alcatra pastrami strip steak ad adipisicing cillum chislic.  Anim laborum elit, buffalo hamburger cupidatat rump burgdoggen pork belly.  Velit dolore veniam mollit quis rump turducken shank, picanha enim reprehenderit jerky.  Tail landjaeger ut, chicken turkey pork loin t-bone cillum buffalo biltong ea pork belly ullamco jerky dolore.  Excepteur in boudin, hamburger picanha flank id sirloin sint sausage.</p><p>Short loin ham hock pancetta filet mignon ground round leberkas ribeye deserunt kielbasa cupidatat shoulder frankfurter hamburger jowl pig.  Hamburger occaecat pork loin ex tongue jowl commodo turkey pastrami magna id duis burgdoggen nulla.  Picanha veniam ribeye, spare ribs est shoulder turducken doner ut in rump non.  Salami fugiat pork belly meatball.</p><p>Tri-tip nisi ullamco, porchetta sirloin swine anim.  Spare ribs boudin exercitation landjaeger pork loin tail, corned beef pastrami commodo buffalo doner beef ribs sint.  Leberkas landjaeger fugiat, sed ut flank pastrami irure meatball.  Filet mignon meatloaf velit ad short loin, enim spare ribs tempor.  Bresaola strip steak nulla spare ribs qui, duis turkey pork belly voluptate.  Deserunt shoulder flank turkey.  Tri-tip t-bone chuck, qui cow bresaola biltong.</p><p>Burgdoggen do doner lorem.  Est fatback ea laboris tenderloin.  Ham veniam beef swine hamburger.  Occaecat jerky pork reprehenderit.  Bresaola pork prosciutto duis laborum elit dolor tempor frankfurter tongue magna.  Deserunt ham hock anim ut, boudin tri-tip commodo lorem irure meatball biltong jerky eiusmod non pork.  Short loin short ribs lorem ut beef ribs non doner kevin capicola sunt aliqua sed.</p><p>Landjaeger pariatur turducken, consectetur dolore shoulder ut venison excepteur non jowl.  Dolore commodo labore deserunt quis burgdoggen.  Pork belly incididunt kevin picanha velit irure tempor.  Voluptate pariatur pork chop sunt anim pork, nulla id.  Sed brisket magna, alcatra quis short ribs meatball pastrami.  Fatback burgdoggen qui duis ipsum, capicola meatloaf labore cupim.  Alcatra id ham hock andouille kielbasa.</p><p>Non veniam exercitation quis pork tongue.  Andouille ex swine ut bacon non, tenderloin ribeye cupim beef ribs.  Ad ut laborum, aliqua ullamco elit short loin pancetta pork chop laboris ex commodo brisket.  Drumstick cupidatat pork loin, consequat sirloin incididunt duis jerky tongue.  Beef ribs jowl ut porchetta lorem.</p><p>Tri-tip voluptate landjaeger prosciutto ut officia occaecat mollit dolore hamburger capicola short ribs ut veniam picanha.  Laboris turducken landjaeger aliqua tongue meatball fugiat picanha.  Ut cupim turkey ham hock chislic irure nisi nostrud short loin sint reprehenderit fugiat fatback filet mignon.  Commodo nulla shankle, sed exercitation culpa id sint ut pastrami cupim aliquip burgdoggen pancetta.  Esse bacon turducken, sausage commodo ball tip frankfurter jerky flank pariatur.  Consequat kevin jerky corned beef non, velit ribeye et pork chop.  Pork ham dolore capicola consequat shankle, cillum sunt turducken ex ut.</p><hr/><p>Spicy jalapeno bacon ipsum dolor amet nostrud ad nisi lorem jowl, spare ribs irure eiusmod magna pork loin meatloaf shoulder id bresaola swine.  Bresaola shank nisi, prosciutto leberkas turducken chicken.  Alcatra sausage cow beef ribs quis doner laboris tail.  Reprehenderit magna porchetta beef ribs ham hock frankfurter ipsum.  Salami alcatra excepteur reprehenderit, prosciutto ut meatball commodo swine pork chop.</p><p>Fatback landjaeger shank officia sirloin biltong lorem anim labore est cillum in velit proident.  Pork loin drumstick landjaeger salami hamburger ham.  Pork belly dolore quis, bacon labore chuck lorem tongue.  Ribeye tongue picanha magna dolore occaecat ea pork jowl beef ribs.  Velit rump reprehenderit, consequat deserunt venison eu irure ea fatback shank nulla biltong landjaeger.</p><p>Jerky pastrami pork chop sint excepteur sirloin aliquip nisi labore dolore jowl in andouille.  Nulla meatball turkey burgdoggen proident.  Pork belly mollit in eiusmod quis.  Aliquip ham hock duis, excepteur laboris irure adipisicing.  Ut burgdoggen salami ex.</p><p>Duis shankle ullamco quis spare ribs occaecat voluptate velit.  Consectetur jowl filet mignon ham.  Occaecat reprehenderit et, chicken officia excepteur cillum t-bone sint chuck aliqua veniam fugiat flank.  Irure esse dolore, sint ut shoulder prosciutto kielbasa.  Qui ribeye alcatra voluptate mollit, pork t-bone ut leberkas tempor in ullamco shankle.  Brisket pork ut kevin.  Veniam picanha pork salami dolore commodo sed tongue.</p><p>Reprehenderit ground round landjaeger cillum sausage consequat jowl.  Picanha labore buffalo beef magna jowl pancetta eu.  Lorem proident biltong, sirloin ut velit in landjaeger beef ut dolore kielbasa.  Commodo ut aliqua ex, t-bone et biltong aliquip enim.</p><p>Meatball jerky est, alcatra pastrami strip steak ad adipisicing cillum chislic.  Anim laborum elit, buffalo hamburger cupidatat rump burgdoggen pork belly.  Velit dolore veniam mollit quis rump turducken shank, picanha enim reprehenderit jerky.  Tail landjaeger ut, chicken turkey pork loin t-bone cillum buffalo biltong ea pork belly ullamco jerky dolore.  Excepteur in boudin, hamburger picanha flank id sirloin sint sausage.</p><p>Short loin ham hock pancetta filet mignon ground round leberkas ribeye deserunt kielbasa cupidatat shoulder frankfurter hamburger jowl pig.  Hamburger occaecat pork loin ex tongue jowl commodo turkey pastrami magna id duis burgdoggen nulla.  Picanha veniam ribeye, spare ribs est shoulder turducken doner ut in rump non.  Salami fugiat pork belly meatball.</p><p>Tri-tip nisi ullamco, porchetta sirloin swine anim.  Spare ribs boudin exercitation landjaeger pork loin tail, corned beef pastrami commodo buffalo doner beef ribs sint.  Leberkas landjaeger fugiat, sed ut flank pastrami irure meatball.  Filet mignon meatloaf velit ad short loin, enim spare ribs tempor.  Bresaola strip steak nulla spare ribs qui, duis turkey pork belly voluptate.  Deserunt shoulder flank turkey.  Tri-tip t-bone chuck, qui cow bresaola biltong.</p><p>Burgdoggen do doner lorem.  Est fatback ea laboris tenderloin.  Ham veniam beef swine hamburger.  Occaecat jerky pork reprehenderit.  Bresaola pork prosciutto duis laborum elit dolor tempor frankfurter tongue magna.  Deserunt ham hock anim ut, boudin tri-tip commodo lorem irure meatball biltong jerky eiusmod non pork.  Short loin short ribs lorem ut beef ribs non doner kevin capicola sunt aliqua sed.</p><p>Landjaeger pariatur turducken, consectetur dolore shoulder ut venison excepteur non jowl.  Dolore commodo labore deserunt quis burgdoggen.  Pork belly incididunt kevin picanha velit irure tempor.  Voluptate pariatur pork chop sunt anim pork, nulla id.  Sed brisket magna, alcatra quis short ribs meatball pastrami.  Fatback burgdoggen qui duis ipsum, capicola meatloaf labore cupim.  Alcatra id ham hock andouille kielbasa.</p><p>Non veniam exercitation quis pork tongue.  Andouille ex swine ut bacon non, tenderloin ribeye cupim beef ribs.  Ad ut laborum, aliqua ullamco elit short loin pancetta pork chop laboris ex commodo brisket.  Drumstick cupidatat pork loin, consequat sirloin incididunt duis jerky tongue.  Beef ribs jowl ut porchetta lorem.<br> Tri-tip voluptate landjaeger prosciutto ut officia occaecat mollit dolore hamburger capicola short ribs ut veniam picanha.  Laboris turducken landjaeger aliqua tongue meatball fugiat picanha.  Ut cupim turkey ham hock chislic irure nisi nostrud short loin sint reprehenderit fugiat fatback filet mignon.  Commodo nulla shankle, sed exercitation culpa id sint ut pastrami cupim aliquip burgdoggen pancetta.  Esse bacon turducken, sausage commodo ball tip frankfurter jerky flank pariatur.  Consequat kevin jerky corned beef non, velit ribeye et pork chop.  Pork ham dolore capicola consequat shankle, cillum sunt turducken ex ut.</p></div>
+        </div>
+        
+        
+                     
+    </div>
+
+    </div>
+    <hr />
+        <span>Name: @context.User.Claims.First(c=>c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value</span>
+        <br />
+        @{
+         var nameIdentifier = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+         }
+                    Unique ID: @nameIdentifier
+    <br />
+        <hr />
+                    @if (acceptedTerms)
+                    {
+                         <div class="alert alert-success" role="alert">You have accepted these terms.</div>
+                         <DevExampleButton ButtonType=DevExampleButton.NetoButtonType.Outline_Info Text="Print" OnClickEvent="@PrintTerms" Width="150px" CustomClass="" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="0" CustomStyle="margin-left:15px!important;"></DevExampleButton>
+                    }
+                    else{
+                        <DevExampleButton ButtonType=DevExampleButton.NetoButtonType.Success Text="Accept" OnClickEvent="() => AcceptTAC(nameIdentifier)" Width="150px" CustomClass="" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="0" CustomStyle="margin-left:15px!important;"></DevExampleButton>
+                        <DevExampleButton ButtonType=DevExampleButton.NetoButtonType.Outline_Info Text="Print" OnClickEvent="@PrintTerms" Width="150px" CustomClass="" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="0" CustomStyle="margin-left:15px!important;"></DevExampleButton>
+                        <DevExampleButton ButtonType=DevExampleButton.NetoButtonType.Warning Text="Decline" OnClickEvent="@DeclineTAC" Width="150px" CustomClass="" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="0" CustomStyle="margin-left:15px!important;"></DevExampleButton>
+                    }
+    </Authorized>
+    <NotAuthorized>
+        <a href="/Account/Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+</DashboardContainer>
+@code {
+    private string AccessToken { get; set; } = ""; 
+    private AccountService AccountService { get; set; }
+    private bool acceptedTerms { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AccountService = new AccountService();
+        AccessToken = TokenState.AccessToken;
+        await base.OnInitializedAsync();
+    }
+    public void AcceptTAC(string nameIdentifier)
+    {
+        if (AccountService.ConfirmAcceptTerms(nameIdentifier))
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+
+    public void DeclineTAC()
+    {
+        NavManager.NavigateTo("/Account/Logout",true);
+    }
+
+    public async Task PrintTerms()
+    {
+        await JS.InvokeVoidAsync("printInvoke","terms");
+    }
+
+    public string IdentityRegistration(AuthenticationState state)
+    {
+
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+
+        if (NameIdentifier != null)
+        {
+            if (AccountService.AccountExists(NameIdentifier))
+            {
+                var account = AccountService.GetAccount(NameIdentifier);
+                if (account is not null)
+                {
+                    acceptedTerms = account.acceptedTerms;
+                }
+            }
+            
+            
+        }
+
+        return "";
+    }
+}

@@ -1,0 +1,18 @@
+﻿@inject IJSRuntime JsRuntime
+
+<div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+<div class="hk-pg-wrapper h-100" style="min-height: 100vh;  height: 100vh">
+    @ChildContent
+    <DefaultFooter />
+</div>
+
+@code {
+
+    private string SetWrapperHeight()
+    {
+        return "height:10%;";
+    }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

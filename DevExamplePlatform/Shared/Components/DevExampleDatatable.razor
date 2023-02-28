@@ -1,0 +1,350 @@
+﻿@using System.ComponentModel
+@using System.Reflection
+@using System.Threading
+@inherits ComponentBase
+
+@inject IJSRuntime JSRuntime
+
+<div class="align-middle">
+    @if (Searchable)
+    {
+        <DevExampleInput @ref="searchInput" Id="filter" Placeholder="Search" Align="DevExampleInput.Alignment.Right" Width="150px" OnInputChanged="searchInputChanged"></DevExampleInput>
+    }
+    <table class="table" id="@Name" style="width:100%; height: @(MaxRowHeight * 2)px; word-wrap: break-word; overflow: hidden;">
+        <thead>
+            <tr>
+                @foreach (DevExampleTableValue columnHeader in TableHeaders)
+                {
+                    <th scope="col" class="@columnHeader.CustomClasses" style="height:@HeaderHeight; vertical-align: middle; width: @columnHeader.MinWidth;">
+
+                        @if (columnHeader.TableValueType == DevExampleTableValueType.Button)
+                        {
+                            <DevExampleButton Text="@columnHeader.Value" Padding="1" Margin="0" Width="60px" Align="DevExampleButton.Alignment.Center" OnClickEvent="@(() => columnHeader.EventAction.Invoke(""+columnHeader.ActionIndex))"></DevExampleButton>
+                        }
+                        @if (columnHeader.TableValueType == DevExampleTableValueType.Image)
+                        {
+                            <img src="@columnHeader.Value">
+                        }
+                        @if (columnHeader.TableValueType == DevExampleTableValueType.Link)
+                        {
+                            <a href="@columnHeader.Link" target="_blank">@columnHeader.Value</a>
+                        }
+                        @if (columnHeader.TableValueType == DevExampleTableValueType.Text)
+                        {
+                            <p>@columnHeader.Value</p>
+                        }
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (searchInput != null)
+            {
+                if (searchInput.Value.Length == 0)
+                {
+                    int pageEnd = CurrentPage * RowsPerPage + RowsPerPage;
+
+                    @for (int r = CurrentPage * RowsPerPage; r < pageEnd; r++)
+                    {
+                        if (r < TableData.Count)
+                        {
+                            var row = TableData[r];
+                            <tr>
+                                @foreach (var columnValue in row.ColumnValues)
+                                {
+                                <td class="@columnValue.CustomClasses" style="padding-top:@RowPadding; padding-bottom:@RowPadding; min-width: @columnValue.MinWidth;">
+
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Button)
+                                    {
+                                        <DevExampleButton Text="@columnValue.Value" Padding="0" Width="@columnValue.MinWidth" Margin="0" Align="DevExampleButton.Alignment.Center" DataTarget="@columnValue.DataTarget" DataToggle="@columnValue.DataToggle" OnClickEvent="@(() => columnValue.EventAction.Invoke(""+columnValue.ActionIndex))"></DevExampleButton>
+                                    }
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Image)
+                                    {
+                                        <img src="@columnValue.Value">
+                                    }
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Link)
+                                    {
+                                        <a href="@columnValue.Link" target="_blank">@columnValue.Value</a>
+                                    }
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Text)
+                                    {
+                                        @columnValue.Value
+                                    }
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Badge)
+                                    {
+                                        <span class="badge bg-@columnValue.CustomClasses inv-badge">@columnValue.Value</span>
+                                    }
+                                    @if (columnValue.TableValueType == DevExampleTableValueType.Icon)
+                                    {
+                                        <DevExampleIcon OnClickEvent="@(() => columnValue.EventAction.Invoke(""+columnValue.ActionIndex))" IconColour="@columnValue.Colour" Type="@columnValue.Value"></DevExampleIcon>
+                                    }
+                                </td>
+                                }
+                            </tr>
+                        }
+                    }
+                }
+                else
+                {
+                    int pageEnd = CurrentPage * RowsPerPage + RowsPerPage;
+
+                    @for (int r = CurrentPage * RowsPerPage; r < pageEnd; r++)
+                    {
+                        if (searchData != null)
+                            if (r < searchData.Count)
+                            {
+                                var row = searchData[r];
+                                <tr>
+                                    @foreach (var columnValue in row.ColumnValues)
+                                    {
+                                    <td class="@columnValue.CustomClasses" style="padding-top: @RowPadding; padding-bottom: @RowPadding; min-width: @columnValue.MinWidth;">
+
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Button)
+                                        {
+                                            <DevExampleButton Text="@columnValue.Value" Padding="0" Margin="0" Width="60px" Align="DevExampleButton.Alignment.Center" DataTarget="@columnValue.DataTarget" DataToggle="@columnValue.DataToggle" OnClickEvent="@(() => columnValue.EventAction.Invoke(""+columnValue.ActionIndex))"></DevExampleButton>
+                                        }
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Image)
+                                        {
+                                            <img src="@columnValue.Value">
+                                        }
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Link)
+                                        {
+                                            <a href="@columnValue.Link" target="_blank">@columnValue.Value</a>
+                                        }
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Text)
+                                        {
+                                            @columnValue.Value
+                                        }
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Badge)
+                                        {
+                                            <span class="badge bg-@columnValue.CustomClasses inv-badge">@columnValue.Value</span>
+                                        }
+                                        @if (columnValue.TableValueType == DevExampleTableValueType.Icon)
+                                        {
+                                            <DevExampleIcon OnClickEvent="@(() => columnValue.EventAction.Invoke(""+columnValue.ActionIndex))" IconColour="@columnValue.Colour" Type="@columnValue.Value"></DevExampleIcon>
+                                        }
+                                    </td>
+                                    }
+                                </tr>
+                            }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+
+    <DevExampleContainer Debug="false" CustomClass="text-center">
+        <DevExampleButton Id="b1" Text="Previous" OnClickEvent="PreviousPage" Width="80px" Align=@DevExampleButton.Alignment.Left Padding="1" Margin="0"></DevExampleButton>
+        Page @(CurrentPage +1) of @(((TableData.Count - 1) / RowsPerPage) +1)
+        <DevExampleButton Id="b2" Text="Next" OnClickEvent="NextPage" Width="80px" Align=@DevExampleButton.Alignment.Right Padding="1" Margin="0"></DevExampleButton>
+    </DevExampleContainer>
+</div>
+
+
+@code{ 
+
+    [Parameter]
+    public bool Searchable { get; set; } = false;
+
+    [Parameter]
+    public bool Pagination { get; set; } = true;
+
+    [Parameter]
+    public int RowsPerPage { get; set; } = 10;
+
+    [CascadingParameter]
+    public int CurrentPage { get; set; } = 0;
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public int MaxRowHeight { get; set; }
+
+    [Parameter]
+    public string MaxTableHeight { get; set; } = "100%";
+
+    [Parameter]
+    public bool ShowHeader { get; set; } = true;
+
+    [Parameter]
+    public string RowPadding { get; set; } = "6px";
+
+    [Parameter]
+    public List<DevExampleTableValue> TableHeaders { get; set; }
+
+    [Parameter]
+    public string HeaderHeight { get; set; } = "30px";
+
+    [Parameter]
+    public List<DevExampleTableRow> TableData { get; set; }
+
+    private List<DevExampleTableRow> searchData { get; set; }
+
+    private DevExampleInput searchInput { get; set; }
+
+    private int MaxPages { get; set; } = 0;
+
+    public class DevExampleTableRow
+    {
+        public DevExampleTableRow()
+        {
+            ColumnValues = new List<DevExampleTableValue>();
+        }
+
+
+        public List<DevExampleTableValue> ColumnValues { get; set; }
+    }
+
+    public class DevExampleTableValue
+    {
+        public DevExampleTableValue(string Value, DevExampleTableValueType Type, string minWidth, string customClasses = null, string Link = "", string CustomColour = null, Action<string> CustomAction = null, string ActionIndex = "", string dataTarget = null, string datatoggle = null)
+        {
+            TableValueType = Type;
+            this.Value = Value;
+            this.Link = Link;
+            this.Colour = CustomColour;
+            this.CustomClasses = customClasses;
+            this.EventAction = CustomAction;
+            this.ActionIndex = ActionIndex;
+            this.MinWidth = minWidth;
+            this.DataTarget = dataTarget;
+            this.DataToggle = datatoggle;
+        }
+        public DevExampleTableValueType TableValueType { get; set; }
+        public string Value { get; set; } = "";
+        public string Link { get; set; } = "";
+        public string Colour { get; set; } = "black";
+        public string CustomClasses { get; set; } = "";
+        public string MinWidth { get; set; } = "100px";
+        public Action<string> EventAction { get; set; } = null;
+        public string ActionIndex { get; set; } = "";
+        public string DataTarget { get; set; } = "";
+        public string DataToggle { get; set; } = "";
+    }
+    public enum DevExampleTableValueType
+    {
+        Image,
+        Link,
+        Text,
+        Badge,
+        Icon,
+        Button
+    }
+
+    private string RenderValue(DevExampleTableValue Value)
+    {
+        string returnString = Value.Value;
+        //if type is image then output html todo
+
+        if (Value.TableValueType == DevExampleTableValueType.Image)
+        {
+            returnString = @"<img src='" + Value.Value + "'>";
+        }
+
+        if (Value.TableValueType == DevExampleTableValueType.Link)
+        {
+            returnString = @"<a href='" + Value.Link + "'>" + Value.Value + "</a>";
+        }
+
+        if (Value.TableValueType == DevExampleTableValueType.Button)
+        {
+            returnString = @"<button class='btn btn-primary'>" + Value.Value + "</button>";
+        }
+
+        return returnString;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Name == null)
+        {
+            Console.WriteLine("Name is required for data table functionality!");
+        }
+        StateHasChanged();
+    }
+
+    private void UpdatePageCount()
+    {
+        if (searchInput.Value.Length != 0)
+        {
+            MaxPages = Convert.ToInt32(Math.Round(Convert.ToDouble(searchData.Count / RowsPerPage), MidpointRounding.AwayFromZero)) + 1;
+        }
+        else
+        {
+            MaxPages = Convert.ToInt32(Math.Round(Convert.ToDouble(TableData.Count / RowsPerPage), MidpointRounding.AwayFromZero)) + 1;
+        }
+    }
+
+    private async void searchInputChanged()
+    {
+        searchData = new List<DevExampleTableRow>();
+
+        foreach (var row in TableData)
+        {
+            foreach (var column in row.ColumnValues)
+            {
+                if (column.Value.Contains(searchInput.Value))
+                {
+                    searchData.Add(row);
+                    Console.WriteLine("Row found: " + column.Value);
+                    searchData = searchData.Distinct().ToList();
+                    UpdatePageCount();
+                    SetPage(0);
+                    StateHasChanged();
+                }
+            }
+        }
+
+        if (searchInput.Value == "")
+        {
+            searchData = null;
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    private void SetPage(int page)
+    {
+        Console.WriteLine("SetPage:" + page);
+        CurrentPage = page;
+    }
+
+    private void NextPage()
+    {
+        try
+        {
+            int max = (TableData.Count - 1) / RowsPerPage;
+            Console.WriteLine("MaxPage: " + max);
+            if (CurrentPage < max)
+            {
+                //Console.WriteLine("Current Page: " + CurrentPage);
+                //Console.WriteLine("Increment Page");
+                CurrentPage = CurrentPage + 1;
+                StateHasChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (CurrentPage > 0)
+        {
+            //Console.WriteLine("Current Page: " + CurrentPage);
+            //Console.WriteLine("Decrement Page");
+            CurrentPage = CurrentPage - 1;
+            StateHasChanged();
+        }
+    }
+}

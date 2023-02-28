@@ -1,0 +1,28 @@
+﻿
+<span class="material-icons" @onclick="ButtonClick" style="color:@IconColour; cursor:pointer;">@Type</span>
+
+@code{
+
+    [Parameter]
+    public string Type { get; set; } = "help";
+    [Parameter]
+    public string IconColour { get; set; } = "grey";
+    [Parameter]
+    public EventCallback OnClickEvent { get; set; }
+
+    private async Task ButtonClick()
+    {
+        await OnClickEvent.InvokeAsync(this);
+    }
+
+    public enum NetoIconType
+    {
+        Start,
+        Help,
+        Cancel,
+        Check_Circle,
+        Clear,
+        Close,
+        Delete
+    }
+}

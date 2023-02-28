@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#000000" name="theme-color" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    ></script>
+    <link href="https://stackpath.bootstrapcdn.com" rel="preconnect" />
+    <link href="https://code.jquery.com" rel="preconnect" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    ></script>
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/manifest.json" rel="manifest" />
+    <title>Dashboard UI Kit Preview</title>
+    <link href="/static/css/lib.css" rel="stylesheet" />
+    <link href="/static/css/app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="outer-events-handler navigator-container">
+        <button class="expandButton" type="button">
+          <i class="uikon">view_list</i>
+        </button>
+        <div class="list">
+          <a class="nav-link-pill" href="/"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">gallery_grid_view</i></span
+              >Screen Previews</span
+            ></a
+          ><a class="nav-link-pill"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_simple</i></span
+              >Switch Dark/Light Theme</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">rocket</i></span
+              >Installation Guide</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_list</i></span
+              >React Docs</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill active"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">love</i></span
+              >Get Designs (Sketch, ..)</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">inbox_paper_round</i></span
+              >Get Previews</span
+            ></a
+          >
+        </div>
+      </div>
+      <div class="container-vertical">
+        <section class="top-bar">
+          <div class="top-bar-section">
+            <div class="top-bar-section">
+              <h2 class="top-bar-title"><i class="uikon">stats</i>Socialio</h2>
+            </div>
+            <div class="top-bar-section searchbarWrapper">
+              <div class="form-group">
+                <div class="input-group input-group-clear">
+                  <div class="input-group-prepend">
+                    <i class="uikon">search_left</i>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Search..."
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="top-bar-section">
+            <i class="uikon social-top-bar-icon">globe_network</i>
+            <div
+              class="outer-events-handler dropdown btn-group"
+              position="bottomRight"
+            >
+              <button
+                class="btn dropdown-toggle btn-social-top-bar-dropdown"
+                type="button"
+                role="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                data-toggle="dropdown"
+              >
+                <span class="avatar"
+                  ><span class="avatar-image-wrapper"
+                    ><img
+                      alt=""
+                      class="avatar-image"
+                      src="/static/media/a18.218e8988.jpg"/></span
+                ></span>
+              </button>
+              <div class="dropdown-menu bottom-right">
+                <a
+                  class="btn dropdown-item"
+                  href="/social/profile"
+                  role="button"
+                  >Profile</a
+                ><button class="btn dropdown-item" type="button" role="button">
+                  Account Settings</button
+                ><button class="btn dropdown-item" type="button" role="button">
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <nav class="tabs socialio-mobile-nav">
+          <a class="tab-item socialio-mobile-nav-item" tabindex="0"
+            ><i class="uikon">gallery_grid_view</i></a
+          ><a class="tab-item socialio-mobile-nav-item active" tabindex="0"
+            ><i class="uikon">home</i></a
+          ><a class="tab-item socialio-mobile-nav-item" tabindex="0"
+            ><i class="uikon">message</i></a
+          >
+        </nav>
+        <div class="container-horizontal socialio-container Home">
+          <nav class="nav-panel">
+            <div class="nav-section">
+              <span class="nav-section-title">Menu</span
+              ><a
+                class="nav-link highlighted active"
+                href="/social"
+                text="Home"
+                aria-current="page"
+                ><span class="nav-link-text">Home</span></a
+              ><a
+                class="nav-link highlighted"
+                href="/social/discussion"
+                text="Discussion"
+                ><span class="nav-link-text">Discussion</span></a
+              ><a
+                class="nav-link highlighted"
+                href="/social/friends"
+                text="Friends"
+                ><span class="nav-link-text">Friends</span></a
+              ><a
+                class="nav-link highlighted"
+                href="/social/events"
+                text="Events"
+                ><span class="nav-link-text">Events</span
+                ><span class="nav-link-right-el"><span>8</span></span></a
+              ><a
+                class="nav-link highlighted"
+                href="/social/videos"
+                text="Videos"
+                ><span class="nav-link-text">Videos</span></a
+              ><a
+                class="nav-link highlighted"
+                href="/social/photos"
+                text="Photos"
+                ><span class="nav-link-text">Photos</span></a
+              ><a class="nav-link highlighted" href="/social/files" text="Files"
+                ><span class="nav-link-text">Files</span></a
+              >
+            </div>
+            <div class="nav-section">
+              <span class="nav-section-title">Your Favourites</span
+              ><a class="nav-link highlighted" text="Railway Deals"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🚝</span>Railway Deals</span
+                ></a
+              ><a class="nav-link highlighted" text="Hockey Guys UK"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🏒</span>Hockey Guys UK</span
+                ></a
+              ><a class="nav-link highlighted" text="Basketball UK"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🏀</span>Basketball UK</span
+                ></a
+              ><a class="nav-link highlighted" text="Winter Sports"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">☃️</span>Winter Sports</span
+                ></a
+              ><a class="nav-link highlighted" text="Ha! The best Jokes"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🙊</span>Ha! The best
+                  Jokes</span
+                ></a
+              ><a class="nav-link highlighted" text="8GAG"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🤣</span>8GAG</span
+                ></a
+              ><a class="nav-link highlighted" text="Mentors"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">💎</span>Mentors</span
+                ></a
+              >
+            </div>
+          </nav>
+          <div class="socialio-content">
+            <div class="container-horizontal socialio-home">
+              <div class="scroll-area socialio-feed">
+                <div class="card card-margin">
+                  <div class="social-post-create">
+                    <button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon social-post-create-iconPost mr"
+                        >building</i
+                      ><span class="social-post-create-actionDesc"
+                        >Make Post</span
+                      ></button
+                    ><button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon social-post-create-iconPhoto mr">camera</i
+                      ><span class="social-post-create-actionDesc"
+                        >Photo/Video Album</span
+                      ></button
+                    ><button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon social-post-create-iconCamera mr"
+                        >video_camera</i
+                      ><span class="social-post-create-actionDesc"
+                        >Live Video</span
+                      >
+                    </button>
+                  </div>
+                  <div class="divider-horizontal"></div>
+                  <div class="social-post-create-message">
+                    <span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"/></span></span
+                    ><textarea
+                      placeholder="Where you at? What are you doing? What’s your number? Share it!"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <div class="social-post-create-footer">
+                    <button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon social-post-create-iconPhoto mr">camera</i
+                      >Photo/Video</button
+                    ><button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon social-post-create-iconPhoto mr">smile</i
+                      >Feeling/Activity
+                    </button>
+                  </div>
+                </div>
+                <div class="card social-post card-margin">
+                  <div class="social-post-header">
+                    <span class="avatar social-post-header-avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a06.a3705e71.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><span class="social-post-header-nameText"
+                            ><a href="/social/profile"
+                              ><strong>Roxie Mills</strong></a
+                            >
+                            <span class="social-post-header-text"
+                              >is feeling excited
+                              <span aria-label="excited" role="img">😳</span>
+                              with </span
+                            ><a href="/social/profile"
+                              >Patrick Rodriguez</a
+                            ></span
+                          ></span
+                        ><span class="avatar-text-bottom"
+                          >December 28, 2018</span
+                        ></span
+                      ></span
+                    >
+                    <div class="outer-events-handler dropdown btn-group">
+                      <button
+                        class="btn btn-clear btn-square dropdown-toggle dropdown-btn-dots"
+                        type="button"
+                        role="button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                      >
+                        <i class="uikon">more</i>
+                      </button>
+                      <div class="dropdown-menu undefined">
+                        <button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Edit</button
+                        ><button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <p>
+                    Travelling to the future, it’s already December 2018 here!
+                    <span aria-label="emoji" role="img">💁🏼</span
+                    ><span aria-label="emoji" role="img">🙋🏻‍</span
+                    ><span aria-label="emoji" role="img">♂️</span>
+                  </p>
+                  <div class="social-post-image-group">
+                    <a
+                      class="social-post-image-group-photo"
+                      href="/social"
+                      style="background-image:url(/static/media/s01.fa7a6efc.jpg)"
+                    ></a
+                    ><a
+                      class="social-post-image-group-photo"
+                      href="/social"
+                      style="background-image:url(/static/media/s02.3b3e9ef5.jpg)"
+                    ></a
+                    ><a
+                      class="social-post-image-group-photo"
+                      href="/social"
+                      style="background-image:url(/static/media/s03.ca516f74.jpg)"
+                    ></a>
+                  </div>
+                  <div class="divider-horizontal"></div>
+                  <div class="social-post-actions">
+                    <button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">love</i>Like</button
+                    ><button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">message_2</i>Comment</button
+                    ><button
+                      class="btn btn-transparent social-post-actions-item-hidden"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">send_round</i>Share
+                    </button>
+                  </div>
+                  <div class="divider-horizontal"></div>
+                  <div class="social-post-comment-write">
+                    <span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"/></span></span
+                    ><textarea
+                      placeholder="Write a comment..."
+                      rows="1"
+                    ></textarea>
+                    <div class="social-post-comment-write-actions">
+                      <i class="uikon">camera</i><i class="uikon">smile</i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card social-post card-margin">
+                  <div class="social-post-header">
+                    <span class="avatar social-post-header-avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a06.a3705e71.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><span class="social-post-header-nameText"
+                            ><a href="/social/profile"
+                              ><strong>Roxie Mills</strong></a
+                            >
+                            <span class="social-post-header-text"
+                              >is feeling excited
+                              <span aria-label="excited" role="img">😳</span>
+                              with </span
+                            ><a href="/social/profile"
+                              >Patrick Rodriguez</a
+                            ></span
+                          ></span
+                        ><span class="avatar-text-bottom"
+                          >December 28, 2018</span
+                        ></span
+                      ></span
+                    >
+                    <div class="outer-events-handler dropdown btn-group">
+                      <button
+                        class="btn btn-clear btn-square dropdown-toggle dropdown-btn-dots"
+                        type="button"
+                        role="button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                      >
+                        <i class="uikon">more</i>
+                      </button>
+                      <div class="dropdown-menu undefined">
+                        <button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Edit</button
+                        ><button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <p>
+                    At the end of your life you’ll always regret the stuff what
+                    you didn’t do more than the stuff you did. And that's deep.
+                  </p>
+                  <div class="divider-horizontal"></div>
+                  <div class="social-post-actions">
+                    <button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">love</i>Like</button
+                    ><button
+                      class="btn btn-transparent"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">message_2</i>Comment</button
+                    ><button
+                      class="btn btn-transparent social-post-actions-item-hidden"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">send_round</i>Share
+                    </button>
+                  </div>
+                  <div class="divider-horizontal"></div>
+                  <div class="social-post-comment-write">
+                    <span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"/></span></span
+                    ><textarea
+                      placeholder="Write a comment..."
+                      rows="1"
+                    ></textarea>
+                    <div class="social-post-comment-write-actions">
+                      <i class="uikon">camera</i><i class="uikon">smile</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="scroll-area socialio-feed-secondary">
+                <div class="card card-margin">
+                  <div
+                    class="card-header socialio-feed-secondary-widget-header"
+                  >
+                    <div><h3>Stories</h3></div>
+                    <div>
+                      <div class="outer-events-handler dropdown btn-group">
+                        <button
+                          class="btn btn-clear btn-square dropdown-toggle dropdown-btn-dots"
+                          type="button"
+                          role="button"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          data-toggle="dropdown"
+                        >
+                          <i class="uikon">more</i>
+                        </button>
+                        <div class="dropdown-menu undefined">
+                          <button
+                            class="btn dropdown-item"
+                            type="button"
+                            role="button"
+                          >
+                            Edit</button
+                          ><button
+                            class="btn dropdown-item"
+                            type="button"
+                            role="button"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="social-stories">
+                    <div class="social-stories-content">
+                      <div
+                        class="social-story"
+                        style="background-image:url(/static/media/s01.fa7a6efc.jpg)"
+                      >
+                        <div class="social-story-avatar">
+                          <span class="avatar"
+                            ><span class="avatar-image-wrapper"
+                              ><img
+                                alt=""
+                                class="avatar-image"
+                                src="/static/media/a07.b9388665.jpg"/></span></span
+                          ><span class="social-story-name">Mario</span>
+                        </div>
+                      </div>
+                      <div
+                        class="social-story"
+                        style="background-image:url(/static/media/s07.5ddee80e.jpg)"
+                      >
+                        <div class="social-story-avatar">
+                          <span class="avatar"
+                            ><span class="avatar-image-wrapper"
+                              ><img
+                                alt=""
+                                class="avatar-image"
+                                src="/static/media/a19.e3931a58.jpg"/></span></span
+                          ><span class="social-story-name">Ralph</span>
+                        </div>
+                      </div>
+                      <div
+                        class="social-story"
+                        style="background-image:url(/static/media/s06.d7486b3e.jpg)"
+                      >
+                        <div class="social-story-avatar">
+                          <span class="avatar"
+                            ><span class="avatar-image-wrapper"
+                              ><img
+                                alt=""
+                                class="avatar-image"
+                                src="/static/media/a25.02d948b0.jpg"/></span></span
+                          ><span class="social-story-name">Ava</span>
+                        </div>
+                      </div>
+                      <div
+                        class="social-story"
+                        style="background-image:url(/static/media/s02.3b3e9ef5.jpg)"
+                      >
+                        <div class="social-story-avatar">
+                          <span class="avatar"
+                            ><span class="avatar-image-wrapper"
+                              ><img
+                                alt=""
+                                class="avatar-image"
+                                src="/static/media/a14.755eb208.jpg"/></span></span
+                          ><span class="social-story-name">Jonathan</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card socialio-feed-secondary-events card-margin">
+                  <button class="btn btn-clear" type="button" role="button">
+                    <i class="uikon mr">calendar</i
+                    ><strong class="socialio-feed-secondary-events-text"
+                      >5 Event Invites</strong
+                    ></button
+                  ><button class="btn btn-clear" type="button" role="button">
+                    <i class="uikon mr">calendar</i
+                    ><strong class="socialio-feed-secondary-events-text"
+                      >Noah Frank</strong
+                    >'s birthday
+                  </button>
+                </div>
+                <div class="card card-margin">
+                  <div
+                    class="card-header socialio-feed-secondary-widget-header"
+                  >
+                    <div><h3>Suggested Page</h3></div>
+                    <div>
+                      <div class="outer-events-handler dropdown btn-group">
+                        <button
+                          class="btn btn-clear btn-square dropdown-toggle dropdown-btn-dots"
+                          type="button"
+                          role="button"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          data-toggle="dropdown"
+                        >
+                          <i class="uikon">more</i>
+                        </button>
+                        <div class="dropdown-menu undefined">
+                          <button
+                            class="btn dropdown-item"
+                            type="button"
+                            role="button"
+                          >
+                            Edit</button
+                          ><button
+                            class="btn dropdown-item"
+                            type="button"
+                            role="button"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding:20px">
+                    <span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/s05.727b5395.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name">Chilli Burgers</span
+                        ><span class="avatar-text-bottom"
+                          >Restaurant</span
+                        ></span
+                      ></span
+                    >
+                    <div
+                      class="socialio-feed-secondary-events-suggested-pages"
+                      style="background-image:url(/static/media/s04.d384642b.jpg)"
+                    ></div>
+                  </div>
+                  <div class="socialio-feed-secondary-events-suggested-cta">
+                    <a class="btn btn-clear" href="#" role="button"
+                      ><i class="uikon mr">love</i><strong>Like Page</strong></a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="nav-panel nav-panel-right">
+            <div class="scroll-area">
+              <div class="nav-section">
+                <span class="nav-section-title">Your Pages</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><span class="avatar-placeholder">LL</span></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lift Lights</span></span
+                    ></span
+                  ><span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">JP Captain Morgan</span></span
+                    ></span
+                  ><span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><span class="avatar-placeholder bg-red">HC</span></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">History Classes</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Contacts</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a01.5a8ba9f1.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Gibbs</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a02.a4579852.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Della Garrett</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Louis Patrick</span></span
+                    ></span
+                  ><span class="avatar" status="12m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a04.ab031936.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lester Berry</span></span
+                    ></span
+                  ><span class="avatar" status="5m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a05.650fb6bd.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Maude Valdez</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a06.a3705e71.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Cynthia Copeland</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a07.b9388665.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Sadie Dawson</span></span
+                    ></span
+                  ><span class="avatar" status="46m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a08.f6ddd520.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Weber</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a09.72d2d002.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Eula Osborne</span></span
+                    ></span
+                  ><span class="avatar" status="22m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a10.06b87a5d.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Essie Bates</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Groups</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s2">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a01.5a8ba9f1.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Z Girls</span></span
+                    ></span
+                  ><span class="avatar" status="6m"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s3">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a11.15f39456.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a22.13bd20f9.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name"
+                        >Elementary School 16</span
+                      ></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s4">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a17.b0bcda20.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a18.218e8988.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a19.e3931a58.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a20.688290ba.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Drumm & Bass</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">More Contacts</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a01.5a8ba9f1.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Gibbs</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a02.a4579852.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Della Garrett</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Louis Patrick</span></span
+                    ></span
+                  ><span class="avatar" status="12m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a04.ab031936.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lester Berry</span></span
+                    ></span
+                  ><span class="avatar" status="5m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a05.650fb6bd.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Maude Valdez</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a06.a3705e71.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Cynthia Copeland</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a07.b9388665.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Sadie Dawson</span></span
+                    ></span
+                  ><span class="avatar" status="46m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a08.f6ddd520.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Weber</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a09.72d2d002.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Eula Osborne</span></span
+                    ></span
+                  ><span class="avatar" status="22m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a10.06b87a5d.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Essie Bates</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+     
+  </body>
+</html>

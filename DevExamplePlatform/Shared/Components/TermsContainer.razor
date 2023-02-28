@@ -1,0 +1,28 @@
+﻿<div class="content container-fluid" style="padding-top:0px;">
+    <div class="page-header">
+        <div class="row">
+            <div class="col">
+                <h3 class="page-title">@ContainerTitle</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body @CustomBodyClass overflow-auto h-75">
+                    @ChildContent
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string ContainerTitle { get; set; } = "";
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string CustomBodyClass { get; set; } = "";
+}

@@ -1,0 +1,79 @@
+﻿@using DevExample.Platform.Pages.Admin
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+@using System.Collections.Generic;
+@inject NavigationManager NavManager
+
+    <div id="@Id" class="modal lg-fade @ModalClass mt-5" tabindex="-1" role="dialog" style="display:@ModalDisplay; padding-top:100px;">
+        <div class="modal-dialog" role="document" style="max-width:800px; border:dashed; border-width:1px; border-color:red;">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">@Title</h5>
+                    <button type="button" class="close" @onclick="(()=>{Close();})">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            @ChildContent
+                        </div>
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="(()=>{Close();})" >Cancel</button>
+                    <button type="button" class="btn btn-secondary" @onclick="Confirm">@ConfirmButtonText</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@code{
+    [Parameter]
+    public EventCallback ConfirmAction { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = "Title";
+
+    [Parameter]
+    public string ConfirmButtonText { get; set; } = "Accept";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    private async Task Confirm()
+    {
+            await ConfirmAction.InvokeAsync();
+            Close();
+        StateHasChanged();
+    }
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+}

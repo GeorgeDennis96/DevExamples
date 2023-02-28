@@ -1,0 +1,28 @@
+﻿@page "/test"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+
+<DashboardContainer ContainerTitle="Test Page">
+    <AuthorizeView>
+        <Authorized>
+
+
+
+        </Authorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+
+@code {
+
+
+
+}

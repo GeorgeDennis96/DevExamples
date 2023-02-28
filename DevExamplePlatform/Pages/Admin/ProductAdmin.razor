@@ -1,0 +1,99 @@
+﻿@using DevExample.Platform.Services
+@using DevExample.Private.Models
+@@page "/admin/product"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+@inject NavigationManager NavManager
+<DashboardContainer IsAdmin="true" ContainerTitle="Product Management " ContainerDescription="List, add update and delete products and services available to end users.">
+    <AuthorizeView>
+        <Authorized>
+            <div class="row">
+                <div class="container-fluid">
+                    <button type="button" class="btn btn-outline-info float-right mr-3 mb-3 mt-3">Add Product</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <ul class="list-unstyled">
+                        @if (ProductList != null)
+                        {@foreach (var product in ProductList)
+                            {
+                                <li class="media pa-20 border border-2 border-light mb-1">
+@*                                    <img class="mr-15 circle d-66" src="@product.DescriptionImage" alt="@product.Name">*@
+                                    <div class="media-body m-1">
+                                        <h6 class="">@product.Name</h6> @product.Description
+                    <td class="text-center pr-1"><span class="badge badge-info">@(product.CatalogVisible ? "Public" : "Private")</span></td>
+                    <td class="text-center pr-1"><span class="badge badge-info">@(product.Enabled ? "Enabled" : "Disabled")</span></td>
+                    <td class="text-center pr-1"><span class="badge badge-info">@(product.Subscribable ? "Subscriptions Open" : "Subscriptions Closed")</span></td>
+                    </div>
+
+                    <DevExampleButton OnClickEvent="(()=>{EditProduct(product.Name);})" Text="Edit" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="100px" CustomClass="m-1 btn-sm" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="8"></DevExampleButton>
+                    <DevExampleButton OnClickEvent="(()=>{NavManager.NavigateTo(product.DashboardPath);})" Text="View" ButtonType="DevExampleButton.NetoButtonType.Outline_Success" Width="100px" CustomClass="m-1 btn-sm" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="8"></DevExampleButton>
+
+                    </li>
+                            }       }
+                        @if (ProductList == null)
+                        {
+                            <li class="media pa-20 border border-2 border-light">
+                                <div class="media-body">
+                                    <p class="">There are currently no products or services.</p>
+                                </div>
+                            </li>
+                        }
+            </ul>
+            </div>
+            </div>
+
+
+
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+@*<AddProductModal RefreshParent="RefreshFromChild" @ref="AddProductModal" Id="AddProductModal" />
+<EditProductModal RefreshParent="RefreshFromChild" @ref="EditProductModal" Id="EditProductModal" />*@
+
+@code {
+
+    //private AddProductModal AddProductModal;
+    //private EditProductModal EditProductModal;
+    private string AccessToken { get; set; } = "";
+    private List<ProductModel> ProductList = new List<ProductModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            UpdateProducts();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        AccessToken = TokenState.AccessToken;
+        await base.OnInitializedAsync();
+    }
+
+    public void EditProduct(string ProductName)
+    {
+        //EditProductModal.Open(ProductName);
+
+    }
+
+    public void UpdateProducts()
+    {
+        ProductList = ProductService.Instance.GetAllProducts();
+        StateHasChanged();
+    }
+
+    public void RefreshFromChild()
+    {
+        UpdateProducts();
+    }
+
+
+}

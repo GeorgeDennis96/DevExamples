@@ -1,0 +1,45 @@
+﻿
+<div class="row h-100">
+    <div class="col-md-12">
+        <div class="card rounded-10 h-100">
+            <div class="card-body @CustomBodyClass">
+                @if (ContainerTitle != "" && ContainerDescription != "")
+                {
+                    <h5 class="hk-sec-title mb-3">
+                        @ContainerTitle
+                        @if (IsAdmin)
+                        {
+                            <span class="badge badge-danger badge-pill"> Admin</span>
+                        }
+                        <br />
+                        <span class="pt-0 pb-1 h6 small">
+                            @ContainerDescription
+                        </span>
+                    </h5>
+                }
+                @ChildContent
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string ContainerTitle { get; set; } = "";
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string CustomBodyClass { get; set; } = "";
+    [Parameter]
+    public string ContainerDescription { get; set; } = "";
+    [Parameter]
+    public bool IsAdmin { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+       
+    }
+
+}

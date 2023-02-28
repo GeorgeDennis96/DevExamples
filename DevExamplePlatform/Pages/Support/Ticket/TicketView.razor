@@ -1,0 +1,629 @@
+﻿@page "/support/tickets/{ticketId}"
+@using Microsoft.AspNetCore.Authentication 
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models
+@using System.Text
+@using System.IO
+@using System.Runtime.Serialization.Formatters.Binary
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer>
+    <AuthorizeView>
+        <Authorized>
+<div class="container-fluid">
+ @if (Ticket != null)
+        {
+            <div class="row">
+                <div class="col-4">
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        <p><h6 style="margin-bottom: 5px;">Title: </h6> @Ticket.Subject</p>
+                    </div>
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        @if (CanEdit)
+                        {
+                            <DevExampleDropdown @ref="Dropdown_Priority" Id="priority" ShowLabel="true" TopMargin="0" LabelText="Priority:" ItemList="priorityList" SelectedValue="@Ticket.Priority" Width="100%"></DevExampleDropdown>
+                        }
+                        else
+                        {
+                            <p><h6 style="margin-bottom: 5px;">Priority: </h6> @Ticket.Priority</p>
+                        }
+                    </div>
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        @if (CanEdit)
+                        {
+                            <DevExampleDropdown @ref="Dropdown_Status" Id="status" ShowLabel="true" TopMargin="0" LabelText="Status:" ItemList="statusList" SelectedValue="@Ticket.Status" Width="100%"></DevExampleDropdown>
+                        }
+                        else
+                        {
+                            <p> <h6 style="margin-bottom: 5px;">Status: </h6> @Ticket.Status</p>
+                        }
+                    </div>
+                </div>
+                <div class="col-4" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        <p><h6 style="margin-bottom: 5px;">Created On: </h6> @Ticket.Created</p>
+                    </div>
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        <p> <h6 style="margin-bottom: 5px;">Last Updated On: </h6> @Ticket.LastOpened </p>
+                    </div>
+                    <div class="row-sm-6 col-lg-12" style="margin:8px;">
+                        <p><h6 style="margin-bottom: 5px;">Ticket ID: <MudTooltip Text="Copy Ticket ID"><MudIconButton Size="Size.Small" Class="float-left" Icon="@Icons.Filled.ContentCopy" OnClick="@(() => CopyText(ticketId))"></MudIconButton></MudTooltip></h6></p>
+                    </div>
+                </div>
+                    <div class="col-4">
+                        <div class="row">
+                                @if (Ticket.Disabled == false || Ticket.Status != "Disabled" || IsAdmin == true)
+                                {
+                                    if (Ticket.Status != "Closed" || IsAdmin == true)
+                                    {
+                                        if (CanEdit)
+                                        {
+                                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Danger" Width="120px" Text="Cancel" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Success" Width="120px" Text="Confirm" OnClickEvent="ConfirmTicketEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                        }
+                                        else
+                                        {
+                                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Edit" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Danger" Width="120px" Text="Delete" DataTarget="#ConfirmDeleteModal" DataToggle="modal" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Back" OnClickEvent="GoBack" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Info" Width="120px" Text="Reopen" DataTarget="#ConfirmReopenTicket" DataToggle="modal" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                    }
+                                }
+                            </div>
+                    </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="row m-0">
+                        <h6 style="margin: 8px;">Attachments: </h6>
+                        <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png"/>
+                        <MudTooltip Text="Add Attachment">
+                            <MudIconButton Variant="Variant.Outlined" Style="padding: 0px; color:#6f7a7f; border-color:transparent; padding-top: 4px;" HtmlTag="label" Color="Color.Info"Icon="@Icons.Filled.PhotoCamera" for="fileInput"></MudIconButton>
+                        </MudTooltip>
+                    </div>
+                            <div class="row" style="margin:8px; margin-left: -8px;">
+                        @if(Ticket.Attachments.Count() >= 1)
+                        {
+                            @foreach(var attachment in Ticket.Attachments)
+                            {
+                                <div class="col" style="display: flex!important; align-items: center; max-width:150px; max-height:150px;">
+                                    <img class="img-thumbnail" @onclick="(() => SetAttachmentModal(attachment))"  data-toggle="modal" data-target="#AttachmentModal" style="max-width:150px; max-height:150px;" src="@attachment.Data" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <p>No Attachments</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col">   
+                    <h6 style="margin: 8px;">Description: </h6>
+                        @if(CanEdit)
+                        {
+                            <textarea type="text" class="form-control" placeholder="Your message" rows="3" style="resize:none;" @bind="DescriptionField"></textarea>
+                        }
+                        else
+                        {
+                            <div class="col-lg-6 col-sm-12 col-md-12" style="padding-left: 8px;">
+                                <p>@Ticket.Description</p>
+                            </div>
+                        }
+                    </div>
+             </div>
+            <hr />
+                    <div class="row" style="margin-left:-8px;">
+                    <div class="col">
+                    <div class="row-12" style="margin-bottom:4px;">
+                        <h6>Comments: </h6> 
+                    </div>
+                        <div>
+                    @if (Ticket.Comments != null)
+                    {
+                        @if (Ticket.Comments.Count >= 1)
+                        {
+                            foreach (var comment in Ticket.Comments)
+                            {
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="overflow-auto card d-inline-block" style="box-shadow:none; border:solid; border-width:1px; border-color:lightgrey; border-radius: 4px; width: 100%;">
+                                            <div class="card-header" style="text-transform:none">
+                                                <div class="row">
+                                                    <div class="col-5 p-2">
+                                                        <span class="d-block pt-1"><span class="font-weight-normal text-dark float-left">@comment.ReplierName - @comment.CreatedOn</span></span>
+                                                    </div>
+                                                    <div class="col-5 p-2">
+                                                        @if (comment.LastUpdated != null)
+                                                        {
+                                                            @if (comment.LastUpdated != comment.CreatedOn)
+                                                            {
+                                                                <span class="d-block pt-1"><span class="font-weight-normal text-dark float-right">Edited at @comment.LastUpdated</span></span>
+                                                            }
+                                                        }
+                                                    </div>
+                                                    <div class="col-2 float-right p-2">
+                                                        @if (comment.CanEdit  || IsAdmin)
+                                                        {
+                                                            if (!Ticket.Disabled || IsAdmin == true)
+                                                            {
+                                                                var email = "";
+                                                                @foreach (var claim in @context.User.Claims)
+                                                                {
+                                                                    if (claim.Type == $"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")
+                                                                    {
+                                                                        email = claim.Value;
+                                                                    }
+                                                                }
+
+                                                                if (comment.ReplierName == email || IsAdmin)
+                                                                {
+                                                                    <div class="h-100 w-100">
+                                                                        <div class="float-right">
+                                                                            <MudTooltip Style="float:right!important;" Class="float-right" Text="Delete Comment"><MudIconButton Size="Size.Small" Class="float-right" Icon="@Icons.Outlined.Delete" data-target="#ConfirmCommentDelete" data-toggle="modal" Color="MudBlazor.Color.Error" OnClick="() => ShowDeleteTicketModal(comment)"></MudIconButton></MudTooltip>
+                                                                        </div>
+                                                                        <div class="float-right">
+                                                                            <MudTooltip Style="float:right!important;" Class="float-right" Text="Edit Comment"><MudIconButton Size="Size.Small" Class="float-right" Icon="@Icons.Outlined.Edit" Color="MudBlazor.Color.Info" OnClick="() => TurnOnEditComment(comment._id)"></MudIconButton></MudTooltip>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr style="margin-top: 0px; margin-bottom: 10px;" />
+                                            <div class="p-2">
+                                            @if(CommentIDToEdit == comment._id)
+                                            {
+                                                <textarea type="text" class="form-control" rows="6" style="resize:none;" @bind="CommentToEdit"></textarea>
+                                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Danger" Width="120px" Text="Cancel" OnClickEvent="CancelEditComment" Margin="m-1" Padding="p-2" CustomClass="mt-1"></DevExampleButton> 
+                                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Success" Width="120px" Text="Confirm" OnClickEvent="() => ConfirmCommentEdit(comment._id)" Margin="m-1" Padding="p-2" CustomClass="mt-1"></DevExampleButton> 
+                                            }
+                                            else
+                                            {
+                                                <pre style="white-space:pre-wrap;">
+                                                    @comment.Message
+                                                </pre>
+                                            }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="media">
+                                <div class="media-body">
+                                    <p>
+                                        No Comments
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="media">
+                            <div class="media-body">
+                                <p>
+                                    No Comments
+                                </p>
+                            </div>
+                        </div>
+                    }
+                        </div>
+                    </div>
+                </div>   
+                    <div class="row" style="margin-top:8px;">
+                        <div class="col-12" style="margin-left: 6px;">
+                            @if (!Ticket.Disabled || Ticket.Status != "Closed" || IsAdmin)
+                            {
+                                if (Ticket.Status != "Disabled" || IsAdmin)
+                                {
+                                    <div class="row-12">
+                                        <h6>Reply: </h6>
+                                    </div>
+                                    <div class="row-12">
+                                        <textarea type="text" class="form-control" placeholder="Your Comment" rows="4" style="" @bind="CommentField"></textarea>
+                                    </div>
+                                }
+                            }
+                            <div class="col-12 p-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <DevExampleButton Align="DevExampleButton.Alignment.Left" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Back" OnClickEvent="GoBack" Margin="m-0" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                    </div>
+                                    @if (!Ticket.Disabled || Ticket.Status != "Closed" || IsAdmin)
+                                    {
+                                        if (Ticket.Status != "Disabled" || IsAdmin)
+                                        {
+                                            <div class="col-6">
+                                                <DevExampleButton Align="DevExampleButton.Alignment.Right" Width="120px" Text="Comment" OnClickEvent="AddComment" Margin="m-0" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            else
+            {
+                Snackbar.Add("Could not retrieve ticket.", Severity.Error);
+            }
+</div>
+
+             <DevExampleModal @ref="AttachmentModal" Id="AttachmentModal" ModalContentStyle="max-width: 1000px; min-width: 388px!important;">
+                 <Header>
+                     @SelectedAttachment.Name
+                 </Header>
+                <Body>
+                    <div class="">
+                        <a href="@SelectedAttachment.Data"  target="_blank">
+                            <img style="width: 100%!important;" src="@SelectedAttachment.Data" />
+                        </a>
+                    </div>
+                </Body>
+                 <Footer>
+                     @if(Ticket.Disabled == false)
+                    {
+                        if(Ticket.Status != "Closed")
+                        {
+                            <button type="button" class="btn btn-outline-danger" @onclick="(() => DeleteAttachment())" data-dismiss="modal">Delete</button>
+                        }
+                    }
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                 </Footer>
+             </DevExampleModal>
+           
+            <DevExampleModal @ref="ConfirmDeleteModal" Id="ConfirmDeleteModal">
+                <Header>
+                    <span>Are you sure you wish to delete this ticket?</span>
+                </Header>
+                <Body>
+                     <span>@Ticket._id</span>
+                </Body>
+                <Footer>
+                    <button type="button" class="btn btn-outline-danger" @onclick="(() => DeleteTicket(ticketId))" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                </Footer>
+            </DevExampleModal>
+
+            <DevExampleModal @ref="ConfirmCommentDelete" Id="ConfirmCommentDelete">
+                <Header>
+                    <span>Are you sure you wish to delete this comment?</span>
+                </Header>
+                <Body>
+                    @if (commentToDelete != null)
+                    {
+                        <span>@commentToDelete.Message</span>   
+                    }
+                </Body>
+                <Footer>
+                    <button type="button" class="btn btn-outline-danger" @onclick="(() => DeleteComment())" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                </Footer>
+            </DevExampleModal>
+
+            <DevExampleModal @ref="ConfirmReopenTicket" Id="ConfirmReopenTicket">
+                <Header>
+                    <span>Are you sure you wish to reopen this ticket?</span>
+                </Header>
+                <Body>
+                     <span>@Ticket._id</span>
+                </Body>
+                <Footer>
+                    <button type="button" class="btn btn-outline-warning" @onclick="ReopenTicket" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                </Footer>
+            </DevExampleModal>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    [Parameter]
+    public string ticketId { get; set; }
+
+    private TicketModel Ticket = new TicketModel();
+
+    string userNameIdentifier { get; set; }
+    AuthenticationState state { get; set; }
+    private bool IsAdmin { get; set; }
+    private string AccessToken { get; set; } = "";
+
+    public List<FileModel> attachmentList { get; set; }
+
+    public DevExampleModal ConfirmDeleteModal, ConfirmReopenTicket, AttachmentModal, ConfirmCommentDelete;
+    private bool CanEdit = false;
+    private string CommentIDToEdit { get; set; }
+    private List<DevExampleDropdown.SelectItem> statusList = new List<DevExampleDropdown.SelectItem>();
+    private List<DevExampleDropdown.SelectItem> priorityList = new List<DevExampleDropdown.SelectItem>();
+    public DevExampleDropdown Dropdown_Status, Dropdown_Priority;
+    public string CommentField { get; set; }
+    public string CommentToEdit { get; set; }
+    public string DescriptionField { get; set; }
+    public string CopiedID { get; set; }
+    public CommentModel commentToDelete { get; set; }
+
+    public FileModel SelectedAttachment { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var emptyattachment = new FileModel();
+        SelectedAttachment = emptyattachment;
+
+        state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        userNameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        IsAdmin = AccountService.Instance.IsIronMan(userNameIdentifier);
+
+        Ticket = TicketService.Instance.GetTicket(userNameIdentifier, ticketId);
+
+        if (statusList.Count < 1)
+        {
+            AddPriorities();
+            AddStatuses();
+        }
+
+        DescriptionField = Ticket.Description;
+        AccessToken = TokenState.AccessToken;
+        await base.OnInitializedAsync();
+
+        StateHasChanged();
+    }
+
+    public void ToggleEdit()
+    {
+        CanEdit = !CanEdit;
+    }
+
+    public void TurnOnEditComment(string commentId)
+    {
+        CommentIDToEdit = commentId;
+        foreach(var comment in Ticket.Comments)
+        {
+            if(comment._id == commentId)
+            {
+                CommentToEdit = comment.Message;
+            }
+        }
+    }
+
+    public async Task CancelEditComment()
+    {
+        CommentIDToEdit = "";
+        StateHasChanged();
+    }
+
+    private async void DeleteAttachment()
+    {
+        var result = TicketService.Instance.DeleteAttachment(userNameIdentifier, Ticket._id, SelectedAttachment);
+        if (result)
+        {
+            await OnInitializedAsync();
+        }
+    }
+
+    private async void UploadFiles(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles();
+        var ticketAttachments = new List<FileModel>();
+
+        foreach (var file in files)
+        {
+            if (files.Count != 0)
+            {
+                var resizedImage = await file.RequestImageFileAsync(file.ContentType, 2048, 2048);
+
+                var buffer = new byte[file.Size];
+                var fileContent = new StreamContent(resizedImage.OpenReadStream(2048 * 2048 * 15));
+                buffer = await fileContent.ReadAsByteArrayAsync();
+
+                var newFile = new FileModel()
+                {
+                    Name = file.Name,
+                    Data = await ImageConversion.ConvertBufferToBase64(buffer, file.ContentType)
+                };
+                ticketAttachments.Add(newFile);
+            }
+        }
+
+        bool result = false;
+
+        if (ticketAttachments.Count > 1)
+        {
+            result = TicketService.Instance.AddMultipleAttachments(userNameIdentifier, Ticket._id, ticketAttachments);
+        }
+        else
+        {
+            result = TicketService.Instance.AddSingleAttachment(userNameIdentifier, Ticket._id, ticketAttachments.FirstOrDefault());
+        }
+
+        if (result)
+        {
+            await OnInitializedAsync();
+        }
+
+    }
+    public async Task ConfirmCommentEdit(string commentId)
+    {
+        var newTicket = Ticket;
+        CanEdit = false;
+        var updatedComment = new CommentModel(); ;
+        foreach(var comment in newTicket.Comments)
+        {
+            if(comment._id == commentId)
+            {
+                updatedComment = comment;
+                updatedComment.Message = CommentToEdit;
+                break;
+            }
+        }
+        var result = TicketService.Instance.UpdateComment(userNameIdentifier, Ticket._id, updatedComment);
+
+        if(result)
+        {
+            CommentIDToEdit = "";
+            Snackbar.Add("Ticket Comment Successfully Edited.", Severity.Success);
+            await OnInitializedAsync();
+        }
+    }
+
+    private async Task AddComment()
+    {
+        var newComment = new CommentModel();
+        newComment.Message = CommentField;
+
+        if(newComment.Message.Count<char>() <= 5 || newComment.Message == null)
+        {
+            Snackbar.Add("Comment must have more then 5 characters", Severity.Warning);
+        }
+        else
+        {
+            var result = TicketService.Instance.AddComment(userNameIdentifier, Ticket._id, newComment);
+            if(result)
+            {
+                Snackbar.Add("Comment Added.", Severity.Success);
+                CommentField = "";
+            }
+            else
+            {
+                Snackbar.Add("Could not add comment.", Severity.Error);
+            }
+            await OnInitializedAsync();
+        }
+    }
+
+    private void ShowDeleteTicketModal(CommentModel comment)
+    {
+        commentToDelete = comment;
+    }
+
+    private async Task DeleteComment()
+    {
+        if (commentToDelete != null)
+        {
+            TicketService.Instance.DeleteComment(userNameIdentifier, Ticket._id, commentToDelete._id);
+            Snackbar.Add("Comment: "+commentToDelete._id+" Deleted.", Severity.Success);
+            await OnInitializedAsync(); 
+        }
+
+    }
+
+    public async Task ReopenTicket()
+    {
+        var newTicket = Ticket;
+        newTicket.Disabled = false;
+        newTicket.Status = "Open";
+
+        var result = TicketService.Instance.UpdateTicket(userNameIdentifier, newTicket);
+        if(result)
+        {
+            Snackbar.Add("Ticket Reopened", Severity.Success);
+            await OnInitializedAsync();   
+        }
+    }
+
+    private void DeleteTicket(string id)
+    {
+        var result = TicketService.Instance.DeleteTicket(userNameIdentifier, id);
+        if(result)
+        {
+            Snackbar.Add("Ticket Deleted.", Severity.Success);
+            GoBack();
+        }
+        else
+        {
+            Snackbar.Add("Failed to Delete Ticket", Severity.Error);
+        }
+    }
+
+    private async Task CopyText(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        CopiedID = text;
+        Snackbar.Add("ID: "+text+ " copied to clipboard!", Severity.Success);
+    }
+
+    private async Task ConfirmTicketEdit()
+    {
+        var newTicket = Ticket;
+        var result = false;
+
+        if (newTicket.Status != Dropdown_Status.GetSelectedValue())
+        {
+            newTicket.Status = Dropdown_Status.GetSelectedValue();
+        }
+        if (newTicket.Priority != Dropdown_Priority.GetSelectedValue())
+        {
+            newTicket.Priority = Dropdown_Priority.GetSelectedValue();
+        }
+        if(newTicket.Status != "" || newTicket.Priority != "")
+        {
+            result = TicketService.Instance.UpdateTicket(userNameIdentifier, newTicket);
+        }
+
+        if(DescriptionField != Ticket.Description || DescriptionField != null)
+        {
+            newTicket.Description = DescriptionField;
+        }
+
+        if(result)
+        {
+            CanEdit = !CanEdit;
+            Snackbar.Add("Edit Successful.", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Could not Updated Ticket.", Severity.Error);
+        }
+        await OnInitializedAsync();
+    }
+
+    private void SetAttachmentModal(FileModel attachment)
+    {
+        SelectedAttachment = attachment;
+    }
+
+    private void AddStatuses()
+    {
+        statusList.Add(new DevExampleDropdown.SelectItem { Name = "Disabled", Value = "Disabled" });
+        statusList.Add(new DevExampleDropdown.SelectItem { Name = "Open", Value = "Open" });
+        statusList.Add(new DevExampleDropdown.SelectItem { Name = "Closed", Value = "Closed" });
+        statusList.Add(new DevExampleDropdown.SelectItem { Name = "Resolved", Value = "Resolved" });
+        statusList.Add(new DevExampleDropdown.SelectItem { Name = "Addition Information Required", Value = "Addition Information Required" });
+    }
+
+    private void AddPriorities()
+    {
+        priorityList.Add(new DevExampleDropdown.SelectItem { Name = "Low", Value = "Low" });
+        priorityList.Add(new DevExampleDropdown.SelectItem { Name = "Normal", Value = "Normal" });
+        priorityList.Add(new DevExampleDropdown.SelectItem { Name = "High", Value = "High" });
+        priorityList.Add(new DevExampleDropdown.SelectItem { Name = "Urgent", Value = "Urgent" });
+    }
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/support/tickets");
+    }
+}

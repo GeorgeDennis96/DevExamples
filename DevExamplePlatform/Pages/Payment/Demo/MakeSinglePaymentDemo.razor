@@ -1,0 +1,60 @@
+﻿@page "/demo/payment"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models;
+@inject NavigationManager NavManager
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Single Payment (Demo)">
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var nameIdentifier = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+                GetAccount(nameIdentifier);
+            }
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <MudCard Style="border-color:#1ebccd;">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">Product One - Price : £9.99</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => CreateCheckout("price_1Lk3hwGie02Aino5Rv418Imy"))">Pay</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </div>
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    private AccountModel DevExampleAccount { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    public void CreateCheckout(string priceID)
+    {
+        //var result = PaymentService.Instance.CreateCheckout(priceID, DevExampleAccount.nameIdentifier);
+        //if (result != "Failed")
+        //{
+        //    NavManager.NavigateTo(result, true);
+        //}
+    }
+
+    private void GetAccount(string nameIdentifier)
+    {
+        DevExampleAccount = DevExample.Platform.Services.AccountService.Instance.GetAccount(nameIdentifier);
+    }
+}

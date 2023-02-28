@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#000000" name="theme-color" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/manifest.json" rel="manifest" />
+    <title>Dashboard UI Kit Preview</title>
+    <link href="/static/css/lib.css" rel="stylesheet" />
+    <link href="/static/css/app.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com" rel="preconnect" />
+    <link href="https://code.jquery.com" rel="preconnect" />
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="outer-events-handler navigator-container">
+        <button class="expandButton" type="button">
+          <i class="uikon">view_list</i>
+        </button>
+        <div class="list">
+          <a class="nav-link-pill" href="/"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">gallery_grid_view</i></span
+              >Screen Previews</span
+            ></a
+          ><a class="nav-link-pill"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_simple</i></span
+              >Switch Dark/Light Theme</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">rocket</i></span
+              >Installation Guide</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_list</i></span
+              >React Docs</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill active"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">love</i></span
+              >Get Designs (Sketch, ..)</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">inbox_paper_round</i></span
+              >Get Previews</span
+            ></a
+          >
+        </div>
+      </div>
+      <div class="container-vertical">
+        <section class="top-bar">
+          <div class="top-bar-section">
+            <div class="top-bar-section">
+              <h2 class="top-bar-title"><i class="uikon">stats</i>Socialio</h2>
+            </div>
+            <div class="top-bar-section searchbarWrapper">
+              <div class="form-group">
+                <div class="input-group input-group-clear">
+                  <div class="input-group-prepend">
+                    <i class="uikon">search_left</i>
+                  </div>
+                  <input
+                    class="form-control"
+                    placeholder="Search..."
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="top-bar-section">
+            <i class="uikon social-top-bar-icon">globe_network</i>
+            <div
+              class="outer-events-handler dropdown btn-group"
+              position="bottomRight"
+            >
+              <button
+                class="btn dropdown-toggle btn-social-top-bar-dropdown"
+                type="button"
+                role="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                data-toggle="dropdown"
+              >
+                <span class="avatar"
+                  ><span class="avatar-image-wrapper"
+                    ><img
+                      alt=""
+                      class="avatar-image"
+                      src="/static/media/a18.218e8988.jpg"/></span
+                ></span>
+              </button>
+              <div class="dropdown-menu bottom-right">
+                <a
+                  class="btn dropdown-item"
+                  href="/social/profile"
+                  role="button"
+                  >Profile</a
+                ><button class="btn dropdown-item" type="button" role="button">
+                  Account Settings</button
+                ><button class="btn dropdown-item" type="button" role="button">
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <nav class="tabs socialio-mobile-nav">
+          <a class="tab-item socialio-mobile-nav-item" tabindex="0"
+            ><i class="uikon">gallery_grid_view</i></a
+          ><a class="tab-item socialio-mobile-nav-item active" tabindex="0"
+            ><i class="uikon">calendar</i></a
+          ><a class="tab-item socialio-mobile-nav-item" tabindex="0"
+            ><i class="uikon">message</i></a
+          >
+        </nav>
+        <div class="container-horizontal socialio-container Home">
+          <nav class="nav-panel">
+            <div class="nav-section">
+              <span class="nav-section-title">Menu</span
+              ><a class="nav-link highlighted" text="Home" href="/social"
+                ><span class="nav-link-text">Home</span></a
+              ><a
+                class="nav-link highlighted"
+                text="Discussion"
+                href="/social/discussion"
+                ><span class="nav-link-text">Discussion</span></a
+              ><a
+                class="nav-link highlighted"
+                text="Friends"
+                href="/social/friends"
+                ><span class="nav-link-text">Friends</span></a
+              ><a
+                class="nav-link highlighted active"
+                text="Events"
+                href="/social/events"
+                aria-current="page"
+                ><span class="nav-link-text">Events</span
+                ><span class="nav-link-right-el"><span>8</span></span></a
+              ><a
+                class="nav-link highlighted"
+                text="Videos"
+                href="/social/videos"
+                ><span class="nav-link-text">Videos</span></a
+              ><a
+                class="nav-link highlighted"
+                text="Photos"
+                href="/social/photos"
+                ><span class="nav-link-text">Photos</span></a
+              ><a class="nav-link highlighted" text="Files" href="/social/files"
+                ><span class="nav-link-text">Files</span></a
+              >
+            </div>
+            <div class="nav-section">
+              <span class="nav-section-title">Your Favourites</span
+              ><a class="nav-link highlighted" text="Railway Deals"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🚝</span>Railway Deals</span
+                ></a
+              ><a class="nav-link highlighted" text="Hockey Guys UK"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🏒</span>Hockey Guys UK</span
+                ></a
+              ><a class="nav-link highlighted" text="Basketball UK"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🏀</span>Basketball UK</span
+                ></a
+              ><a class="nav-link highlighted" text="Winter Sports"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">☃️</span>Winter Sports</span
+                ></a
+              ><a class="nav-link highlighted" text="Ha! The best Jokes"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🙊</span>Ha! The best
+                  Jokes</span
+                ></a
+              ><a class="nav-link highlighted" text="8GAG"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">🤣</span>8GAG</span
+                ></a
+              ><a class="nav-link highlighted" text="Mentors"
+                ><span class="nav-link-text"
+                  ><span class="nav-link-left-el">💎</span>Mentors</span
+                ></a
+              >
+            </div>
+          </nav>
+          <div class="socialio-content">
+            <div class="container-vertical">
+              <section class="top-bar">
+                <div class="top-bar-section">
+                  <h2 class="top-bar-title">
+                    <span
+                      class="avatar social-events-title-icon"
+                      style="margin-right:15px"
+                      ><span class="avatar-image-wrapper"
+                        ><span class="avatar-placeholder"
+                          ><span style="font-size:.785rem" role="img"
+                            >✈️</span
+                          ></span
+                        ></span
+                      ></span
+                    >Cheap Holidays
+                  </h2>
+                </div>
+                <div class="top-bar-section">
+                  <div>
+                    <div
+                      class="outer-events-handler dropdown btn-group social-events-dropdown-filter"
+                    >
+                      <button
+                        class="btn dropdown-toggle"
+                        type="button"
+                        role="button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                      >
+                        Joined
+                      </button>
+                      <div class="dropdown-menu bottom-left">
+                        <button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Something here
+                        </button>
+                      </div>
+                    </div>
+                    <div class="outer-events-handler dropdown btn-group">
+                      <button
+                        class="btn dropdown-toggle"
+                        type="button"
+                        role="button"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        data-toggle="dropdown"
+                      >
+                        <i class="uikon mr">send_round</i
+                        ><span class="social-events-dropdown-share-text"
+                          >Share</span
+                        >
+                      </button>
+                      <div class="dropdown-menu bottom-left">
+                        <button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Send as message</button
+                        ><button
+                          class="btn dropdown-item"
+                          type="button"
+                          role="button"
+                        >
+                          Share on sharestagram
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <div class="scroll-area social-events-content">
+                <div class="card social-events-widget-calendar">
+                  <div class="card-header">
+                    <div>
+                      <h3 class="social-events-calendar-title">Calendar</h3>
+                    </div>
+                    <div>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-transparent btn-square"
+                          type="button"
+                          role="button"
+                        >
+                          <i class="uikon calendar-btn-arrow"
+                            >arrow_left</i
+                          ></button
+                        ><button
+                          class="btn btn-transparent"
+                          type="button"
+                          role="button"
+                        >
+                          June 2018<i class="uikon ml"
+                            >dropdown_arrow</i
+                          ></button
+                        ><button
+                          class="btn btn-transparent btn-square"
+                          type="button"
+                          role="button"
+                        >
+                          <i class="uikon calendar-btn-arrow">arrow_right</i>
+                        </button>
+                      </div>
+                      <button
+                        class="btn btn-primary social-events-add-lg"
+                        type="button"
+                        role="button"
+                        style="margin-left:10px"
+                      >
+                        <i class="uikon mr">add</i> Create Event</button
+                      ><button
+                        class="btn btn-primary btn-square social-events-add-sm"
+                        type="button"
+                        role="button"
+                        style="margin-left:10px"
+                      >
+                        <i class="uikon">add</i>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <table cellspacing="0" class="social-events-calendar">
+                      <thead>
+                        <tr>
+                          <th class="social-events-calendar-weekday">MON</th>
+                          <th class="social-events-calendar-weekday">TUE</th>
+                          <th class="social-events-calendar-weekday">WED</th>
+                          <th class="social-events-calendar-weekday">THU</th>
+                          <th class="social-events-calendar-weekday">FRI</th>
+                          <th class="social-events-calendar-weekday">SAT</th>
+                          <th class="social-events-calendar-weekday">SUN</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day">
+                              <div class="social-events-day-number">
+                                <span class="social-events-day-month-name"
+                                  >May</span
+                                >27
+                              </div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item blue"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Party in London, UK
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 8:00 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day">
+                              <div class="social-events-day-number">28</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day">
+                              <div class="social-events-day-number">29</div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item green"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Summer Pool Part
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 5:00 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day">
+                              <div class="social-events-day-number">30</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day">
+                              <div class="social-events-day-number">31</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">
+                                <span class="social-events-day-month-name"
+                                  >June</span
+                                >1
+                              </div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item indigo"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Serbia Tour
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 6:00 AM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">2</div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">3</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">4</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">5</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">6</div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item blue"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Rooftop Festival
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 8:46 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">7</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">8</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">9</div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">10</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">11</div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item green"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Socialbook Meetup
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 4:00 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">12</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">13</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">14</div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item orange"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    Mallorca Meetup
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 8:00 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">15</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">16</div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">17</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">18</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">19</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">20</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">21</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">22</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">23</div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">24</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">25</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">26</div>
+                              <div
+                                class="outer-events-handler social-events-calendar-item-wrapper"
+                              >
+                                <button
+                                  class="social-events-calendar-item blue"
+                                  type="button"
+                                >
+                                  <div
+                                    class="social-events-calendar-item-title"
+                                  >
+                                    $10 Picnic in Soho
+                                  </div>
+                                  <div class="social-events-calendar-item-time">
+                                    at 5:00 PM
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">27</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">28</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">29</div>
+                            </div>
+                          </td>
+                          <td class="social-events-day-container">
+                            <div class="social-events-day highlighted">
+                              <div class="social-events-day-number">30</div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="nav-panel nav-panel-right">
+            <div class="scroll-area">
+              <div class="nav-section">
+                <span class="nav-section-title">Your Pages</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><span class="avatar-placeholder">LL</span></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lift Lights</span></span
+                    ></span
+                  ><span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">JP Captain Morgan</span></span
+                    ></span
+                  ><span class="avatar"
+                    ><span class="avatar-image-wrapper"
+                      ><span class="avatar-placeholder bg-red">HC</span></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">History Classes</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Contacts</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a01.5a8ba9f1.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Gibbs</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a02.a4579852.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Della Garrett</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Louis Patrick</span></span
+                    ></span
+                  ><span class="avatar" status="12m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a04.ab031936.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lester Berry</span></span
+                    ></span
+                  ><span class="avatar" status="5m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a05.650fb6bd.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Maude Valdez</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a06.a3705e71.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Cynthia Copeland</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a07.b9388665.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Sadie Dawson</span></span
+                    ></span
+                  ><span class="avatar" status="46m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a08.f6ddd520.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Weber</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a09.72d2d002.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Eula Osborne</span></span
+                    ></span
+                  ><span class="avatar" status="22m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a10.06b87a5d.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Essie Bates</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Groups</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s2">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a01.5a8ba9f1.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Z Girls</span></span
+                    ></span
+                  ><span class="avatar" status="6m"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s3">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a11.15f39456.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a22.13bd20f9.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name"
+                        >Elementary School 16</span
+                      ></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><div class="avatar-image-multi-container s4">
+                        <img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a17.b0bcda20.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a18.218e8988.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a19.e3931a58.jpg"
+                        /><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a20.688290ba.jpg"
+                        /></div></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Drumm & Bass</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">More Contacts</span>
+                <div class="avatar-menu-container">
+                  <span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a01.5a8ba9f1.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Gibbs</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a02.a4579852.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Della Garrett</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a03.5b4479bc.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Louis Patrick</span></span
+                    ></span
+                  ><span class="avatar" status="12m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a04.ab031936.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Lester Berry</span></span
+                    ></span
+                  ><span class="avatar" status="5m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a05.650fb6bd.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Maude Valdez</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a06.a3705e71.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Cynthia Copeland</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a07.b9388665.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Sadie Dawson</span></span
+                    ></span
+                  ><span class="avatar" status="46m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a08.f6ddd520.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Francisco Weber</span></span
+                    ></span
+                  ><span class="avatar" status="uik_online"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a09.72d2d002.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Eula Osborne</span></span
+                    ></span
+                  ><span class="avatar" status="22m"
+                    ><span class="avatar-image-wrapper"
+                      ><img
+                        alt=""
+                        class="avatar-image"
+                        src="/static/media/a10.06b87a5d.jpg"/></span
+                    ><span class="avatar-content"
+                      ><span class="avatar-name">Essie Bates</span></span
+                    ></span
+                  >
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+     
+  </body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#000000" name="theme-color" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    ></script>
+    <link href="https://stackpath.bootstrapcdn.com" rel="preconnect" />
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://code.jquery.com" rel="preconnect" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/manifest.json" rel="manifest" />
+    <title>Dashboard UI Kit Preview</title>
+    <link href="/static/css/lib.css" rel="stylesheet" />
+    <link href="/static/css/app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="outer-events-handler navigator-container">
+        <button class="expandButton" type="button">
+          <i class="uikon">view_list</i>
+        </button>
+        <div class="list">
+          <a class="nav-link-pill" href="/"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">gallery_grid_view</i></span
+              >Screen Previews</span
+            ></a
+          ><a class="nav-link-pill"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_simple</i></span
+              >Switch Dark/Light Theme</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">rocket</i></span
+              >Installation Guide</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_list</i></span
+              >React Docs</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill active"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">love</i></span
+              >Get Designs (Sketch, ..)</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">inbox_paper_round</i></span
+              >Get Previews</span
+            ></a
+          >
+        </div>
+      </div>
+      <div class="container-horizontal">
+        <nav class="nav-panel-dark buildings-navigation buildingsMenuAnimate">
+          <div class="container-vertical">
+            <section class="top-bar buildings-nav-top-bar">
+              <div class="top-bar-section">
+                <h2 class="top-bar-title buildings-nav-top-bar-title">
+                  <i class="uikon">building</i><span>Buildings</span>
+                </h2>
+              </div>
+            </section>
+            <div class="scroll-area">
+              <div class="nav-section">
+                <span class="nav-section-title">Menu</span
+                ><a class="nav-link-pill" href="/buildings/dashboard"
+                  ><span class="nav-link-text">Dashboard</span></a
+                ><a
+                  class="nav-link-pill active"
+                  href="/buildings/listing"
+                  aria-current="page"
+                  ><span class="nav-link-text">Buildings</span></a
+                ><a class="nav-link-pill" href="/buildings/posts"
+                  ><span class="nav-link-text">Posts</span></a
+                ><a class="nav-link-pill" href="/buildings/conversations"
+                  ><span class="nav-link-text">Conversations</span
+                  ><span class="nav-link-right-el"
+                    ><span class="nav-link-count">2</span></span
+                  ></a
+                ><a class="nav-link-pill" href="/buildings/amenities"
+                  ><span class="nav-link-text">Amenities</span></a
+                ><a class="nav-link-pill" href="/buildings/tenants"
+                  ><span class="nav-link-text">Tenants</span></a
+                ><a class="nav-link-pill" href="/buildings/performance"
+                  ><span class="nav-link-text">Performance</span></a
+                ><a class="nav-link-pill" href="/buildings/users"
+                  ><span class="nav-link-text">Users</span></a
+                >
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Support</span
+                ><a class="nav-link" href="/buildings/help"
+                  ><span class="nav-link-text">Need Help?</span></a
+                ><a class="nav-link" href="/buildings/contact"
+                  ><span class="nav-link-text">Contact Us</span></a
+                ><a class="nav-link" href="/buildings/knowledge-base"
+                  ><span class="nav-link-text">Knowledge Base</span></a
+                >
+              </div>
+            </div>
+            <a class="nav-panel-user-container" href="/buildings/user/settings"
+              ><span class="avatar"
+                ><span class="avatar-image-wrapper"
+                  ><img
+                    alt=""
+                    src="/static/media/a07.b9388665.jpg"
+                    class="avatar-image"/></span
+                ><span class="avatar-content"
+                  ><span class="avatar-name">Kara Johnson</span
+                  ><span class="avatar-text-bottom">HR Specialist</span></span
+                ></span
+              ><i class="uikon nav-panel-user-dropdown-icon"
+                >dropdown_arrow</i
+              ></a
+            >
+            <div class="nav-panel-about-container">
+              <div class="nav-panel-about-copyright">© Buildings Ltd. 2018</div>
+              <div class="nav-panel-about-about">
+                Created with love for the environment. By designers and
+                develodivers who love to work together in offices!
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="container-vertical buildingsMenuAnimate">
+          <div class="container-vertical">
+            <section class="top-bar buildings-top-bar">
+              <button
+                class="btn btn-transparent nav-burger"
+                type="button"
+                role="button"
+              >
+                <div class="burger burger-squeeze navigation-burger">
+                  <div class="burger-lines"></div>
+                </div>
+              </button>
+              <div class="top-bar-section">
+                <div
+                  class="outer-events-handler dropdown btn-group select select-buildings"
+                  position="bottomLeft"
+                >
+                  <button
+                    class="btn dropdown-toggle select-buildings-button"
+                    type="button"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    data-toggle="dropdown"
+                  >
+                    <span class="select-building-option"
+                      ><img
+                        alt="english"
+                        src="data:image/png;base64,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"
+                      />All Buildings</span
+                    >
+                  </button>
+                  <div class="dropdown-menu bottom-right">
+                    <button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-building-option"
+                        ><img
+                          alt="english"
+                          src="data:image/png;base64,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"
+                        />All Buildings</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-building-option"
+                        ><img
+                          alt="tuvalu"
+                          src="data:image/png;base64,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"
+                        />Some Buildings</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-building-option"
+                        ><img
+                          alt="norway"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAAXNSR0IArs4c6QAADENJREFUWAntWEtvJFcV/urdb3e322732M7kiZMg4khIJCSZyCgLCGwiIUUCsYUlCxazIllMdrNgwR62s2TDGgwTRZF4ZTITwcQTnInt8btt97u7uqr4vlvdM55khPgBXLv6Vt2699zvfOeec88tCywbG9tLGc+62ul31w73DxuDsz1UazXMLT7FtxZs24Zlq+aTZZnLtq3dJMG669qXZ2dntyVnWn794Y2lMA6v8nmNIxoWb3RxoKnNs2kwTXoDx7J2+Xrd9e3LP11d3bY2NjaWwlF0I18oVIvFIvZ2d7H96UeoX7iI+ceexmg4OgcsoWyCnIAzEmE1XddanYL71QcfLdpW8jGSpMpuBtGkmnQHbANQrYm51wsjk7VtO81wMH7BHYfJVc/xqjYnHI/HmK/PY9R5zDDkBx6SOMYoDOFaLudKhUmIhJpZkVTj2BI7P+YF146uWJZTNZOqgRyZ7mJew8QZ/6meaTdNak2bVVftjHOFs2EtTmJYjkUQEWIOmV96HAdbmxiPRnyO0e/34bkeBNR1HQIUc6nICcg1TaniWPYlxyAwdtf0wmEu/aTg9CzmJ+18PwUtNonikuv6fsOySCm7xrGojeEFGdgEcrC9iXJ92QgJxyGiKEIul4Hne8JgikBSfGPySGatuqPFSI1T7GImVUKtBpx+BHJCuubWv2lj5cCuu6e7myhU5mHlc2SC4gTOZS/Xx6c3/oILZyfIFmfh5woc4WPM94KlvpP5+PSgOGTUNepPmdKM5xgxD3w2rRM8pkvKoBiTBd3eyQGSUQ/xsI18pY5csWRM1e/10Or2URmEGA53DJu5wgwqtQVkM7MUK2mpyilr6UweQYkxsWGWh8zOV/JsrVfj4aZrIrNTQuoABhvH6D11h+0FAaJ4jHbzACc7/0anuU9BFM41ly1UUZxdQGWugUy+iO3tLdy+9Tcc3fvCgE+hPPzrOTZ8jnWIrHd6isI4QsX30T89Q8V1YdGRrMEQBcfFqNtFnnU0HMKNEvgTtqWcHRu5xCsKozFO9rZwdngPtfkG5hYuGNNGbM9msogSB7c3t3F8sEcGxxxp9HwImczoUev2QRPHX+yiZnt4PF9A97CJZS6HzIjAuj0sZnM42z/EUjaPwfEJilGMWT/gMrAV02hq0hvxInf0BpUEraM9OkGCleefQ3GmCIfr7ejkDFv3CLhSxFxjiYwylJiFL3M+KD4F+46DiGw4fB+QpTIZyxJwlu/Ens35arSUS5uVPQ9FspZhKKrS4cSWwLkjhgSHgz2XAIk61mTsNGidobxQQrFUQt8LUOGSf+mlAubnaihVZg2oqbc9gEWfobZaOw3uHFGxbBwhJpDFaoVxkmbN5TCiKUX2YoVttEa9zH40v825DWMkxx0M+sjn8ozwfbieaxZ5ZI/pmWm8UghhP5QKRcwUZwzwAZXJZnyDR3oQy/3iaQK6XLlQ4hq14ZER7RblQp4dyaDYCzTWQjEbSDRJccwcuhcwxXFXntLv9xBkGLtsguFfLOZCriF24J5o6hTg2AhKolTQdImd90qXILRGFGTTeMbhvJd+ZkbejxkPLQIYkUG1aT4h0+5DNbikaEoJUTRXo0C69CokEVrHe+xsIVeeZZtDYRrM3YEUyeQRZ5Lnfrn4UoT9FajNvir6OE5mF7Omnjyz0ivTJuB6L5EMY3Br1equ7foNddCk2i91tU53cXJ8gGp9CXmuM+rPkbyoTRST2Qx1c2kKjuFku1OAtuPsU9kS9UyLmJoU3XIaw7qadK9i6kk/WYj75D5ra102zmYCeNTU0r6pi71D0jyMbQy7HUSjPpKwy2DcQtRroneyjzFjkukIrJsZ+ENTXjes3592+iatp2AE5zwgwdWzzO867nV37+DuZYTRdx3Prw4Y6ALGl0yGC5XdvKDAnSnH+77o1L8pZBhetsh1QubiuOn57uX0DRBYeJdD32JXZhgqk0GT+wkc8zRRKr2f/HIRNOl479rf/8nPt+/c/WR1Z2vjWuvscNf3fGTo0vJQ6aB1QvMQJycgskyxihI39mypLPNd8333fi4m2S8uL+/kg8yq5djXOIh9Uo7uM3X/ZoJkApwz7dKK11zXXV2p1Xamb/9f/68MGGK3t5OlcTi46ljJmmUnDaUe8ip5uscUqNuJsLPVYSbLEDH1NnoiI/q6lwsuv/zywzn/1u2PFr3m++/lTv946dZmu/6bO8+iuvwktnf3ceCVzdr8MkBOuc+264Fvv/P7X/5ix7p9u7eYCyyTo3NzSzdQTi5g2pDlYaNRhC0CG/TorSZ2pQvF5G6e04wH/RdeeWPZrIvjjRtLQzu54bY/qRYOfodbm2f47WfPo3zhaezs7eMoeDSwc0CbmYyzavt2fIXTVAXKMMWHKSjzzBFewI05cBk36cqk0SY4c2pSjbjKwHNlKniQ8HQUR9XIncXYDiiTLmTcWQGZcujJPjft/3JVk9C6yj3Xfk3pJMlRZcyn7USg0kZuqLzPZckcowZbTVCN2ZbOx6Cc4LUpMAbcNQ2Fx4zXmyEY5neUp61Oox3ulQozShEnDjsd+qC2rDXXcpK6WU/sNV1X073OIBU+F8hmPXQC7qFjmlNTKHrE3PfCiIF3XJ9KJYSGwWBnELs0BC2RcAuzuN3xdIMLQQSHsfKwz/1yOuirdYNk0IT8Uy1NHWqjyVr9ESoVbexs5H+u6CDTImsEpCbl/jHTTGvI4113dE60mGGhNnEwx76UHzHNCUeIOk08Oefhyfki/nwc4GTAVJuyzheNVhPXN5kyV2oyl/ak8+HoYMhcf4wLy0WzpnyyFuSYVzIFVjFHNO5IEbel9vGxabv/M90ifB5yKI/ejgGBWUwORhw/7LZxMVdGO+EOwnePKpyOCJmfC/mUHbONEGzrZATf66KxnGdeZaNYYGbapznJlrSKhpyo18e4331Ytqhnif0yZTLTZSIzYkrdZ1/Pz6DTD1HJ91GmSUMlLY8oShzNgjfmnJhNKYg205hCj48HFGaj1sjymOcpE0f3lIkkOw15GB71ujxhfQmYSDC5SxHwSybfUsbyxNIFLpMxuoMRilYbtUIFhwiUt3yl6ORPtgRLNX9IbcQETrJdjwzR5e7eOcGY7NQfK6A85zO2gWyOYakfM+CEm/+DknqgMpTY4Rr1qwTTxfbOPWzsbeLVV1+lbEqPRmSsg16Ox0Uz2wMJumP8TDNOmU8OIEAhwchWwhnws8CQtB7utZl5OKjMk7kqDxRE1zk+4/rhgT7mYpuUND9LHxJp7S9Q0B0MmOeXqnMmey2XKygwrR4NO8jmhhj7zFSm63Iix2SwWhJmWbBWNB/SWwRLfWWR0gyPX+0Ok0emRUwQcwWXyaOL+sUC2js20ySp8OgSZ+aZun+C07MhLj77OMNODjc/vmkEP7G4gHptEU2eHxIeSs4XnkDllWyiAygQhoOIghgGDHsCR2+lST0mkt1OH7kO2SKDAYfM8BT1zEsrDBmtBzKNMDJvtGJIcWsQQz9743Us1Wf5JakN+7kVs2xOjg9x79Ob8J8rwefZ04yZSCKwFJAWmbyt0+GBgy5t0wtVZFp+BCLlGZw1h2iddZHxFYx50mGXmcUaVr73iumrH77hr0apUMFgBr0B8Nm/bmH/84CnbW5tHKezZ6Nex+vf+ibu0cmOLO4I58ypfVrfBGZ0WgkZWE9bPKMQlBQ3GigQcSJF+VwphyG/aXS7IVljO5XSt4ZsqaDMwBR+Q9OXQUZ/jSEwN0PPPsY//v5XkyAYo3N9aLg+nizU5vCDH76N/Ne/zRjH/pJiYVeMvc+br2ltnTVHSLjluAFTZrKmwKsi/TWJvpElPOb1OwO6eIxs6GnvlyLvm4784RJY58gfGWX4LmSYePONNZRn3uI03CupqHSlPvT4kN9DdvDhn/6AZwt1LDy1QuuYTw/r1tFRbzHrex+3TvrV/T2eyg1b6cKXcIUQE3ilPR8U+PodeqPxKF/O0Iz80QvLKyv3055+PLpBTFXFyP3TNjrctsoFnR1ExuSi0hbNqe8cnW4Lt456AFMjbu7NwHJX1Y9U95Z2Nvv8XGmtMd8yH3MlgUqZS320XgRUqYva2/c+33XHrfUgl7n8zHde3laPadm6/cFiFFvvseel25/v1G9+dhdZKhxSOX2eChX/aLYMT+TfeH4F87MVRI6//89x9noU2++8/eLKzn8AwsHfsQV73/kAAAAASUVORK5CYII="
+                        />Other Buildings</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="top-bar-section buildings-top-bar-actions">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <i class="uikon">search_left</i>
+                    </div>
+                    <input
+                      class="form-control"
+                      placeholder="Type to search..."
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="divider-vertical buildings-top-bar-mobile-hidden divider-margin"
+                ></div>
+                <div
+                  class="outer-events-handler dropdown btn-group select buildings-top-bar-mobile-hidden"
+                  position="bottomRight"
+                >
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    data-toggle="dropdown"
+                  >
+                    <span class="select-option-country-content"
+                      ><img
+                        alt="english"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAABA9JREFUaAXl2ltoVEcYB/D/ObuGeMM0CRW0DYIXfKhCn6IWtUr70idf7Et9EIooERUviRq1aNqgtFqwKdUuLdRejQUVRAVREw1q4iWJWW0uuJoasjG3NRs3u2vOnjP9vsVTNkuMm2T3YWcGhnNmzmHZ77czs3PmjIa4JIR4i6o+pPwO5QzKsic/BfiQco2maVZssJpdIBQnnRdT3kt5gl2v0LGJYl1LQDV2zFGcP881587ImXhz+eJ359oXFD2aFPdWAirj+Lm1oKW5+/LvtR1zDcPER8tmcZWqyUGBH6ZeVElAbt31R8Nnt+56F5qWhSPH7+D8ZY+qMHbcPM4e54Le2fmiABDR7kViKPv5Hk5faLFvVPW4hCxm6v2Bwbx4Addv9fjrTGN8tWrlOXokYg77d33ilBu/lLtVA4mNd7IeW4o/P3m2ET/+Wh9frUx5RBxWOHOxBUd/ugcajpRLb8RhkYtXPDh87DYsxYQSwmGgK1WtOPhdNUxTnSaUMA4DVVW3oeTbGzCMIY8gfEnKNCocFqip9eKLr6vwcpBn2nKnUeMwR92DTuw5eB3BUERqnTHhsMiDpm7sLq1EYMCQFmjMOCzS7PGh6MsK+PtfSgk0LhwWefxvH3aUVMD3PCwd0LhxWKStvR87DlxFV09QKqCk4LCItzOA7fuvwvssIA1Q0nBYpLs3SC2oAk+pJcmQkorDIL6+EAppDPK09qW9T9JxWIT/vXZ+VYnmR760BkoJDosEBgaxq/Qa3I3daQvkDD/zhVL17UNhA/tKKyJl+UZNdqZIq9miIzcn7HT6+yZBm5YSnwxY2GQ0OCdX9XyQdtNEzXEo+momFTKTEEGRVY95In0H5pTgZIHGG7MWeUjvOU/ScaaLIHZbdXgbKRvKUtHQh/3MpOLkiRfYJerALUeGlDSc+TS2FIp6TBTyrPEkBed90YMtogEZQq7l03HjLBUdWG/9Ax3yLbyPC+cT8RRrLHnfq48Z51PxCKusVhnG3dfGMGocjbrP56IJK632136oLBdGheMkmI2WG/miS5b4R4wjYZxMmNhm3cd7Ir2XIUbUiLuYEM5UmtQVEcxswRsv1UlvxMkWYRTT48AMDKij8irSEXEYpJgeB7Ih32uXRH5ppwPDL0JxF+KuxF1KxUST2pA+BYY3PvgFohd7RK2yMOxh6Y4nOi0tnIjFyUdX9AEyU8i/iyI27thzDVpdzskf2vTN5YXfLxS9T/jiStGOzaYbTsV2cA2FgenQHbT9+NUO9kWO4Ir5Zv/dVZYnN/ZGFc9pQ3bJtPJj1Rx7dHM2n4jVBVOea8Y31Gg2cFm9pHUQxrrsv13n7dj/x7Er/KsL5piIfEzlmZSH3aNs3yvJ0a9peJiVhUuayzVkJ8R/3QhoLDU0oyQAAAAASUVORK5CYII="
+                        class="select-option-flag"
+                      />Czech Republic</span
+                    >
+                  </button>
+                  <div class="dropdown-menu bottom-right">
+                    <button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="english"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAABA9JREFUaAXl2ltoVEcYB/D/ObuGeMM0CRW0DYIXfKhCn6IWtUr70idf7Et9EIooERUviRq1aNqgtFqwKdUuLdRejQUVRAVREw1q4iWJWW0uuJoasjG3NRs3u2vOnjP9vsVTNkuMm2T3YWcGhnNmzmHZ77czs3PmjIa4JIR4i6o+pPwO5QzKsic/BfiQco2maVZssJpdIBQnnRdT3kt5gl2v0LGJYl1LQDV2zFGcP881587ImXhz+eJ359oXFD2aFPdWAirj+Lm1oKW5+/LvtR1zDcPER8tmcZWqyUGBH6ZeVElAbt31R8Nnt+56F5qWhSPH7+D8ZY+qMHbcPM4e54Le2fmiABDR7kViKPv5Hk5faLFvVPW4hCxm6v2Bwbx4Addv9fjrTGN8tWrlOXokYg77d33ilBu/lLtVA4mNd7IeW4o/P3m2ET/+Wh9frUx5RBxWOHOxBUd/ugcajpRLb8RhkYtXPDh87DYsxYQSwmGgK1WtOPhdNUxTnSaUMA4DVVW3oeTbGzCMIY8gfEnKNCocFqip9eKLr6vwcpBn2nKnUeMwR92DTuw5eB3BUERqnTHhsMiDpm7sLq1EYMCQFmjMOCzS7PGh6MsK+PtfSgk0LhwWefxvH3aUVMD3PCwd0LhxWKStvR87DlxFV09QKqCk4LCItzOA7fuvwvssIA1Q0nBYpLs3SC2oAk+pJcmQkorDIL6+EAppDPK09qW9T9JxWIT/vXZ+VYnmR760BkoJDosEBgaxq/Qa3I3daQvkDD/zhVL17UNhA/tKKyJl+UZNdqZIq9miIzcn7HT6+yZBm5YSnwxY2GQ0OCdX9XyQdtNEzXEo+momFTKTEEGRVY95In0H5pTgZIHGG7MWeUjvOU/ScaaLIHZbdXgbKRvKUtHQh/3MpOLkiRfYJerALUeGlDSc+TS2FIp6TBTyrPEkBed90YMtogEZQq7l03HjLBUdWG/9Ax3yLbyPC+cT8RRrLHnfq48Z51PxCKusVhnG3dfGMGocjbrP56IJK632136oLBdGheMkmI2WG/miS5b4R4wjYZxMmNhm3cd7Ir2XIUbUiLuYEM5UmtQVEcxswRsv1UlvxMkWYRTT48AMDKij8irSEXEYpJgeB7Ih32uXRH5ppwPDL0JxF+KuxF1KxUST2pA+BYY3PvgFohd7RK2yMOxh6Y4nOi0tnIjFyUdX9AEyU8i/iyI27thzDVpdzskf2vTN5YXfLxS9T/jiStGOzaYbTsV2cA2FgenQHbT9+NUO9kWO4Ir5Zv/dVZYnN/ZGFc9pQ3bJtPJj1Rx7dHM2n4jVBVOea8Y31Gg2cFm9pHUQxrrsv13n7dj/x7Er/KsL5piIfEzlmZSH3aNs3yvJ0a9peJiVhUuayzVkJ8R/3QhoLDU0oyQAAAAASUVORK5CYII="
+                          class="select-option-flag"
+                        />Czech Republic</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="tuvalu"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAACX1JREFUaAXdW3tUVMcZ/927d3fZXXZ5P+SpICKKRuwjrUVNWmITPLE1KcakOTaN1vaYczSxMW3T1KOxJmmPUZPjaRsbc2xOY4/GqgGFI2rUKBEVNKgYwSiKICBZhF32Afu4nbl4b/cNa1B3nT+4M998M/PNj5nvNcDAR3nsl9sSeCtywbA62m3PiivgGUZWUpieM6qhLsUh4xyN6WNby05eb/IxHJNHx8ZnJ2tiUpsaEhT9Vvl5bWzVzpj0al+895rm5J1mrRLHKopz+jxlYVwJ+9fumBv3yJT1W0sbEk6dbWdd+2h973/mQF+yALK4WDjeXIlnFpV5smB8bjxW/34qmH0HYfpwm9BfU/hjrMqc5MUbMgQGRgLEHk7BLDtUnNMiyiUBULNua2VBTeWW3PrqpBUvT2EL8hNFniF/fQHDZWXiypj8Ic9xTxh5aHkec219qJ1aenG6KIMAzsflDfNG32wu4vttjHl7GZy7yrFyWSGCAcgfMLrlv4WBVYjrhfiXT3Q6UfrQnqZkKii7cGGNHA5+TdSrixn5uDGC8OaPS4MCKBAw+2tvoOLcjRAHxUU8ntfZbPY1lMJeMzU9/M+P6hJ2fXoFuldfRLAADQbM2/84ASfvsng4VHl+Tkk9r2B5B75L5f37h1/AJ0Cf+L9iQwGG3OVwLPKOr74az/IMHy9K7xOgbeSK3QJI5KPfSI3cyypR5Ut1DL1K9MSEKTDCNons2Sw4lnPddCCAXPmUCs7NXN9PwNB9MmBkspFF81eyRmuK68Zr6tqh1UXggXmPwn7hIpydetjqG8AQZ4B+WbUK9FiIfsxgwDhSouCMVbsuEfJ1lmG2M79Zd+x8kt2e5yktBeLnT4zH6BQNDG+sh+18o8TCsCx4YvNoEYG51m3H+x/VEeXrrWQuxmjQmig429IcoV6RMexc5sDu2s6pIzhJ7/gSmrf0wfTBFjgNRrduVqOG5lfPgonUuNE9G/+6YsNmPjCP55h73abgcAnnTqsMm4/dlixOkxnG9RsHHZtROAPILBiU724yPKhqxHHLgF/nb13OkpBsUxY+6K9fotvq6uE09kptWqEnRz5xnBvNV8MYFeuLfM9oMbJe/CF2B0quL4ONl/mVgzsek91jnzgp2hdHZpoOqclaWMsq0Xf0uBcLPTmyURlQzS5GR6cJV1sMXjyUcOpKj0/63SYmyAx4IaYCoxVtiOcM2DRiA5r74/FW15PodUZ4icN98nnzzd0t3ZmePaKDR4FxtUr2y1fBaiMhS0mCreESzFt2CEOjimdg+54G1NV7hwr9k9OAnATPJe56u9OhQ401C0WaOmHtUfIOvNs10ycwlEGKyl0lFYFxTTuIVkng4zho//gS5LnZQpMCxJdX4nUSrD4wPvho3nXtO12vvqVnbOCEK3W6b5TfJb3ACQQMQ3SMWBhVRNgAtDC6EjJmwPVI5nqwWv8kippXYMPNmUiU+b/ybuAEAqaiuk3ERfh2dVtQXtUK3WtLQ/oERbMmzIo8iWJNLeSMA+f6MlDR+y2SiGCxw/g9tNn9GwsJnEDA7D3Rjnfer3UDh/p6726qxZ6jLSED0PdVFzBWISXysD5xE3anr0a0zITfxe1EWdpq5Cpb3fYRqCGAMxgw6zbW+J0jVABiwKM48hTm6KqkK/RK5y+gd2gl2VfpS9DQlyq1B6uwBTmxas+cr6h8K092IBAw4uSDATR2RKTIeke+T+mOYn/GCjysPocZxBIdyngNz0R9hn6eIyEgg4PmfHxt1xHr4x3aBBKImzYxKcqXVdpXQ4E5GWisWx8FiJaZRAcZ/rxWMvNUheeNyMNZo13ovxM/thoKkadolUx0hWkytvRME3TMcv1cnLGOhIrpE3ybYNZnk86ejnD1Y4R8DAFm7Xsng87H+DtBGZe/DEam2+K18ApcIFfmUn8y7Le8Xur9UmBosfBKXLMF52txNy02o2FcfhSvUKB9RjGunujApoqL4FO9nebDZ9qRMXYcHCoVGhr0sKd586zdewk9LIOcknlIKC8Da7GgE/5ddEHyYfjxmTkPf7X8VJgpX9k8DDOSnE7hrsZ3iOVZPCyzhdEkz+oO49+G6X4lplG5ZMr9ct2HHWMU1/Fc1KdI4roD7s4tRRqQ8z7opIHnuqQPkMbpwRGHcFvqGlwlemhR+699xldhd3Kox6thrbf1q6KB55v6JwRg6ATUkX35xnM+gaH9YQcOjaiLNGeo7EMqS2NL3fh6HBpiuRSotWbDSdLovlIV4oCwuVY0czdSfgNztFXkN+9EDDlBV23xxMGbIO7F7Uv9mjxlC2Zrq1FlGYvG/hR0E2BofLWwbRGabInIVrQjgumHGUq3sWIjbMBptcXhldidRIkORNGztMexpH2BuA+3r441Y0PyRmQRMGl5O3EzAWcElnQsEEARmalPFKiEzbVqscdhr6lA2st+0yRcs/t+FzA41XjpxvMSL70+L3bMh9FJnpSCKGFzcuieYmVGLO98mnhnPCYrL3ttk1ohqkO6nRqSynKiyxGJI5ZxQsylZIIPX8LKCaSRN09Ogb/yfPQBmJxK0FgrjgBJC43Ko0jKggag9EQNtQhPM0NlDgU+CgzN2ZhJnFRn/X9681HNKUyIaMYjapIbJthRJ+8L0l/W+x1BbGqhbqeEjc6hm6Opzpkko/cUsVgqtk/K2xyz5mKC8grUhKYmVooq4kMkTfFNS8iBQzc4TV3vta+faT/HwYw/4SFNPek/j33pK0HzOLTQk3HckiuNqbbmBK18pcEulZAD5weqL/G07oiLiAPV7cYpKO+dLNHLb+VsRAJNY81rW4z57S/A6pSL5G/0DRlrVRDRhEXkwS2LvCUpGRv+m/oX1JFnk9e/niNt0E4ye2dJgpwqZk+1/Lebj0l8waRCpUE+KiEDzmmiQE9YckhGr0UQk25/bdcsN5EPWvKxpusnAi2YRLnbJEE0QgYcKvNl4tLTK2HgVYKr7xn31FoGHhEp73CdDjqX78IYSQaaJdpv4MHLN9Pdo9JrM69tCdrt0cJLwt1b2XslluEbmR/tb4mzGs30xW54tJj3OmFHIfqs7ujsMZPYA0VpehbMe2G3gzskMPlbQAfDcQvp9IIpz0sfvZQQD9+h9cJqWhKgrDzyeNYJCZyN32ZsarV2JsMwbxFif1jtZpiEJVepjZHh8arZY1aJU3q6C/jhnsuZ/TbndBL5TuSdSBIZ78cv+aNQ8p9S0JO91UbKUUr+rcjgus//ASEZAnOjgjcCAAAAAElFTkSuQmCC"
+                          class="select-option-flag"
+                        />Tuvalu</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="norway"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAAA2hJREFUaAXtm09IFFEcx3/v7ewfd2t3XUW0FOuQUJeKjKAi+oN4kA4dNOvQIUPFQ9Cto3ToEhRhQVogBIFiRHQyiNSDdihLyqIOSYcsRW12S511Zmd+vVlYsdj9JbniLvMeLPv4fd/+5vf7zO+92Z23wyBNw/p2T9Q9U+YywZtG/sOkHDtUxLcWb7aNb79b4WnNDFRFFLUyzBZtGx//PBMfG1+w+7nYXIzN+80j06yvwfw7PmWl4dfptp2GlbimwmQNGuCxVooZ+p4dFeA9fjipDne9gv4XE3CpZT9UHd2etM1//QaGpWf49MabDRHCEjyLqQ3NfS6f+3Lw/u25VFQ81RHiRR2N1whYhwCelN0J7yLnkIV4wdCM8Wh9S00q5yScuYbWWiHeBARfSnDmO5aaDB/ONbZV2PlzrG/bBGjecyaMNFkjBpll3E3CUZl5UnTK0wxzrAkRatXG1m1iWuEex1KgEjdhL2cAEWqMUzUGGOFiIRZ8ZEtHYPlSnk50uk3CISpAwpFwCAKEJCtHwiEIEJKsHAmHIEBIsnIkHIIAIcnKIeAovLTEB2v4dcUK6PtjLBQEXlZChJCbEjPRpwSazla7d+9atwgDZ04B2K88a/rgSLWcVsRJU37MG67E1DwxZPXSgmbfywdQY3GYzJLP1R89uyPdGrrZ1StP1aEP0XB2Xee/t8Z9wWEl7HeZ5WXJPbk1Z6RG42BXT2HIBwG/e83+NtJBwMN10Mfef8QstRudL7G2sRf7Byay5HHj3CwNDHfLBZkoT8WKxTTz2zQxhJZYWHyP8RdkHGRFY4CL8Yx6rgq4sKgpC7e6R0WA/709E2g9t7xXni7RxZ7HoD8fTifltM0FfFROK+IUSTgSDkGAkGTlSDgEAUKSlSPhEAQISVaOhEMQICRZORIOQYCQOGMsQeiOlRCYycV/jqccS4BI3AKc4mLRGSLGOFISO1V6xOMZ4eHezkExtQYcSSFj0uw6e9Dx015zkHF+HoBlZwsi4wHzQxA8xgtLve12tMlLeWHPnS+ilA4yYG/yI4X1ipI9cnv5CdbRsWQfYfmpmUhf1ztsbj6gRnkToFUnKqkSGf7zkSLU4kXW9Gxy+yKkmK4txX5eoGsJYRNrvfCSMGfFdnPOVqUoCBEbfmIIPYV9XU/smFPtN/HkBP2vciyMAAAAAElFTkSuQmCC"
+                          class="select-option-flag"
+                        />Norway</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="container-horizontal contentContainer">
+              <div class="scroll-area buildings-list-grid mapView">
+                <div class="buildings-list-grid-header">
+                  <h1 class="buildings-list-grid-headline">45 Buildings</h1>
+                  <div class="buildings-list-grid-view-switch-wrapper">
+                    <i class="uikon buildings-list-grid-view-switch-icon"
+                      >view_list</i
+                    >
+                    <div class="divider-vertical"></div>
+                    <i class="uikon buildings-list-grid-view-switch-icon active"
+                      >view_grid</i
+                    >
+                  </div>
+                </div>
+                <div class="shopping-grid">
+                  <a class="shopping-card-item" href="/buildings/listing/1"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b19.1bbfed41.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Bauhaus Archive</h2>
+                    <div class="shopping-card-text">
+                      7246 Woodland Rd.<br />Waukesha, WI 53186
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >906 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >36 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£75/sqm</div>
+                    </div></a
+                  ><a class="shopping-card-item" href="/buildings/listing/2"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b08.417a9467.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Lotus Temple</h2>
+                    <div class="shopping-card-text">
+                      164 S. Carson Court<br />Newport News, VA 23601
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >876 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >20 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£65/sqm</div>
+                    </div></a
+                  ><a
+                    class="shopping-card-item active"
+                    href="/buildings/listing/3"
+                    aria-current="page"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b05.d40af9fd.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Dome of the Rock</h2>
+                    <div class="shopping-card-text">
+                      123 Johnson Court<br />Roy, UT 84067
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >564 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >46 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£96/sqm</div>
+                    </div></a
+                  ><a class="shopping-card-item" href="/buildings/listing/4"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b02.29a6afe5.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Lloyd's Building</h2>
+                    <div class="shopping-card-text">
+                      36 Squaw Creek Dr.<br />Harleysville, PA 19438
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >466 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >120 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£120/sqm</div>
+                    </div></a
+                  ><a class="shopping-card-item" href="/buildings/listing/5"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b03.343ac0b0.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Space Needle</h2>
+                    <div class="shopping-card-text">
+                      9117 Brickyard Street<br />De Pere, WI 54115
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >790 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >100 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£230/sqm</div>
+                    </div></a
+                  ><a class="shopping-card-item" href="/buildings/listing/6"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b10.6f1d6bd4.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Fallingwater</h2>
+                    <div class="shopping-card-text">
+                      329 Squaw Creek Rd.<br />Greensburg, PA 15601
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >865 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >125 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£59/sqm</div>
+                    </div></a
+                  ><a class="shopping-card-item" href="/buildings/listing/7"
+                    ><div class="shopping-card-image-container">
+                      <div
+                        class="shopping-card-image"
+                        style="background-image:url(/static/media/b09.090c11b9.jpg)"
+                      ></div>
+                    </div>
+                    <h2 class="shopping-card-title">Chrysler Building</h2>
+                    <div class="shopping-card-text">
+                      7202 Snake Hill Court<br />Bethel Park, PA 15602
+                      <div class="shopping-card-extra">
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >profile_round</i
+                          >865 Users
+                        </div>
+                        <div class="shopping-card-extra-item">
+                          <i class="uikon shopping-card-extra-icon"
+                            >shopping_bag</i
+                          >125 Offices
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shopping-card-footer">
+                      <div class="shopping-card-status">For Rent</div>
+                      <div class="shopping-card-price">£59/sqm</div>
+                    </div></a
+                  >
+                </div>
+              </div>
+              <div class="scroll-area buildings-listing-detail mapView">
+                <div
+                  class="buildings-listing-detail-cover-image"
+                  style="background-image:url(/static/media/b05.d40af9fd.jpg)"
+                ></div>
+                <div class="buildings-listing-detail-content">
+                  <div class="buildings-listing-detail-content-main">
+                    <span class="content-title">Luxury Offices</span>
+                    <h1 class="buildings-listing-detail-name">
+                      Dome of the Rock
+                    </h1>
+                    <p>164 S. Carson Court Newport News, VA 23601</p>
+                    <p class="buildings-listing-detail-description">
+                      Each unit will be constructed to a high standard and will
+                      benefit from minimum 10m eaves, a mix of dock and level
+                      loading doors and integral office accommodation, as well
+                      as generous loading yards.
+                    </p>
+                    <p class="buildings-listing-detail-description">
+                      The site is situated on Coldharbour Lane which is located
+                      to the south of the A13 dual carriageway in turn providing
+                      swift access proving to Junction 31 of motorway M25.
+                    </p>
+                    <div class="buildings-listing-detail-search-reviews">
+                      <span class="buildings-listing-detail-search-totals"
+                        >165 Ratings</span
+                      >
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input
+                            class="form-control"
+                            placeholder="Search Ratings"
+                            type="text"
+                          />
+                          <div class="input-group-append">
+                            <i class="uikon">search_left</i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="buildings-listing-detail-rating-summary">
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Accuracy</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i>
+                        </div>
+                      </div>
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Location</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon">star</i>
+                        </div>
+                      </div>
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Activity</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon">star</i>
+                        </div>
+                      </div>
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Noise</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon">star</i><i class="uikon">star</i>
+                        </div>
+                      </div>
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Cleanliness</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon">star</i>
+                        </div>
+                      </div>
+                      <div class="buildings-listing-detail-rating-summary-item">
+                        <span
+                          class="buildings-listing-detail-rating-summary-attr"
+                          >Value</span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="buildings-listing-detail-review">
+                      <div class="buildings-listing-detail-review-header">
+                        <span class="avatar"
+                          ><span class="avatar-image-wrapper"
+                            ><img
+                              alt=""
+                              src="/static/media/a21.3c96e570.jpg"
+                              class="avatar-image"/></span
+                          ><span class="avatar-content"
+                            ><span class="avatar-name">Natasha Special</span
+                            ><span class="avatar-text-bottom"
+                              >17th October 2018</span
+                            ></span
+                          ></span
+                        >
+                        <div class="star-rating">
+                          <i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon star-rating-fill">star_fill</i
+                          ><i class="uikon">star</i>
+                        </div>
+                      </div>
+                      <p>
+                        You are empowered to make decisions and choose your own
+                        goals/tasks. Every day you meet so many amazing
+                        entrepreneurs as well as continuously build these
+                        relationships. Inspiring and fun meetings, all-hands &
+                        trips (Summer Camp & Summit). Support system! Everyone
+                        cares for your well-being and become family.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="buildings-listing-detail-content-misc">
+                    <span class="content-title">Property Features</span>
+                    <table class="buildings-listing-detail-amenities">
+                      <tbody>
+                        <tr>
+                          <td><i class="uikon">building</i></td>
+                          <td>Property Type</td>
+                          <td>Open Space</td>
+                        </tr>
+                        <tr>
+                          <td><i class="uikon">ruler</i></td>
+                          <td>Office Size</td>
+                          <td>1400 m2</td>
+                        </tr>
+                        <tr>
+                          <td><i class="uikon">profile_round</i></td>
+                          <td>Suitable for</td>
+                          <td>15 - 25 people</td>
+                        </tr>
+                        <tr>
+                          <td><i class="uikon">tap_click_force_touch</i></td>
+                          <td>Meeting rooms</td>
+                          <td>2</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <button
+                      class="btn btn-transparent btn-block"
+                      type="button"
+                      role="button"
+                    >
+                      <i class="uikon mr">building_plan</i>View a Floor Plan
+                    </button>
+                    <div class="buildings-listing-detail-photos">
+                      <span class="content-title">All Property Photos</span>
+                      <div class="buildings-listing-detail-gallery">
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b20.b134036c.jpg)"
+                        ></div>
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b21.1238228c.jpg)"
+                        ></div>
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b22.a6e56b23.jpg)"
+                        ></div>
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b23.d6b7727a.jpg)"
+                        ></div>
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b24.2cc8695d.jpg)"
+                        ></div>
+                        <div
+                          class="buildings-listing-detail-gallery-image"
+                          style="background-image:url(/static/media/b25.ff66e5a0.jpg)"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+  </body>
+</html>

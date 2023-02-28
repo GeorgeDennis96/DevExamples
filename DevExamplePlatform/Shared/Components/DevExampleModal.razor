@@ -1,0 +1,50 @@
+﻿
+
+<div class="modal fade @CustomClass" id="@Id" tabindex="-1" role="dialog" aria-labelledby="@Id" aria-hidden="true" style="">
+    <div class="modal-dialog" role="document" style="max-width:@MaxWidth; min-width: fit-content;">
+        <div class="modal-content" style="@ModalContentStyle">
+            <div class="modal-header">
+                @Header
+                <h5 class="modal-title" id="@Id">@Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @Body
+            </div>
+            <div class="modal-footer">
+                @Footer
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code{
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string ModalContentStyle { get; set; }
+
+    [Parameter]
+    public string CustomClass { get; set; }
+
+    [Parameter]
+    public string MaxWidth { get; set; } = "";
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+    [Parameter]
+    public RenderFragment Body { get; set; }
+    [Parameter]
+    public RenderFragment Footer { get; set; }
+
+
+
+}

@@ -1,0 +1,142 @@
+﻿@page "/admin/stripe/product/management"
+@using DevExample.Platform.Services
+@using Stripe;
+@using DevExample.Private.Models;
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Stripe Products">
+    <AuthorizeView>
+        <Authorized>
+            <div class="row-12">
+                <div class="col-md-12">
+                    @if (StripeProducts != null)
+                    {
+                        if (StripeProducts != null && StripeProducts.Any())
+                        {
+                            <div class="float-right p-3">
+                                <button type="button" class="btn btn-outline-info" @onclick="GoToCreateProduct">Create Product</button>
+                            </div>
+                            <MudTable Items="@StripeProducts" Style="box-shadow:none;" SortLabel="Sort By" T="Product" Loading="IsContentLoading" Dense="true" RowsPerPage="10" Bordered="true" Filter="new Func<Stripe.Product,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                                <ToolBarContent>
+                                    <MudSpacer />
+                                    <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                </ToolBarContent>
+                                <HeaderContent>
+                                    <MudTh>ID</MudTh>
+                                    <MudTh>Product Name</MudTh>
+                                    <MudTh>Image</MudTh>
+                                    <MudTh>Description</MudTh>
+                                    <MudTh>Prices</MudTh>
+                                    <MudTh>Created On</MudTh>
+                                    <MudTh>Active</MudTh>
+                                    <MudTh>Manage</MudTh>
+                                </HeaderContent>
+                                <RowTemplate Context="tableContext">
+                                    <MudTd Style="padding-right:8px;" DataLabel="ID"><MudTooltip Text="Copy Product ID"><MudIconButton Size="Size.Small" Class="float-left border-0" Icon="@Icons.TwoTone.Numbers" OnClick="@(() => CopyText(tableContext.Id))"></MudIconButton></MudTooltip></MudTd>
+                                    <MudTd DataLabel="PName">@tableContext.Name</MudTd>
+                                    <MudTd Style="width: 60px" DataLabel="Image" Class="text-center p-0 pl-5 pr-5 pt-5 pb-5">
+                                        @if (tableContext.Images.FirstOrDefault() != null)
+                                        {
+                                            <div class="text-center">
+                                                <img src="@tableContext.Images[0]"  style="vertical-align:middle;" width="50px" class="img-fluid" alt="Responsive image">
+                                            </div>
+                                        }
+                                    </MudTd>
+                                    <MudTd DataLabel="Description">@tableContext.Description</MudTd>
+                                    <MudTd DataLabel="Prices">
+                                        @{
+                                            var prices = GetProductPrice(tableContext.Id);
+                                        }
+                                        @foreach (var price in prices)
+                                        {
+                                            var amount = price.UnitAmountDecimal / 100;
+
+                                            <a href="/admin/stripe/product/management/price/@price.Id" class="badge badge-light ml-2">£@amount</a>
+                                        }
+                                    </MudTd>
+                                    <MudTd DataLabel="Created On">@tableContext.Created</MudTd>
+                                    <MudTd DataLabel="Active">@tableContext.Active</MudTd>
+                                    <MudTd DataLabel="Manage"><button type="button" class="btn btn-primary" @onclick="@(() => GoToProduct(tableContext.Id))">View</button></MudTd>
+                                </RowTemplate>
+                                <PagerContent>
+                                    <MudTablePager />
+                                </PagerContent>
+                            </MudTable>
+                        }
+                    }
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+    private AccountModel DevExampleAccount = new AccountModel();
+    private List<Product> StripeProducts = new List<Product>();
+
+    private string searchString1 = "";
+    private Product selectedItem1 = null;
+    private bool IsContentLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var nameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        DevExampleAccount = Services.AccountService.Instance.GetAccount(nameIdentifier);
+        GetAllProducts();
+        IsContentLoading = false;
+    }
+
+    public void GetAllProducts()
+    {
+        StripeProducts = PaymentService.Instance.GetAllProducts();
+    }
+
+    public AccountModel GetAccount(string userNameIdentifier)
+    {
+        var acc = Services.AccountService.Instance.GetAccount(userNameIdentifier);
+
+        return acc;
+    }
+
+    private void GoToProduct(string productId)
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management/" + productId);
+    }
+
+    private List<Price> GetProductPrice(string productId)
+    {
+        var prices = PaymentService.Instance.GetProductPrices(productId);
+        return prices;
+    }
+
+    private void GoToCreateProduct()
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management/create", true);
+    }
+
+    private async Task CopyText(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        Snackbar.Add($"ID: {text} copied to clipboard!", Severity.Success);
+    }
+
+    private bool FilterFunc1(Product product) => FilterFunc(product, searchString1);
+
+    private bool FilterFunc(Product product, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.Id.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+}

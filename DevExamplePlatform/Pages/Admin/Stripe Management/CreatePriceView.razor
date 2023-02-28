@@ -1,0 +1,251 @@
+﻿@page "/admin/stripe/price/management/create/{productid}"
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+@using DevExample.Platform.Shared
+@using DevExample.Private.Models.Stripe
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Stripe Price Create">
+    <AuthorizeView>
+        <Authorized>
+            <form>
+                <div class="form-group">
+                    <div class="form-group">
+                        <h5>Nickname:</h5>
+                        <div>
+                            <input type="text" class="form-control w-md-25 w-sm-50" placeholder="Nickname" @bind="PriceNickname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Product:</h5>
+                        <div>
+                            <input type="text" readonly class="form-control w-md-25 w-sm-50" st @bind="productid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Usage Type:</h5>
+                        <div>
+                            <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedPriceType" ItemList="TypeOfPrice" @ref="PriceType" Class="form-control w-md-25 w-sm-50" Id="pricetype" Width="100%" TopMargin="0px"></DevExampleDropdown>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Currency Type:</h5>
+                        <div>
+                            <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedCurrency" ItemList="Currencies" @ref="CurrencyDropdown" Class="form-control w-md-25 w-sm-50" Id="currencies" Width="100%" TopMargin="0px"></DevExampleDropdown>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Unit Amount:</h5>
+                        <div>
+                            <input type="number" class="form-control w-md-25 w-sm-50" placeholder="Unit Amount" min="0" max="99999999" @bind-value="@PriceUnitAmount">
+                        </div>
+                    </div>
+                </div>
+                @if (PriceType != null)
+                {
+                    if (PriceType.SelectedValue == "recurring")
+                    {
+                        <div class="form-group">
+                            <h5>Interval</h5>
+                            <div>
+                                <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedInterval" ItemList="Intervals" @ref="IntervalsDropdown" Class="form-control w-md-25 w-sm-50" Id="intervals" Width="100%" TopMargin="0px"></DevExampleDropdown>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Interval Count</h5>
+                            <div>
+                                <input type="number" class="form-control w-50" placeholder="Interval Count" @bind="IntervalCount">
+                            </div>
+                        </div>
+                    }
+                    if (PriceType.SelectedValue == "metered")
+                    {
+                        <div class="form-group">
+                            <h5>Aggregate Usage:</h5>
+                            <div>
+                                <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedAggregateUsages" ItemList="AggregateUsages" @ref="DropdownAggregateUsages" Class="form-control w-md-25 w-sm-50" Id="AggregateUsages" Width="100%" TopMargin="0px"></DevExampleDropdown>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Interval:</h5>
+                            <div>
+                                <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedInterval" ItemList="Intervals" @ref="IntervalsDropdown" Class="form-control w-md-25 w-sm-50" Id="intervals" Width="100%" TopMargin="0px"></DevExampleDropdown>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Interval Count:</h5>
+                            <div>
+                                <input type="number" class="form-control w-md-25 w-sm-50" placeholder="Interval Count" @bind="IntervalCount">
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" @bind="@IsDefaultPrice">
+                        <label class="form-check-label" for="inlineCheckbox1">Default Price</label>
+                    </div>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-info float-left" style="width:150px" @onclick="GoBack">Back</button>
+            <button type="submit" class="btn btn-outline-info float-right" style="width:150px" @onclick="Create">Create</button>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+    [Parameter]
+    public string productid { get; set; }
+
+    public List<string> ProductIds = new List<string>();
+
+    public DevExampleDropdown CurrencyDropdown { get; set; }
+    public List<DevExampleDropdown.SelectItem> Currencies = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedCurrency { get; set; } = "GBP";
+
+    public DevExampleDropdown PriceType { get; set; }
+    public List<DevExampleDropdown.SelectItem> TypeOfPrice = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedPriceType { get; set; }
+
+    public DevExampleDropdown IntervalsDropdown { get; set; }
+    public List<DevExampleDropdown.SelectItem> Intervals = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedInterval { get; set; } = "Day";
+    public string IntervalCount { get; set; } = "1";
+
+    //public DevExampleDropdown Products { get; set; }
+    //public List<DevExampleDropdown.SelectItem> DropdownProductIDs = new List<DevExampleDropdown.SelectItem>();
+    //public string SelectedProductId { get; set; }
+
+    public DevExampleDropdown DropdownAggregateUsages { get; set; }
+    public List<DevExampleDropdown.SelectItem> AggregateUsages = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedAggregateUsages { get; set; }
+
+    private string PriceNickname { get; set; }
+    private long PriceUnitAmount { get; set; }
+    private bool IsDefaultPrice { get; set; } = false;
+
+
+    private AccountModel DevExampleAccount = new AccountModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        DevExampleAccount = Services.AccountService.Instance.GetAccount(NameIdentifier);
+
+        //GetProductIDs();
+
+        GetCurrency();
+        GetPriceTypes();
+        GetIntervals();
+        GetAggregateUsages();
+        //SelectedProductId = productid;
+
+        //if (Products != null)
+        //{
+        //    Products.SetSelectedValue(SelectedProductId);           
+        //}
+
+    }
+
+    public void Create()
+    {
+        StripePriceModel priceModel = new StripePriceModel();
+
+        if (productid != null)
+        {
+            priceModel.Nickname = PriceNickname;
+            priceModel.Product_Id = productid;
+            if (PriceType.GetSelectedValue() == "recurring")
+            {
+                priceModel.Interval = SelectedInterval;
+                priceModel.Interval_Count = IntervalCount;
+                priceModel.Currency = SelectedCurrency;
+                priceModel.Active = true;
+                priceModel.Type = "recurring";
+                priceModel.Unit_Amount = PriceUnitAmount;
+                priceModel.Is_Default_Price = IsDefaultPrice;
+            }
+            else if (PriceType.GetSelectedValue() == "one_time")
+            {
+                priceModel.Currency = SelectedCurrency;
+                priceModel.Active = true;
+                priceModel.Type = "one_time";
+                priceModel.Unit_Amount = PriceUnitAmount;
+                priceModel.Is_Default_Price = IsDefaultPrice;
+            }
+            else if (PriceType.GetSelectedValue() == "metered")
+            {
+                priceModel.Currency = SelectedCurrency;
+                priceModel.Active = true;
+                priceModel.Type = "metered";
+                priceModel.Is_Default_Price = IsDefaultPrice;
+                priceModel.Unit_Amount = PriceUnitAmount;
+                priceModel.Interval = SelectedInterval;
+                priceModel.Interval_Count = IntervalCount;
+                priceModel.Aggregate_Usage = DropdownAggregateUsages.GetSelectedValue();
+            }
+
+            //var result = Services.PaymentService.Instance.CreateStripePrice(priceModel);
+            //if (result == "Success")
+            //{
+            //    Snackbar.Add("Price added to Product: " + productid, Severity.Success);
+            //    GoBack();
+            //}
+            //else
+            //{
+            //    Snackbar.Add(result);
+            //}
+        }
+    }
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management");
+    }
+
+    //public void GetProductIDs()
+    //{
+    //    ProductIds = Services.PaymentService.Instance.GetAllProductIDs(100);
+
+    //    foreach (var id in ProductIds)
+    //    {
+    //        DropdownProductIDs.Add(new DevExampleDropdown.SelectItem() { Name = id, Value = id });
+    //    }
+    //}
+
+    private void GetPriceTypes()
+    {
+        TypeOfPrice.Add(new DevExampleDropdown.SelectItem() { Name = "One Time", Value = "one_time" });
+        TypeOfPrice.Add(new DevExampleDropdown.SelectItem() { Name = "Recurring", Value = "recurring" });
+        TypeOfPrice.Add(new DevExampleDropdown.SelectItem() { Name = "Metered", Value = "metered" });
+    }
+
+    private void GetAggregateUsages()
+    {
+        AggregateUsages.Add(new DevExampleDropdown.SelectItem() { Name = "Sum of usage values during period", Value = "sum" });
+        AggregateUsages.Add(new DevExampleDropdown.SelectItem() { Name = "Most recent value during period", Value = "last_during_period" });
+        AggregateUsages.Add(new DevExampleDropdown.SelectItem() { Name = "Most recent usage value", Value = "last_ever" });
+        AggregateUsages.Add(new DevExampleDropdown.SelectItem() { Name = "Maximum usage value during period", Value = "max" });
+    }
+
+    private void GetIntervals()
+    {
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Day", Value = "day" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Week", Value = "week" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Month", Value = "month" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Year", Value = "year" });
+    }
+
+    private void GetCurrency()
+    {
+        Currencies.Add(new DevExampleDropdown.SelectItem() { Name = "GBP - £", Value = "gbp" });
+        Currencies.Add(new DevExampleDropdown.SelectItem() { Name = "USD - $", Value = "usd" });
+    }
+}

@@ -1,0 +1,94 @@
+﻿@page "/demo/payment/subscription"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models;
+@using Stripe
+@inject NavigationManager NavManager
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Subscription (Demo)">
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var nameIdentifier = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+                GetAccount(nameIdentifier);
+            }
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <MudCard Style="border-color:#1ebccd;">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">Product One - Price : £12.00 / Month</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => CreateCheckout("price_1LcWCvGie02Aino59xOW8GAM"))">Subscribe</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </div>
+                    <div class="col-4">
+                        <MudCard Style="border-color:#1ebccd;">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">Product One - Price : £20.99 / Month</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => CreateCheckout("price_1LcWCvGie02Aino5aRtwaUqS"))">Subscribe</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </div>
+                    <div class="col-4">
+                        <MudCard Style="border-color:#1ebccd;">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">Product Two - Price : £9.99 / Month</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => CreateCheckout("price_1LdBkDGie02Aino5nERPJi1z"))">Subscribe</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </div>
+
+                                        <div class="col-4">
+                        <MudCard Style="border-color:#1ebccd;">
+                            <MudCardContent>
+                                <MudText Typo="Typo.h5">Test - Price : £0 / Month</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@(() => CreateCheckout("price_1LlEkOGie02Aino5N2EmWKBS"))">Subscribe</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </div>
+                </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+
+@code {
+
+    private AccountModel DevExampleAccount { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    public void CreateCheckout(string priceID)
+    {
+        //var result = PaymentService.Instance.CreateCheckout(priceID, DevExampleAccount.nameIdentifier);
+        //if (result != "Failed")
+        //{
+        //    NavManager.NavigateTo(result, true);
+        //}
+    }
+
+    private void GetAccount(string nameIdentifier)
+    {
+        DevExampleAccount = DevExample.Platform.Services.AccountService.Instance.GetAccount(nameIdentifier);
+    }
+}

@@ -1,0 +1,650 @@
+﻿@page "/account/{tabtostart}"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models;
+@using DevExample.Platform;
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer>
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var nickname = "";
+                var email = "";
+                var emailVerified = false;
+                var AuthID = "";
+                foreach (var claim in @context.User.Claims)
+                {
+                    @if (claim.Type == "picture")
+                    {
+                        if (DevExampleAccount != null)
+                        {
+                            if (!DevExampleAccount.isDefaultProfilePicture)
+                            {
+                                image = DevExampleAccount.profilePictureSource.Data;
+                            }
+                            else
+                            {
+                                image = claim.Value;
+                            }
+                        }
+                    }
+                    if (claim.Type == "nickname")
+                    {
+                        nickname = claim.Value;
+                    }
+                    if (claim.Type == $"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")
+                    {
+                        email = claim.Value;
+                    }
+                    if (claim.Type == "email_verified")
+                    {
+                        emailVerified = bool.Parse(claim.Value);
+                    }
+                    if (claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
+                    {
+                        AuthID = claim.Value;
+                    }
+                }
+            }
+
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="hk-sec-title mb-3">
+                        Account Information
+                        <br />
+                        <span class="pt-0 pb-1 h6 small">
+                            Useful information relating to your DevExample account.
+                        </span>
+                    </h5>
+                </div>
+            </div>
+
+            @if (tabtostart != null)
+            {
+                <TabControl @ref="@TabController" DefaultTab="@tabtostart">
+                    <TabTemplate Context="tabContext">
+                        @tabContext.TabText
+                    </TabTemplate>
+                    <ChildContent>
+                        <TabPage TabText="General">
+                            <div class="card-body media align-items-center pt-0">
+                                <MudAvatar Style="height:100px; width:100px; font-size:3rem;" Color="Color.Primary" Image="@image"></MudAvatar>
+                                <div class="media-body ml-4">
+                                    <InputFile id="fileInput1" OnChange="UploadFile" hidden accept=".jpg, .jpeg, .png, .gif" />
+                                    <label class="btn btn-outline-info p-0 m-0" style="cursor: pointer; align-items: center; width: 200px;" for="fileInput1">Change Profile Picture</label>
+                                    <button type="button" style="width: 60px;" class="btn btn-outline-info p-0 m-0" onclick="@(() => SetDefaultProfilePicture(DevExampleAccount.nameIdentifier))">Reset</button>
+                                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                </div>
+                            </div>
+                            <div class="pt-0 w-sm-100 w-md-100 w-lg-50">
+                                <div class="form-group">
+                                    <label class="form-label">Nickname</label>
+                                    <input type="text" disabled class="form-control mb-1" value="@nickname">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Auth</label>
+                                    <input type="text" disabled class="form-control mb-1" value="@AuthID">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="text" class="form-control mb-1" value="@email">
+                                    @if (emailVerified == false)
+                                    {
+                                        <div class="alert alert-warning mt-3">
+                                            Your email is not confirmed. Please check your inbox.<br>
+                                            <a href="javascript:void(0)">Resend confirmation</a>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Change Password">
+                            <div class="col-sm-12 col-md-12 col-lg-6 pl-0 pr-0">
+                                <div class="form-group">
+                                    <label class="form-label">Current password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Repeat new password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Padding="0" Margin="0" Align="DevExampleButton.Alignment.Right" CustomStyle="padding:6px; margin-left:10px;" Text="Save Changes" CustomClass="mt-10"></DevExampleButton>
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Info">
+                            <div class="col-sm-12 col-md-12 col-lg-6 pr-0 pl-0">
+                                <div class="form-group">
+                                    <label class="form-label">Bio</label>
+                                    <textarea class="form-control" rows="5">@bio</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Date of birth</label>
+                                    <input type="text" class="form-control" value="Not Given">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <select class="custom-select">
+                                        <option selected>UK</option>
+                                        <option>USA</option>
+                                        <option>Canada</option>
+                                        <option>Germany</option>
+                                        <option>France</option>
+                                    </select>
+                                </div>
+                                <h6 class="mb-4">Contacts</h6>
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" value="+0 (000) 000 0000">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Website</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Padding="0" Margin="0" Align="DevExampleButton.Alignment.Right" CustomStyle="padding:6px; margin-left:10px;" Text="Save Changes" CustomClass="mt-10"></DevExampleButton>
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Social Links">
+                            <div class="col-sm-12 col-md-12 col-lg-6 pr-0 pl-0">
+                                <div class="form-group">
+                                    <label class="form-label">Twitter</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Facebook</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Google+</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">LinkedIn</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Instagram</label>
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                                <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Padding="0" Margin="0" Align="DevExampleButton.Alignment.Right" CustomStyle="padding:6px; margin-left:10px;" Text="Save Changes" CustomClass="mt-10"></DevExampleButton>
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Connections">
+                            <div class="col-12">
+                                <div class="card-body pt-0">
+                                    <button type="button" class="btn btn-twitter">Connect to <strong>Twitter</strong></button>
+                                </div>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-facebook">Connect to <strong>Facebook</strong></button>
+                                </div>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-instagram">Connect to <strong>Instagram</strong></button>
+                                </div>
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Subscriptions">
+                            <div class="pt-0">
+                                @if (UserSubscriptions != null)
+                                {
+
+                                <MudTable Items="@UserSubscriptions" Style="box-shadow: none;" SortLabel="Sort By" T="Stripe.Subscription" Dense="true" Bordered="true" Filter="new Func<Stripe.Subscription,bool>(FilteSubscriptionFunc)" @bind-SelectedItem="selectedSubscription">
+                                        <ToolBarContent>
+                                            <MudTextField @bind-Value="SubscriptionSearchString" Placeholder="Search" InputMode="InputMode.search" Style="margin-top:0px;" Adornment="Adornment.Start" Immediate="true" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                        </ToolBarContent>
+                                        <HeaderContent>
+                                            <MudTh>Name</MudTh>
+                                            <MudTh>Price</MudTh>
+                                            <MudTh><MudTableSortLabel SortBy="new Func<Stripe.Subscription, object>(x=>x.Created)">Created</MudTableSortLabel></MudTh>
+                                            <MudTh>Status</MudTh>
+                                            <MudTh>Period Start Date</MudTh>
+                                            <MudTh>Period End Date</MudTh>
+                                            <MudTh>Units Used</MudTh>
+                                            <MudTh>Total Cost</MudTh>
+                                            <MudTh></MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate Context="tableContext">
+                                            @{
+                                                string productName = GetProductNameFromStored(tableContext.Items.Data[0].Price.ProductId).GetAwaiter().GetResult();
+                                            }
+                                            <MudTd Style="padding-right:8px;" DataLabel="Name">@productName</MudTd>
+                                            @{
+                                                string unitAmount;
+                                                var calc = tableContext.Items.Data[0].Price.UnitAmountDecimal / 100;
+                                                if(tableContext.Items.Data[0].Price.Recurring.UsageType == "metered")
+                                                {
+                                                    unitAmount = calc.ToString() + " Per Unit";
+                                                }
+                                                else
+                                                {
+                                                    unitAmount = calc.ToString();
+                                                }
+                                            }
+                                            <MudTd DataLabel="Price">£@unitAmount / @tableContext.Items.Data[0].Price.Recurring.Interval</MudTd>
+                                            <MudTd DataLabel="Created">@tableContext.Created</MudTd>
+                                            <MudTd DataLabel="Status">@tableContext.Status</MudTd>
+                                            <MudTd DataLabel="CrPerSt">@tableContext.CurrentPeriodStart</MudTd>
+                                            <MudTd DataLabel="CrPerEnd">@tableContext.CurrentPeriodEnd</MudTd>
+                                            @{
+                                                var unitsUsed = "-";
+                                                decimal? totalCost = 0;
+                                                if (tableContext.Items.Data[0].Price.Recurring.UsageType == "metered")
+                                                {
+                                                    if (tableContext.Items.Data[0].Price.UnitAmountDecimal != null)
+                                                    {
+                                                        totalCost = tableContext.Items.Data[0].Price.UnitAmountDecimal;
+                                                    }
+                                                    
+                                                    var totalUsage = (decimal)PaymentService.Instance.GetTotalMeteredUsage(DevExampleAccount.nameIdentifier, tableContext.Items.Data[0].Id);
+                                                    totalCost = totalUsage * totalCost / 100;
+                                                    unitsUsed = PaymentService.Instance.GetTotalMeteredUsage(DevExampleAccount.nameIdentifier, tableContext.Items.Data[0].Id).ToString();
+
+                                                }
+                                            }
+                                            <MudTd DataLabel="Units Used">@unitsUsed</MudTd>
+                                            <MudTd DataLabel="Total Cost">£@totalCost</MudTd>
+                                            <MudTd DataLabel="Cancel">
+                                                <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" CustomStyle="margin: 0px!important; padding: 3px!important;" OnClickEvent="@(() => SetSubscriptionToCancel(tableContext))" DataTarget="#CancelSubscriptionModel" DataToggle="modal" Text="Cancel"></DevExampleButton>
+                                            </MudTd>
+                                        </RowTemplate>
+                                        <PagerContent>
+                                            <MudTablePager />
+                                        </PagerContent>
+                                    </MudTable>
+                                }
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Invoices">
+                            <div class="pt-0">
+                                @if (UserInvoices != null)
+                                {
+                                    <MudTable Items="@UserInvoices" Style="box-shadow: none;" SortLabel="Sort By" T="Stripe.Invoice" Dense="true" Bordered="true" Filter="new Func<Stripe.Invoice,bool>(FilterInvoiceFunc)" @bind-SelectedItem="selectedInvoice">
+                                        <ToolBarContent>
+                                            <MudTextField @bind-Value="InvoiceSearchString" Placeholder="Search" InputMode="InputMode.search" Style="margin-top:0px;" Adornment="Adornment.Start" Immediate="true" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                        </ToolBarContent>
+                                        <HeaderContent>
+                                            <MudTh>Image</MudTh>
+                                            <MudTh>Created</MudTh>
+                                            <MudTh>Amount Remaining</MudTh>
+                                            <MudTh><MudTableSortLabel SortBy="new Func<Stripe.Invoice, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
+                                            <MudTh></MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate Context="tableContext">
+                                            <MudTd DataLabel="Image" Class="mud-table-cell">
+                                                @{
+                                                    string img;
+                                                    if (tableContext.Lines.Data.Count == 0)
+                                                    {
+                                                        img = null;
+                                                    }
+                                                    else
+                                                    {
+                                                        img = GetProductImageFromStored(tableContext.Lines.Data.First().Price.ProductId).GetAwaiter().GetResult();
+                                                    }
+
+                                                if (img != null)
+                                                {
+                                                    <MudAvatar Square="true" Image="@img"></MudAvatar>
+                                                }
+                                                else
+                                                {
+                                                    <MudSkeleton Animation="Animation.False" Style="display: inline-block!important;" SkeletonType="SkeletonType.Rectangle" Width="40px" Height="40px" />
+                                                }
+                                            }
+
+                                            </MudTd>
+                                            <MudTd DataLabel="Created">@tableContext.Created</MudTd>
+                                            @{
+                                                var amount = (float)tableContext.AmountRemaining / 100;
+                                            }
+                                            <MudTd DataLabel="Amount Remaining">£@amount</MudTd>
+                                            <MudTd DataLabel="Status">@tableContext.Status.ToString().ToUpperInvariant()</MudTd>
+                                            <MudTd DataLabel="Manage">
+                                                @if (tableContext.Status != "draft")
+                                                {
+                                                    <a href="@tableContext.HostedInvoiceUrl" target="_blank" class="btn btn-outline-info" role="button" aria-disabled="true">View</a>
+                                                }
+                                            </MudTd>
+                                        </RowTemplate>
+                                        <PagerContent>
+                                            <MudTablePager />
+                                        </PagerContent>
+                                    </MudTable>
+                                }
+                            </div>
+                        </TabPage>
+                        <TabPage TabText="Notifications">
+                            <div class="col-sm-12 col-md-12 col-lg-6 pr-0 pl-0">
+                                <label class="form-label">Activity</label>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked="">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone comments on my article</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked="">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone answers on my forum thread</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Email me when someone follows me</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-6 pr-0 pl-0">
+                                <label class="form-label">Application</label>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked="">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">News and announcements</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Weekly product updates</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Padding="0" Margin="0" Align="DevExampleButton.Alignment.Right" CustomStyle="padding:6px; margin-left:10px;" Text="Save Changes" CustomClass="mt-10"></DevExampleButton>
+                        </TabPage>
+                        <TabPage IsVisible="AccountService.Instance.IsIronMan(DevExampleAccount.nameIdentifier)" TabText="Advanced">
+                            <div class="form-group">
+                                <label class="form-label">JWT</label>
+                                <MudTextField T="string" Lines="10" Variant="Variant.Outlined" Text="@AccessToken" Disabled="true" />
+                                <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Padding="0" Margin="0" Align="DevExampleButton.Alignment.Right" CustomStyle="padding:6px;" Text="Copy Token" CustomClass="mt-10" OnClickEvent="@(() => CopyJWT(AccessToken))"></DevExampleButton>
+                            </div>
+                        </TabPage>
+                    </ChildContent>
+                </TabControl>
+            }
+            <DevExampleModal @ref="CancelSubscriptionModel" Id="CancelSubscriptionModel" ModalContentStyle="max-width: 1000px; min-width: 388px!important;">
+                <Header>
+                    @if (SubscriptionToCancel != null)
+                    {
+                        @GetProductNameFromStored(SubscriptionToCancel.Items.Data[0].Price.ProductId).GetAwaiter().GetResult();
+                    }
+
+                </Header>
+                <Body>
+                    @if (SubscriptionToCancel != null)
+                    {
+                        @if (SubscriptionToCancel.Items.Data[0].Price.Recurring.UsageType == "metered")
+                        {
+                            <p>If you cancel your service now an invoice will be sent and your service will no longer be active.</p>
+                        }
+                        else
+                        {
+                            <p>Your service will continue until the end of the month billing period. The next billing period you will not be charged and the service will end.</p>
+                        }
+                    }
+                    <p>Are you sure you wish to cancel your subscription?</p>
+                </Body>
+                <Footer>
+                    <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Info" CustomStyle="margin: 0px!important; padding: 8px!important;" Align="DevExampleButton.Alignment.Left" Text="No" DataDismiss="modal"></DevExampleButton>
+                    <DevExampleButton ButtonType="DevExampleButton.NetoButtonType.Outline_Danger" CustomStyle="margin: 0px!important; padding: 8px!important; margin-left: 12px!important;" Align="DevExampleButton.Alignment.Right" Text="Yes" DataDismiss="modal" OnClickEvent="@(() => CancelSubscription())"></DevExampleButton>
+                </Footer>
+            </DevExampleModal>
+        </Authorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+
+@code {
+
+    [Parameter]
+    public string tabtostart { get; set; }
+
+    public TabControl TabController;
+    public DevExampleModal CancelSubscriptionModel;
+    private AccountModel DevExampleAccount = new AccountModel();
+    private string AccessToken { get; set; } = "";
+
+    private string image { get; set; }
+
+    private List<Stripe.Subscription> UserSubscriptions = new List<Stripe.Subscription>();
+    private Stripe.Subscription selectedSubscription = null;
+    private string SubscriptionSearchString { get; set; }
+
+    private List<Stripe.Invoice> UserInvoices = new List<Stripe.Invoice>();
+    private Dictionary<string, string> ProductImages = new Dictionary<string, string>();
+    private Dictionary<string, string> ProductNames = new Dictionary<string, string>();
+    private Stripe.Invoice selectedInvoice = null;
+    private string InvoiceSearchString { get; set; }
+
+    private Stripe.Subscription SubscriptionToCancel { get; set;}
+    private string bio { get; set; }
+
+    private bool firstRender = true;
+
+    [CascadingParameter]
+    public MainLayout _Parent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userNameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        GetAccount(userNameIdentifier);
+        if (AccountService.Instance.IsIronMan(DevExampleAccount.nameIdentifier))
+        {
+            AccessToken = TokenState.AccessToken;
+        }
+        GetSubscriptions();
+        GetInvoices();
+        ProductImages = await GetProductImages();
+        StateHasChanged();
+    }
+
+    public void SetSubscriptionToCancel(Stripe.Subscription subscription)
+    {
+        SubscriptionToCancel = subscription;
+        foreach (var sub in UserSubscriptions)
+        {
+            if (sub.Id == subscription.Id)
+            {
+                SubscriptionToCancel = sub;
+            }
+        }
+    }
+
+    public void CancelSubscription()
+    {
+        bool invoiceNow = false;
+        bool prorate = false;
+        if (SubscriptionToCancel.Items.Data[0].Price.Recurring.UsageType == "metered")
+        {
+            invoiceNow = true;
+            prorate = true;
+        }
+        var result = Services.PaymentService.Instance.CancelSubscription(SubscriptionToCancel.Id, DevExampleAccount.stripeCustomerId);
+        if (result)
+        {
+            Snackbar.Add($"Subscription was cancelled", Severity.Success);
+        }
+        GetInvoices();
+        GetSubscriptions();
+        StateHasChanged();
+    }
+
+    public void GetSubscriptions()
+    {
+        //UserSubscriptions = Services.PaymentService.Instance.GetUserSubscriptions(DevExampleAccount.nameIdentifier);
+    }
+
+    public void GetInvoices()
+    {
+        UserInvoices = Services.PaymentService.Instance.GetUserInvoices(DevExampleAccount.stripeCustomerId);
+    }
+
+    private async void SetDefaultProfilePicture(string nameIdentifier)
+    {
+        var result = AccountService.Instance.SetDefaultProfilePicture(nameIdentifier);
+        _Parent.navbar.GetUserImage();
+        await OnInitializedAsync();
+        StateHasChanged();
+    }
+
+    private async void UploadFile(InputFileChangeEventArgs e)
+    {
+        if (e.File != null)
+        {
+            var resizedImage = await e.File.RequestImageFileAsync(e.File.ContentType, 512, 512);
+
+            var buffer = new byte[e.File.Size];
+            var fileContent = new StreamContent(resizedImage.OpenReadStream(1024 * 1024 * 15));
+            buffer = await fileContent.ReadAsByteArrayAsync();
+
+            var newImage = new FileModel()
+                {
+                    Name = e.File.Name,
+                    Data = await ImageConversion.ConvertBufferToBase64(buffer, e.File.ContentType)
+                };
+
+            var result = AccountService.Instance.UpdateProfilePicture(DevExampleAccount.nameIdentifier, newImage);
+            if (result)
+            {
+                GetAccount(DevExampleAccount.nameIdentifier);
+                _Parent.navbar.GetUserImage();
+
+                StateHasChanged();
+            }
+        }
+    }
+    public void GetAccount(string nameIdentifier)
+    {
+        DevExampleAccount = AccountService.Instance.GetAccount(nameIdentifier);
+    }
+
+    public async Task<string> GetProductImageFromStored(string productId)
+    {
+        string? productImage = null;
+        try
+        {
+            productImage = ProductImages[productId];
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); };
+
+        return productImage;
+    }
+
+    public async Task<string> GetProductNameFromStored(string productId)
+    {
+        string? productName = null;
+        try
+        {
+            productName = ProductNames[productId];
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); };
+
+        return productName;
+    }
+
+    public async Task<Dictionary<string, string>> GetProductImages()
+    {
+        Dictionary<string, string> imageCollection = new Dictionary<string, string>();
+
+        var productIds = new List<string>();
+
+        var userProducts = Services.PaymentService.Instance.GetAllProducts();
+
+        GetProductNames(userProducts);
+
+        foreach (var product in userProducts)
+        {
+            var img = GetProductImageFromStripeAPI(product.Id);
+            imageCollection.TryAdd(product.Id, product.Images.FirstOrDefault());
+        }
+
+        foreach (var prod in userProducts)
+        {
+
+        }
+
+        return imageCollection;
+    }
+
+    public void GetProductNames(List<Stripe.Product> stripeProducts)
+    {
+        Dictionary<string, string> nameCollection = new Dictionary<string, string>();
+        foreach (var prod in stripeProducts)
+        {
+            nameCollection.TryAdd(prod.Id, prod.Name);
+        }
+        ProductNames = nameCollection;
+    }
+
+    private string GetProductImageFromStripeAPI(string productId)
+    {
+        string img = Services.PaymentService.Instance.GetProduct(productId).Images.FirstOrDefault<string>();
+        return img;
+    }
+
+    private async Task CopyJWT(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        Snackbar.Add($"Token copied to clipboard.", Severity.Success);
+    }
+
+    private bool FilterInvoiceFunc(Stripe.Invoice invoice) => InvoiceFilterFunc(invoice, InvoiceSearchString);
+    private bool InvoiceFilterFunc(Stripe.Invoice invoice, string invoiceSearchString)
+    {
+        if (string.IsNullOrWhiteSpace(invoiceSearchString))
+            return true;
+        if (invoice.Id.Contains(invoiceSearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    private bool FilteSubscriptionFunc(Stripe.Subscription subscription) => SubscriptionFilterFunc(subscription, SubscriptionSearchString);
+    private bool SubscriptionFilterFunc(Stripe.Subscription subscription, string subscriptionSearchString)
+    {
+        if (string.IsNullOrWhiteSpace(subscriptionSearchString))
+            return true;
+        if (subscription.Id.Contains(subscriptionSearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    private async Task CopyText(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        Snackbar.Add($"ID: {text} copied to clipboard!", Severity.Success);
+    }
+}

@@ -1,0 +1,245 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <Authorized>
+
+        @{
+            var nameIdentifier = context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+            GetAccount(nameIdentifier);
+        }
+
+        @* NAVBAR *@
+        <nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar">
+            <button class="navbar-toggler collapsed" type="button" @onclick="ToggleMenubar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand pl-4" href="/">
+                <img class="brand-img d-inline-block" src="dist/img/logo-dark.png" alt="brand" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item">
+                    <a id="settings_toggle_btn" class="nav-link nav-link-hover" href="#;"><span class="feather-icon"><i data-feather="settings"></i></span></a>
+                </li>
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    @if (DevExampleAccount.isDefaultProfilePicture)
+                                    {
+                                        <img src="@UserImage" alt="user" class="avatar-img rounded-circle">
+                                    }
+                                    else
+                                    {
+                                        <img src="@DevExampleAccount.profilePictureSource.Data" alt="user" class="avatar-img rounded-circle">
+                                    }
+                                </div>
+                                <span class="badge badge-success badge-indicator"></span>
+                            </div>
+                            <div class="media-body">
+                                <span>@context.User.Identity.Name<i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="" @onclick:preventDefault @onclick="@GoToAccount"><i class="dropdown-icon zmdi zmdi-account"></i><span>Account</span></a>
+                        <a class="dropdown-item" href="" @onclick:preventDefault><i class="dropdown-icon zmdi zmdi-settings"></i><span>Settings</span></a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"@onclick:preventDefault @onclick="@LogOut"><i class="dropdown-icon zmdi zmdi-power"></i><span>Log out</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        @* MENUBAR *@
+        @if (!IsMenuDisabled)
+        {
+            <nav class="hk-nav hk-nav-light @CustomMenuClass" id="navigationMenu" style="overflow-y:scroll; overflow-x:hidden; top:44px; @DefaultLeftPosition">
+                <div class="slimScrollBar">
+                    <a href="#" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i data-feather="x"></i></span></a>
+                    <div class="navbar-nav-wrap">
+                        <ul class="navbar-nav flex-column">
+                            <span><center><small>Release: Alpha</small></center></span>
+                            <li class="nav-header">
+                                <span class="nav-link-text">DevExample</span>
+                                <ul id="dash_drp" class="nav flex-column">
+                                    <li class="nav-item">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/gaming">DevExample Gaming</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/subscriptions">Subscriptions</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/products/view/all">Products</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/support/tickets">Support</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/support/faqs">FAQs</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/status">Status</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            @if (AccountService.IsIronMan(nameIdentifier))
+                            {
+
+                                <hr class="nav-separator">
+                                <li class="nav-header">
+                                    <span class="nav-link-text">Billing</span>
+                                    <ul id="dash_drp" class="nav flex-column">
+                                        <li class="nav-item">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link cursor-pointer" href="/account/Subscriptions">Subscriptions</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link cursor-pointer" href="/account/Invoices">Invoices</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-header">
+                                    <span class="nav-link-text">Admin</span>
+                                    <ul id="dash_drp" class="nav flex-column">
+                                        <li class="nav-item">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/admin/">Dashboard</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/admin/stripe/product/management">Product Management</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/admin/stripe/billing/invoices">Invoice Management</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/admin/support/faq/list">FAQs</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        }
+
+    </Authorized>
+    <NotAuthorized>
+
+        <NavbarLogin />
+    </NotAuthorized>
+</AuthorizeView>
+<!-- Top Navbar -->
+
+@code {
+    private AccountService AccountService { get; set; }
+    private bool ShowExtended { get; set; } = false;
+    private List<SubscriptionModel> SubscriptionList;
+    private AccountModel DevExampleAccount = new AccountModel();
+
+    public string UserImage { get; set; }
+
+    [Parameter]
+    public bool IsMenuDisabled { get; set; }
+
+    private string DefaultLeftPosition { get; set; }
+    public bool IsMenuVisible { get; set; }
+    public string CustomMenuClass { get; set; }
+
+    private AuthenticationState state { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AccountService = new AccountService();
+        try
+        {
+            state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            UserImage = state.User.Claims.Where(c => c.Type == "picture").FirstOrDefault().Value.ToString();
+            var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+
+    public void GetUserImage()
+    {
+        UserImage = state.User.Claims.Where(c => c.Type == "picture").FirstOrDefault().Value.ToString();
+        Refresh();
+    }
+
+    public void ToggleMenubar()
+    {
+        IsMenuVisible = !IsMenuVisible;
+        SetMenuClass();
+    }
+
+    private void SetMenuClass()
+    {
+        if (IsMenuVisible)
+        {
+            CustomMenuClass = "collapse show";
+            DefaultLeftPosition = "left:0;";
+        }
+        else
+        {
+            CustomMenuClass = "collapse";
+            DefaultLeftPosition = "left:-240;";
+        }
+        StateHasChanged();
+    }
+
+    public void ToggleShowExtended()
+    {
+        ShowExtended = !ShowExtended;
+        StateHasChanged();
+    }
+
+    public void GoToSwagger()
+    {
+        NavManager.NavigateTo("/swaggerview");
+    }
+
+    private async Task LogOut()
+    {
+        NavManager.NavigateTo("/Account/Logout", true);
+    }
+
+    private void GoToAccount(MouseEventArgs args)
+    {
+        NavManager.NavigateTo("/account/General");
+    }
+
+    private void GoToInvoices(MouseEventArgs args)
+    {
+        NavManager.NavigateTo("/test/Invoices");
+    }
+
+    public void GetAccount(string nameIdentifier)
+    {
+        DevExampleAccount = AccountService.Instance.GetAccount(nameIdentifier);
+    }
+
+}

@@ -1,0 +1,250 @@
+﻿@page "/support/tickets/create"
+@using Microsoft.AspNetCore.Authentication 
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models
+@using System.IO
+@using System.Text
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Create a support ticket " IsAdmin="IsAdmin">
+    <AuthorizeView>
+        <Authorized>
+            <form>
+                <div class="form-group">
+                    <h5>Subject:</h5>
+                    <div class="mb-3">
+                        <input type="text" class="form-control w-sm-100 w-md-50 w-lg-25" placeholder="Subject" @bind="Subject">
+                    </div>
+                    <h5>Priority:</h5>
+                    <div class="mb-3">
+                        <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@firstPriority" ItemList="Priorities" @ref="Priority" Id="Priority" TopMargin="0px" Class="form-control w-sm-100 w-md-50 w-lg-25" Width="100%"></DevExampleDropdown>
+                    </div>
+                    @if (IsAdmin)
+                    {
+                        <h5>For User: </h5>
+                        <div class="mb-3">
+                            <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedUser" ItemList="UsersDropdownList" @ref="UsersDropdown" Id="users" TopMargin="0px" Class="form-control w-sm-100 w-md-50 w-lg-25" Width="100%"></DevExampleDropdown>
+                        </div>
+                    }
+                    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png" />
+                    <MudIconButton HtmlTag="label" Color="Color.Info" Icon="@Icons.Filled.PhotoCamera" for="fileInput"></MudIconButton>
+                    @if (files != null)
+                    {
+                        <MudText Class="font-weight-normal" Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                        <ul>
+                            @foreach (var file in files)
+                            {
+                                <li>
+                                    <span>
+                                        @file.Name <code>@file.Size bytes </code><MudIconButton Class="p-0 m-0" HtmlTag="delete" Color="Color.Error" Icon="@Icons.Filled.Delete" @onclick="@(() => DeleteAttachment(file))"></MudIconButton>
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="form-group">
+                    <h5>Description:</h5>
+                    <div>
+                        <textarea class="form-control w-sm-100 w-md-50 w-lg-50" rows="12" style="resize:none;" @bind="Message"></textarea>
+                    </div>
+                </div>
+            </form>
+            <button type="button" class="btn btn-outline-info float-left" @onclick="GoBack">Back</button>
+            <button type="button" class="btn btn-outline-info float-right" @onclick="CreateTicket">Create</button>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    private List<DevExampleDropdown.SelectItem> Priorities = new List<DevExampleDropdown.SelectItem>();
+    private List<DevExampleDropdown.SelectItem> UsersDropdownList = new List<DevExampleDropdown.SelectItem>();
+    public string Subject { get; set; }
+    public string Message { get; set; }
+    public DevExampleDropdown Priority { get; set; }
+    public DevExampleDropdown UsersDropdown { get; set; }
+    public List<string> BinaryFiles = new List<string>();
+    public List<string> AcceptableExtensions = new List<string>();
+    public bool IsAdmin { get; set; }
+
+    public string SelectedUser { get; set; }
+    public string firstUser;
+    public string firstPriority;
+
+    public bool firstRender = true;
+
+    public string userNameIdentifier { get; set; }
+    AuthenticationState state;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (firstRender)
+        {
+            state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            userNameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+
+            var account = AccountService.Instance.GetAccount(userNameIdentifier);
+            IsAdmin = account.ironMan;
+
+            firstUser = UsersDropdownList.FirstOrDefault<DevExampleDropdown.SelectItem>().Name;
+
+            GetPriorities();
+            firstPriority = Priorities.FirstOrDefault<DevExampleDropdown.SelectItem>().Name;
+
+            GetAcceptableExtensions();
+            firstRender = false;
+        }
+    }
+
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+    private async void UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+
+        files.Clear();
+
+        foreach (var file in e.GetMultipleFiles())
+        {
+            files.Add(file);
+        }
+    }
+
+    private async Task CreateTicket()
+    {
+        TicketModel newTicket = new TicketModel();
+        newTicket.Description = Message;
+        newTicket.Subject = Subject;
+
+        if (Priority.GetSelectedValue() == null)
+        {
+            newTicket.Priority = "Low";
+        }
+        else
+        {
+            newTicket.Priority = Priority.GetSelectedValue();
+        }
+
+        if (IsAdmin)
+        {
+            if (SelectedUser != null)
+            {
+                var name = AccountService.Instance.GetAccount(userNameIdentifier).name;
+                newTicket.CreatedBy = name;
+            }
+            else
+            {
+                CreateSnackbar("Please select a user to create a ticket.", Severity.Warning);
+            }
+        }
+
+        newTicket.Attachments = await AddFilesToTicket();
+
+        if (IsAdmin)
+        {
+            var selectedItem = UsersDropdown.GetSelectedValue();
+            if (TicketService.Instance.AddTicket(SelectedUser, userNameIdentifier, newTicket))
+            {
+                CreateSnackbar("Ticket has been added!", Severity.Success);
+                GoBack();
+            }
+            else
+            {
+                CreateSnackbar("Failed to add this ticket.", Severity.Error);
+            }
+        }
+        else
+        {
+            if (TicketService.Instance.AddTicket(userNameIdentifier, userNameIdentifier, newTicket))
+            {
+                CreateSnackbar("Ticket has been added!", Severity.Success);
+                GoBack();
+            }
+            else
+            {
+                CreateSnackbar("Failed to add this ticket.", Severity.Error);
+            }
+        }
+    }
+
+    private async Task<List<FileModel>> AddFilesToTicket()
+    {
+        List<FileModel> convertedFiles = new List<FileModel>();
+
+        foreach (var file in files)
+        {
+            if (file.Size <= ImageConversion.MaxFileSize)
+            {
+                if (file != null)
+                {
+                    var resizedImage = await file.RequestImageFileAsync(file.ContentType, 2048, 2048);
+
+                    var buffer = new byte[file.Size];
+                    var fileContent = new StreamContent(resizedImage.OpenReadStream(2048 * 2048 * 15));
+                    buffer = await fileContent.ReadAsByteArrayAsync();
+
+                    if (IsFileAcceptable(file))
+                    {
+                        var newFile = new FileModel()
+                        {
+                            Name = file.Name,
+                            Data = await ImageConversion.ConvertBufferToBase64(buffer, file.ContentType)
+                        };
+                        convertedFiles.Add(newFile);
+                    }
+                }
+            }
+        }
+        return convertedFiles;
+    }
+
+    public void CreateSnackbar(string message, Severity severity)
+    {
+        Snackbar.Add(message, severity);
+    }
+
+    private void GetAcceptableExtensions()
+    {
+        AcceptableExtensions.Add("image/jpg");
+        AcceptableExtensions.Add("image/jpeg");
+        AcceptableExtensions.Add("image/png");
+    }
+
+    private void GetPriorities()
+    {
+        Priorities.Add(new DevExampleDropdown.SelectItem() { Name = "Low", Value = "Low" });
+        Priorities.Add(new DevExampleDropdown.SelectItem() { Name = "Normal", Value = "Normal" });
+        Priorities.Add(new DevExampleDropdown.SelectItem() { Name = "High", Value = "High" });
+        Priorities.Add(new DevExampleDropdown.SelectItem() { Name = "Urgent", Value = "Urgent" });
+    }
+
+    private bool IsFileAcceptable(IBrowserFile file)
+    {
+        if (AcceptableExtensions.Contains(file.ContentType))
+        {
+            CreateSnackbar("File Added.", Severity.Success);
+            return true;
+        }
+        CreateSnackbar("Could not accept file extension. File: "+ file.Name, Severity.Error);
+        return false;
+    }
+
+    public void DeleteAttachment(IBrowserFile file)
+    {
+        files.Remove(file);
+        StateHasChanged();
+    }
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/support/tickets");
+    }
+}

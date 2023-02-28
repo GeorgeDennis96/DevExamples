@@ -1,0 +1,137 @@
+﻿@page "/admin/stripe/billing/invoices"
+@using DevExample.Platform.Services
+@using Stripe;
+@using DevExample.Private.Models;
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="All Invoices">
+    <AuthorizeView>
+        <Authorized>
+            <section>
+                <div class="row">
+                    <div class="col-4">
+                        <MudCard Class="shadow-none border">
+                            <MudCardHeader>
+                                <p>Total Last Month MRR</p>
+                            </MudCardHeader>
+                            <MudCardContent Class="text-center">
+                                @if (IsLoadingLastMonthsMRR)
+                                {
+                                    <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+                                }
+                                else
+                                {
+                                    <p>£@TotalLastMonthMRR</p>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
+                    <div class="col-4">
+                        <MudCard Class="shadow-none border">
+                            <MudCardHeader>
+                                <p>Total Overall MRR</p>
+                            </MudCardHeader>
+                            <MudCardContent Class="text-center">
+                                @if (IsLoadingCurrentTotalMRR)
+                                {
+                                    <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+                                }
+                                else
+                                {
+                                    <p>£@TotalCurrentMRR</p>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
+                    <div class="col-4">
+                        <MudCard Class="shadow-none border">
+                            <MudCardHeader>
+                                <p>Total Subscribers</p>
+                            </MudCardHeader>
+                            <MudCardContent Class="text-center">
+                                <p>@TotalSubscribers</p>
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <MudTable Items="@InvoiceList" Style="box-shadow: none;" SortLabel="Sort By" T="Stripe.Invoice" Dense="true" Bordered="true" Filter="new Func<Stripe.Invoice,bool>(FilterInvoiceFunc)" @bind-SelectedItem="selectedInvoice">
+                    <ToolBarContent>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="InvoiceSearchString" Placeholder="Search" InputMode="InputMode.search" Style="margin-top:0px;" Adornment="Adornment.Start" Immediate="true" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Stripe.Invoice, object>(x=>x.Number)">Invoice Number</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Stripe.Invoice, object>(x=>x.Customer)">Customer</MudTableSortLabel></MudTh>
+                        <MudTh>Amount</MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Stripe.Invoice, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
+                        <MudTh>Due</MudTh>
+                        <MudTh>Created</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="tableContext">
+                        @{
+                            var totalCost =  tableContext.AmountDue / 100;
+                        }
+                        <MudTd DataLabel="Number">@tableContext.Number</MudTd>
+                        <MudTd DataLabel="Email">@tableContext.CustomerEmail</MudTd>
+                        <MudTd DataLabel="Amount">£@tableContext.AmountDue</MudTd>
+                        <MudTd DataLabel="Staus">@tableContext.Status.ToString().ToUpperInvariant()</MudTd>
+                        <MudTd DataLabel="Due">@tableContext.DueDate</MudTd>
+                        <MudTd DataLabel="Created">@tableContext.Created</MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+            </section>
+        </Authorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    private List<Stripe.Invoice> InvoiceList = new List<Stripe.Invoice>();
+    private Stripe.Invoice selectedInvoice = null;
+    private string InvoiceSearchString { get; set; }
+    private int? TotalSubscribers { get; set; }
+    private decimal TotalCurrentMRR { get; set; }
+    private decimal TotalLastMonthMRR { get; set; }
+    private bool IsLoadingLastMonthsMRR = true;
+    private bool IsLoadingCurrentTotalMRR = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //var result = PaymentService.Instance.CreateReport("balance.summary.1");
+        //NavManager.NavigateTo(result.Result.Url);
+
+        GetInvoices();
+        TotalSubscribers = PaymentService.Instance.GetTotalActiveSubscribers();
+
+        //TotalLastMonthMRR = await Services.PaymentService.Instance.GetLastMonthsRevenue();
+        IsLoadingLastMonthsMRR = false;
+        TotalCurrentMRR = await Services.PaymentService.CalculateMonthlyRecurringRevenue();
+        IsLoadingCurrentTotalMRR = false;
+        StateHasChanged();
+    }
+
+    private void GetInvoices()
+    {
+        InvoiceList = Services.PaymentService.Instance.GetAllInvoices();
+    }
+
+    private bool FilterInvoiceFunc(Stripe.Invoice invoice) => InvoiceFilterFunc(invoice, InvoiceSearchString);
+    private bool InvoiceFilterFunc(Stripe.Invoice invoice, string invoiceSearchString)
+    {
+        if (string.IsNullOrWhiteSpace(invoiceSearchString))
+            return true;
+        if (invoice.Number.Contains(invoiceSearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (invoice.CustomerEmail.Contains(invoiceSearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+}

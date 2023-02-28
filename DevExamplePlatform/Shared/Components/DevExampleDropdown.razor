@@ -1,0 +1,96 @@
+﻿@if (ShowLabel)
+{
+    <p><h6 style="margin-bottom: 5px;">@LabelText</h6></p>
+}
+<select class="mt-@TopMargin @Class" style="width:@Width; @Style" id="@Id" @onchange="@OnChange" @onclick="OnClickEvent">
+
+    @if (SelectedValue == null)
+    {
+        <option selected value="">Please Select</option>
+    }
+
+    @foreach (var item in ItemList)
+    {
+        if (item.Value == SelectedValue)
+        {
+            <option value="@item.Value" selected>@item.Name</option>
+        }
+        else
+        {
+            <option value="@item.Value">@item.Name</option>
+        }
+    }
+</select>
+
+@code{
+
+    [Parameter]
+    public EventCallback OnClickEvent { get; set; }
+    [Parameter]
+    public string Width { get; set; } = "100px";
+
+    [Parameter]
+    public string TopMargin { get; set; } = "3";
+
+    [Parameter]
+    public string SelectedValue { get; set; } 
+
+    [Parameter]
+    public bool ShowLabel { get; set; } = false;
+
+    [Parameter]
+    public string LabelText { get; set; } = "";
+
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string Class { get; set; } = "custom-select";
+
+    [Parameter]
+    public List<SelectItem> ItemList { get; set; }
+
+    public bool Hidden { get; set; }
+
+    public void OnChange(ChangeEventArgs e)
+    {
+        SelectedValue = e.Value.ToString();
+        SelectedValueChanged.InvokeAsync(e.Value.ToString()).GetAwaiter().GetResult();
+    }
+
+    [Parameter]
+    public EventCallback<string> SelectedValueChanged { get; set; }
+
+    public string GetSelectedValue()
+    {
+        return SelectedValue;
+    }
+
+    public void SetSelectedValue(string newValue)
+    {
+        SelectedValue = newValue;
+    }
+
+    private void AddItems(List<SelectItem> items)
+    {
+        foreach (var item in items)
+        {
+            ItemList.Add(item);
+        }
+    }
+
+    public void Clear()
+    {
+        SelectedValue = "";
+    }
+
+    public class SelectItem
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
+}

@@ -1,0 +1,142 @@
+﻿<CascadingValue Value="this">
+	<div class="row">
+		<div class="col-sm-12 col-lg-3 col-md-3 pr-md-3 mb-3">
+				@foreach (TabPage tabPage in Pages)
+				{
+					if (tabPage.IsVisible)
+					{
+						var ButtonBackgroundColor = "";
+						var ButtonFontColor = "";
+						if (tabPage == ActivePage)
+						{
+							ButtonBackgroundColor = "#1ebccd";
+							ButtonFontColor = "white";
+						}
+						else
+						{
+							ButtonFontColor = "#495057";
+						}
+						var IsTopButton = false;
+						if (tabPage == Pages[0])
+						{
+							IsTopButton = true;
+						}
+						else
+						{
+							IsTopButton = false;
+						}
+
+						<div class="row" style="padding: inherit;">
+							<button type="button" style="
+							   border-top:@SetTopBorder(IsTopButton);
+							   border-top-color:lightgray!important;
+							   border-top-width:@SetTopBorderWidth(IsTopButton);
+							   border-left:solid!important;
+							   border-left-color:#1ebccd!important;
+							   border-left-width:3px!important;
+							   border-bottom: solid!important;
+							   border-bottom-color: lightgray!important;
+							   border-bottom-width: 1px!important;
+							   border-right: solid!important;
+							   border-right-color: lightgray!important;
+							   border-right-width: 1px!important;
+							   background-color:@ButtonBackgroundColor;
+							   Color:@ButtonFontColor;"
+							   @onclick="(() => ActivatePage(tabPage))" class="btn btn-outline-info rounded-0 border-0 w-100 text-left pl-50 @SetButtonActive(tabPage)">
+								@if (TabTemplate != null)
+								{
+									@TabTemplate(tabPage)
+								}
+								else
+								{
+									@tabPage.TabText
+								}
+							</button>
+						</div>
+					}
+				}
+		</div>
+		<div class="col-md-9">
+			@ChildContent
+		</div>
+	</div>
+</CascadingValue>
+
+@code {
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public RenderFragment<TabPage> TabTemplate { get; set; }
+
+	[Parameter]
+	public string DefaultTab { get; set; }
+
+	public bool FirstRender { get; set; } = true;
+
+	public TabPage ActivePage { get; set; }
+	List<TabPage> Pages = new List<TabPage>();
+
+	protected override void OnParametersSet()
+	{
+		if (FirstRender)
+		{
+			ActivatePageByName(DefaultTab);
+			FirstRender = false;
+		}
+	}
+
+	internal void AddPage(TabPage tabPage)
+	{
+		Pages.Add(tabPage);
+
+		var selectedPage = Pages.Where(p => p.TabText == DefaultTab).FirstOrDefault();
+		ActivatePage(selectedPage);
+	}
+
+	private string SetButtonActive(TabPage page)
+	{
+		if (page == ActivePage)
+		{
+			return "active";
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+	public void ActivatePage(TabPage page)
+	{
+		ActivePage = page;
+		StateHasChanged();
+	}
+
+	public void ActivatePageByName(string pageName)
+	{
+		var selectedPage = Pages.Where(p=>p.TabText == pageName).FirstOrDefault();
+		ActivePage = selectedPage;
+		StateHasChanged();
+	}
+
+	public string SetTopBorder(bool isTopBorder)
+	{
+		if (isTopBorder)
+		{
+			return "solid!important;";
+		}
+		return "none;";
+	}
+
+	public string SetTopBorderWidth(bool isTopBorder)
+	{
+		if (isTopBorder)
+		{
+			return "1px!important;";
+		}
+		else
+		{
+			return "0px!important";
+		}
+	}
+}

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#000000" name="theme-color" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    ></script>
+    <link href="https://stackpath.bootstrapcdn.com" rel="preconnect" />
+    <link href="https://code.jquery.com" rel="preconnect" />
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    ></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/manifest.json" rel="manifest" />
+    <title>Dashboard UI Kit Preview</title>
+    <link href="/static/css/lib.css" rel="stylesheet" />
+    <link href="/static/css/app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="outer-events-handler navigator-container">
+        <button class="expandButton" type="button">
+          <i class="uikon">view_list</i>
+        </button>
+        <div class="list">
+          <a class="nav-link-pill" href="/"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">gallery_grid_view</i></span
+              >Screen Previews</span
+            ></a
+          ><a class="nav-link-pill"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_simple</i></span
+              >Switch Dark/Light Theme</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">rocket</i></span
+              >Installation Guide</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_list</i></span
+              >React Docs</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill active"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">love</i></span
+              >Get Designs (Sketch, ..)</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">inbox_paper_round</i></span
+              >Get Previews</span
+            ></a
+          >
+        </div>
+      </div>
+      <div class="container-horizontal">
+        <nav class="nav-panel-dark buildings-navigation buildingsMenuAnimate">
+          <div class="container-vertical">
+            <section class="top-bar buildings-nav-top-bar">
+              <div class="top-bar-section">
+                <h2 class="top-bar-title buildings-nav-top-bar-title">
+                  <i class="uikon">building</i><span>Buildings</span>
+                </h2>
+              </div>
+            </section>
+            <div class="scroll-area">
+              <div class="nav-section">
+                <span class="nav-section-title">Menu</span
+                ><a class="nav-link-pill" href="/buildings/dashboard"
+                  ><span class="nav-link-text">Dashboard</span></a
+                ><a class="nav-link-pill" href="/buildings/listing"
+                  ><span class="nav-link-text">Buildings</span></a
+                ><a class="nav-link-pill" href="/buildings/posts"
+                  ><span class="nav-link-text">Posts</span></a
+                ><a class="nav-link-pill" href="/buildings/conversations"
+                  ><span class="nav-link-text">Conversations</span
+                  ><span class="nav-link-right-el"
+                    ><span class="nav-link-count">2</span></span
+                  ></a
+                ><a class="nav-link-pill" href="/buildings/amenities"
+                  ><span class="nav-link-text">Amenities</span></a
+                ><a class="nav-link-pill" href="/buildings/tenants"
+                  ><span class="nav-link-text">Tenants</span></a
+                ><a class="nav-link-pill" href="/buildings/performance"
+                  ><span class="nav-link-text">Performance</span></a
+                ><a
+                  class="nav-link-pill active"
+                  href="/buildings/users"
+                  aria-current="page"
+                  ><span class="nav-link-text">Users</span></a
+                >
+              </div>
+              <div class="nav-section">
+                <span class="nav-section-title">Support</span
+                ><a class="nav-link" href="/buildings/help"
+                  ><span class="nav-link-text">Need Help?</span></a
+                ><a class="nav-link" href="/buildings/contact"
+                  ><span class="nav-link-text">Contact Us</span></a
+                ><a class="nav-link" href="/buildings/knowledge-base"
+                  ><span class="nav-link-text">Knowledge Base</span></a
+                >
+              </div>
+            </div>
+            <a class="nav-panel-user-container" href="/buildings/user/settings"
+              ><span class="avatar"
+                ><span class="avatar-image-wrapper"
+                  ><img
+                    alt=""
+                    class="avatar-image"
+                    src="/static/media/a07.b9388665.jpg"/></span
+                ><span class="avatar-content"
+                  ><span class="avatar-name">Kara Johnson</span
+                  ><span class="avatar-text-bottom">HR Specialist</span></span
+                ></span
+              ><i class="uikon nav-panel-user-dropdown-icon"
+                >dropdown_arrow</i
+              ></a
+            >
+            <div class="nav-panel-about-container">
+              <div class="nav-panel-about-copyright">© Buildings Ltd. 2018</div>
+              <div class="nav-panel-about-about">
+                Created with love for the environment. By designers and
+                develodivers who love to work together in offices!
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="container-vertical buildingsMenuAnimate">
+          <div class="container-vertical buildings-users">
+            <section class="top-bar buildings-top-bar">
+              <button
+                class="btn btn-transparent nav-burger"
+                type="button"
+                role="button"
+              >
+                <div class="burger burger-squeeze navigation-burger">
+                  <div class="burger-lines"></div>
+                </div>
+              </button>
+              <div class="top-bar-section">
+                <h2 class="top-bar-title">Users</h2>
+              </div>
+              <div class="top-bar-section buildings-top-bar-actions">
+                <button class="btn btn-success" type="button" role="button">
+                  Add User
+                </button>
+                <div
+                  class="divider-vertical buildings-top-bar-mobile-hidden divider-margin"
+                ></div>
+                <div
+                  class="outer-events-handler dropdown btn-group select buildings-top-bar-mobile-hidden"
+                  position="bottomRight"
+                >
+                  <button
+                    class="btn dropdown-toggle"
+                    type="button"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    data-toggle="dropdown"
+                  >
+                    <span class="select-option-country-content"
+                      ><img
+                        alt="english"
+                        class="select-option-flag"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAABA9JREFUaAXl2ltoVEcYB/D/ObuGeMM0CRW0DYIXfKhCn6IWtUr70idf7Et9EIooERUviRq1aNqgtFqwKdUuLdRejQUVRAVREw1q4iWJWW0uuJoasjG3NRs3u2vOnjP9vsVTNkuMm2T3YWcGhnNmzmHZ77czs3PmjIa4JIR4i6o+pPwO5QzKsic/BfiQco2maVZssJpdIBQnnRdT3kt5gl2v0LGJYl1LQDV2zFGcP881587ImXhz+eJ359oXFD2aFPdWAirj+Lm1oKW5+/LvtR1zDcPER8tmcZWqyUGBH6ZeVElAbt31R8Nnt+56F5qWhSPH7+D8ZY+qMHbcPM4e54Le2fmiABDR7kViKPv5Hk5faLFvVPW4hCxm6v2Bwbx4Addv9fjrTGN8tWrlOXokYg77d33ilBu/lLtVA4mNd7IeW4o/P3m2ET/+Wh9frUx5RBxWOHOxBUd/ugcajpRLb8RhkYtXPDh87DYsxYQSwmGgK1WtOPhdNUxTnSaUMA4DVVW3oeTbGzCMIY8gfEnKNCocFqip9eKLr6vwcpBn2nKnUeMwR92DTuw5eB3BUERqnTHhsMiDpm7sLq1EYMCQFmjMOCzS7PGh6MsK+PtfSgk0LhwWefxvH3aUVMD3PCwd0LhxWKStvR87DlxFV09QKqCk4LCItzOA7fuvwvssIA1Q0nBYpLs3SC2oAk+pJcmQkorDIL6+EAppDPK09qW9T9JxWIT/vXZ+VYnmR760BkoJDosEBgaxq/Qa3I3daQvkDD/zhVL17UNhA/tKKyJl+UZNdqZIq9miIzcn7HT6+yZBm5YSnwxY2GQ0OCdX9XyQdtNEzXEo+momFTKTEEGRVY95In0H5pTgZIHGG7MWeUjvOU/ScaaLIHZbdXgbKRvKUtHQh/3MpOLkiRfYJerALUeGlDSc+TS2FIp6TBTyrPEkBed90YMtogEZQq7l03HjLBUdWG/9Ax3yLbyPC+cT8RRrLHnfq48Z51PxCKusVhnG3dfGMGocjbrP56IJK632136oLBdGheMkmI2WG/miS5b4R4wjYZxMmNhm3cd7Ir2XIUbUiLuYEM5UmtQVEcxswRsv1UlvxMkWYRTT48AMDKij8irSEXEYpJgeB7Ih32uXRH5ppwPDL0JxF+KuxF1KxUST2pA+BYY3PvgFohd7RK2yMOxh6Y4nOi0tnIjFyUdX9AEyU8i/iyI27thzDVpdzskf2vTN5YXfLxS9T/jiStGOzaYbTsV2cA2FgenQHbT9+NUO9kWO4Ir5Zv/dVZYnN/ZGFc9pQ3bJtPJj1Rx7dHM2n4jVBVOea8Y31Gg2cFm9pHUQxrrsv13n7dj/x7Er/KsL5piIfEzlmZSH3aNs3yvJ0a9peJiVhUuayzVkJ8R/3QhoLDU0oyQAAAAASUVORK5CYII="
+                      />Czech Republic</span
+                    >
+                  </button>
+                  <div class="dropdown-menu bottom-right">
+                    <button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="english"
+                          class="select-option-flag"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAABA9JREFUaAXl2ltoVEcYB/D/ObuGeMM0CRW0DYIXfKhCn6IWtUr70idf7Et9EIooERUviRq1aNqgtFqwKdUuLdRejQUVRAVREw1q4iWJWW0uuJoasjG3NRs3u2vOnjP9vsVTNkuMm2T3YWcGhnNmzmHZ77czs3PmjIa4JIR4i6o+pPwO5QzKsic/BfiQco2maVZssJpdIBQnnRdT3kt5gl2v0LGJYl1LQDV2zFGcP881587ImXhz+eJ359oXFD2aFPdWAirj+Lm1oKW5+/LvtR1zDcPER8tmcZWqyUGBH6ZeVElAbt31R8Nnt+56F5qWhSPH7+D8ZY+qMHbcPM4e54Le2fmiABDR7kViKPv5Hk5faLFvVPW4hCxm6v2Bwbx4Addv9fjrTGN8tWrlOXokYg77d33ilBu/lLtVA4mNd7IeW4o/P3m2ET/+Wh9frUx5RBxWOHOxBUd/ugcajpRLb8RhkYtXPDh87DYsxYQSwmGgK1WtOPhdNUxTnSaUMA4DVVW3oeTbGzCMIY8gfEnKNCocFqip9eKLr6vwcpBn2nKnUeMwR92DTuw5eB3BUERqnTHhsMiDpm7sLq1EYMCQFmjMOCzS7PGh6MsK+PtfSgk0LhwWefxvH3aUVMD3PCwd0LhxWKStvR87DlxFV09QKqCk4LCItzOA7fuvwvssIA1Q0nBYpLs3SC2oAk+pJcmQkorDIL6+EAppDPK09qW9T9JxWIT/vXZ+VYnmR760BkoJDosEBgaxq/Qa3I3daQvkDD/zhVL17UNhA/tKKyJl+UZNdqZIq9miIzcn7HT6+yZBm5YSnwxY2GQ0OCdX9XyQdtNEzXEo+momFTKTEEGRVY95In0H5pTgZIHGG7MWeUjvOU/ScaaLIHZbdXgbKRvKUtHQh/3MpOLkiRfYJerALUeGlDSc+TS2FIp6TBTyrPEkBed90YMtogEZQq7l03HjLBUdWG/9Ax3yLbyPC+cT8RRrLHnfq48Z51PxCKusVhnG3dfGMGocjbrP56IJK632136oLBdGheMkmI2WG/miS5b4R4wjYZxMmNhm3cd7Ir2XIUbUiLuYEM5UmtQVEcxswRsv1UlvxMkWYRTT48AMDKij8irSEXEYpJgeB7Ih32uXRH5ppwPDL0JxF+KuxF1KxUST2pA+BYY3PvgFohd7RK2yMOxh6Y4nOi0tnIjFyUdX9AEyU8i/iyI27thzDVpdzskf2vTN5YXfLxS9T/jiStGOzaYbTsV2cA2FgenQHbT9+NUO9kWO4Ir5Zv/dVZYnN/ZGFc9pQ3bJtPJj1Rx7dHM2n4jVBVOea8Y31Gg2cFm9pHUQxrrsv13n7dj/x7Er/KsL5piIfEzlmZSH3aNs3yvJ0a9peJiVhUuayzVkJ8R/3QhoLDU0oyQAAAAASUVORK5CYII="
+                        />Czech Republic</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="tuvalu"
+                          class="select-option-flag"
+                          src="data:image/png;base64,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"
+                        />Tuvalu</span
+                      ></button
+                    ><button
+                      class="btn dropdown-item"
+                      type="button"
+                      role="button"
+                    >
+                      <span class="select-option-country-content"
+                        ><img
+                          alt="norway"
+                          class="select-option-flag"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAwCAYAAABDl2dmAAAABGdBTUEAALGOGCHvlwAAA2hJREFUaAXtm09IFFEcx3/v7ewfd2t3XUW0FOuQUJeKjKAi+oN4kA4dNOvQIUPFQ9Cto3ToEhRhQVogBIFiRHQyiNSDdihLyqIOSYcsRW12S511Zmd+vVlYsdj9JbniLvMeLPv4fd/+5vf7zO+92Z23wyBNw/p2T9Q9U+YywZtG/sOkHDtUxLcWb7aNb79b4WnNDFRFFLUyzBZtGx//PBMfG1+w+7nYXIzN+80j06yvwfw7PmWl4dfptp2GlbimwmQNGuCxVooZ+p4dFeA9fjipDne9gv4XE3CpZT9UHd2etM1//QaGpWf49MabDRHCEjyLqQ3NfS6f+3Lw/u25VFQ81RHiRR2N1whYhwCelN0J7yLnkIV4wdCM8Wh9S00q5yScuYbWWiHeBARfSnDmO5aaDB/ONbZV2PlzrG/bBGjecyaMNFkjBpll3E3CUZl5UnTK0wxzrAkRatXG1m1iWuEex1KgEjdhL2cAEWqMUzUGGOFiIRZ8ZEtHYPlSnk50uk3CISpAwpFwCAKEJCtHwiEIEJKsHAmHIEBIsnIkHIIAIcnKIeAovLTEB2v4dcUK6PtjLBQEXlZChJCbEjPRpwSazla7d+9atwgDZ04B2K88a/rgSLWcVsRJU37MG67E1DwxZPXSgmbfywdQY3GYzJLP1R89uyPdGrrZ1StP1aEP0XB2Xee/t8Z9wWEl7HeZ5WXJPbk1Z6RG42BXT2HIBwG/e83+NtJBwMN10Mfef8QstRudL7G2sRf7Byay5HHj3CwNDHfLBZkoT8WKxTTz2zQxhJZYWHyP8RdkHGRFY4CL8Yx6rgq4sKgpC7e6R0WA/709E2g9t7xXni7RxZ7HoD8fTifltM0FfFROK+IUSTgSDkGAkGTlSDgEAUKSlSPhEAQISVaOhEMQICRZORIOQYCQOGMsQeiOlRCYycV/jqccS4BI3AKc4mLRGSLGOFISO1V6xOMZ4eHezkExtQYcSSFj0uw6e9Dx015zkHF+HoBlZwsi4wHzQxA8xgtLve12tMlLeWHPnS+ilA4yYG/yI4X1ipI9cnv5CdbRsWQfYfmpmUhf1ztsbj6gRnkToFUnKqkSGf7zkSLU4kXW9Gxy+yKkmK4txX5eoGsJYRNrvfCSMGfFdnPOVqUoCBEbfmIIPYV9XU/smFPtN/HkBP2vciyMAAAAAElFTkSuQmCC"
+                        />Norway</span
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="container-horizontal buildings-users-container">
+              <div class="container-vertical buildings-users-list">
+                <section class="top-bar buildings-users-list-top-bar">
+                  <div class="form-group">
+                    <div class="input-group input-group-clear">
+                      <input
+                        class="form-control"
+                        placeholder="Search users"
+                        type="text"
+                      />
+                      <div class="input-group-append">
+                        <i class="uikon">search_left</i>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div class="scroll-area">
+                  <div class="buildings-users-list-letter">a</div>
+                  <a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/1"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a21.3c96e570.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Adriana Boyd</strong></span
+                        ><span class="avatar-text-bottom">Exor</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/2"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a07.b9388665.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong
+                            >Angelina Newton
+                            <span
+                              class="status-dot buildings-users-status green"
+                            ></span></strong></span
+                        ><span class="avatar-text-bottom">Toyota</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/3"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a02.a4579852.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Ann Waters</strong></span
+                        ><span class="avatar-text-bottom">Google</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/4"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a12.b8d9d8ea.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Austin Ray</strong></span
+                        ><span class="avatar-text-bottom">Ford</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item active"
+                    href="/buildings/users/5"
+                    aria-current="page"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a10.06b87a5d.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Ava Robbins</strong></span
+                        ><span class="avatar-text-bottom"
+                          >United Health</span
+                        ></span
+                      ></span
+                    ></a
+                  >
+                  <div class="buildings-users-list-letter">b</div>
+                  <a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/6"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a01.5a8ba9f1.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Ben Underwood</strong></span
+                        ><span class="avatar-text-bottom">Walmart</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/7"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a11.15f39456.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong
+                            >Bill Hammond
+                            <span
+                              class="status-dot buildings-users-status green"
+                            ></span></strong></span
+                        ><span class="avatar-text-bottom">Tinder</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/8"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a18.218e8988.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Brandi Olson</strong></span
+                        ><span class="avatar-text-bottom">Google</span></span
+                      ></span
+                    ></a
+                  >
+                  <div class="buildings-users-list-letter">c</div>
+                  <a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/9"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a23.90c7f162.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Carl Nelson</strong></span
+                        ><span class="avatar-text-bottom">Allianz</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/10"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a13.20ff0828.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong
+                            >Celsa Boyd
+                            <span
+                              class="status-dot buildings-users-status green"
+                            ></span></strong></span
+                        ><span class="avatar-text-bottom">Tesla</span></span
+                      ></span
+                    ></a
+                  >
+                  <div class="buildings-users-list-letter">d</div>
+                  <a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/12"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a16.3f68bd20.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong
+                            >David Pickford
+                            <span
+                              class="status-dot buildings-users-status green"
+                            ></span></strong></span
+                        ><span class="avatar-text-bottom">Ford</span></span
+                      ></span
+                    ></a
+                  ><a
+                    class="buildings-users-list-user-item"
+                    href="/buildings/users/13"
+                    ><span class="avatar"
+                      ><span class="avatar-image-wrapper"
+                        ><img
+                          alt=""
+                          class="avatar-image"
+                          src="/static/media/a26.4e32f156.jpg"/></span
+                      ><span class="avatar-content"
+                        ><span class="avatar-name"
+                          ><strong>Diamond Mason</strong></span
+                        ><span class="avatar-text-bottom">Toyota</span></span
+                      ></span
+                    ></a
+                  >
+                </div>
+              </div>
+              <div class="scroll-area buildings-users-detail">
+                <button
+                  class="btn btn-clear btn-square buildings-users-detail-back-btn"
+                  type="button"
+                  role="button"
+                >
+                  <i class="uikon">arrow_left</i></button
+                ><span class="avatar avatar-jumbo"
+                  ><span class="avatar-image-wrapper"
+                    ><img
+                      alt=""
+                      class="avatar-image"
+                      src="/static/media/a10.06b87a5d.jpg"/></span
+                  ><span class="avatar-content"
+                    ><span class="avatar-name"
+                      ><strong
+                        >Ava Robbins<span
+                          class="status-dot buildings-users-status green"
+                        ></span></strong></span
+                    ><span class="avatar-text-bottom"
+                      >United Health
+                      <div class="buildings-users-detail-reviews">
+                        <span class="buildings-users-detail-reviews-count"
+                          >9</span
+                        >
+                        Reviews
+                      </div></span
+                    ></span
+                  ></span
+                >
+                <div class="buildings-users-detail-content">
+                  <span class="content-title">Basic Details</span>
+                  <div class="buildings-users-detail-content-basics">
+                    <div class="icon-text icon-text-text-highlight">
+                      <i class="uikon">message_2</i
+                      ><span class="icon-text-text">me@angenewton.co</span>
+                    </div>
+                    <div class="icon-text icon-text-text-highlight">
+                      <i class="uikon">phone</i
+                      ><span class="icon-text-text">+44 (0) 7887 665 221</span>
+                    </div>
+                    <div class="icon-text icon-text-text-highlight">
+                      <i class="uikon">pin_rounded_circle</i
+                      ><span class="icon-text-text">United Kingdom</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="buildings-users-detail-content-bio-wrapper">
+                  <span class="content-title">Bio</span>
+                  <p>
+                    Working in automotive quality management for over 3 years. A
+                    passionate traveller, loves to spend time with her dog. Wine
+                    taster. Biggest dream is to travel the world with all the
+                    money I make from renting building to my dearest customers
+                    who pay well.
+                  </p>
+                </div>
+                <div class="buildings-users-detail-content-tags-wrapper">
+                  <span class="content-title">Tags</span>
+                  <div
+                    class="badge-container buildings-users-detail-content-tags"
+                  >
+                    <span class="badge green badge-fill">Office Management</span
+                    ><span class="badge orange badge-fill">Design</span
+                    ><span class="badge blue badge-fill">Developer</span>
+                  </div>
+                </div>
+                <div class="divider-horizontal divider-margin"></div>
+                <div class="buildings-users-detail-section-header">
+                  <span class="content-title"
+                    >Associated with buildings (45)</span
+                  ><span class="buildings-users-detail-section-header-see-all"
+                    >See All</span
+                  >
+                </div>
+                <div class="buildings-users-detail-associate-buildings">
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b05.d40af9fd.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      Amazon House
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      London
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b02.29a6afe5.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      BIC Center
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      Prague
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b03.343ac0b0.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      8 Canada Square
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      London
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b12.ae334944.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      Tower 43
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      London
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b10.6f1d6bd4.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      Croissant Business Center
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      Paris
+                    </p>
+                  </div>
+                  <div>
+                    <div
+                      class="buildings-users-detail-associate-building-image"
+                      style="background-image:url(/static/media/b07.84d6e62d.jpg)"
+                    ></div>
+                    <h5 class="buildings-users-detail-associate-building-title">
+                      Space House
+                    </h5>
+                    <p
+                      class="buildings-users-detail-associate-building-location"
+                    >
+                      Torronto
+                    </p>
+                  </div>
+                </div>
+                <div class="divider-horizontal divider-margin"></div>
+                <div>
+                  <div class="buildings-users-detail-section-header">
+                    <span class="content-title">Member of teams (5)</span
+                    ><span class="buildings-users-detail-section-header-see-all"
+                      >See All</span
+                    >
+                  </div>
+                  <div class="buildings-users-detail-teams">
+                    <div class="buildings-users-detail-team">
+                      <div
+                        class="buildings-users-detail-team-image"
+                        style="background-image:url(/static/media/b17.55b21b53.jpg)"
+                      ></div>
+                      <div class="buildings-users-detail-team-content">
+                        <span class="badge white badge-fill">OWNER</span>
+                        <h5 class="buildings-users-detail-team-title">
+                          Historical
+                        </h5>
+                        <p class="buildings-users-detail-team-members-count">
+                          35 members
+                        </p>
+                      </div>
+                    </div>
+                    <div class="buildings-users-detail-team">
+                      <div
+                        class="buildings-users-detail-team-image"
+                        style="background-image:url(/static/media/b12.ae334944.jpg)"
+                      ></div>
+                      <div class="buildings-users-detail-team-content">
+                        <h5 class="buildings-users-detail-team-title">
+                          Paris Design
+                        </h5>
+                        <p class="buildings-users-detail-team-members-count">
+                          3 members
+                        </p>
+                      </div>
+                    </div>
+                    <div class="buildings-users-detail-team">
+                      <div
+                        class="buildings-users-detail-team-image"
+                        style="background-image:url(/static/media/b16.d8ae98bb.jpg)"
+                      ></div>
+                      <div class="buildings-users-detail-team-content">
+                        <h5 class="buildings-users-detail-team-title">
+                          Modernists
+                        </h5>
+                        <p class="buildings-users-detail-team-members-count">
+                          102 members
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="divider-horizontal divider-margin"></div>
+                <div class="buildings-users-detail-section-header">
+                  <span class="content-title">Reviews (18)</span
+                  ><span class="buildings-users-detail-section-header-see-all"
+                    >See All</span
+                  >
+                </div>
+                <span class="avatar"
+                  ><span class="avatar-image-wrapper"
+                    ><img
+                      alt=""
+                      class="avatar-image"
+                      src="/static/media/a02.a4579852.jpg"/></span
+                  ><span class="avatar-content"
+                    ><span class="avatar-name">Alice Townsend</span
+                    ><span class="avatar-text-bottom"
+                      >I've had the pleasure to work with Angelina on a number
+                      of projects requiring quality check. It's not easy
+                      communicating project requirements, especially aesthetics,
+                      when your design work is being done remotely.</span
+                    ></span
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+  </body>
+</html>

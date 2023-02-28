@@ -1,0 +1,59 @@
+﻿@using System.Linq.Expressions
+
+<div class="p-3">
+    <input type="radio" name="@randomName" value="False" checked="@(Value == "false" || Value == "False")" @onclick="() => SetValue(false)">False
+    <span class="pl-3"> </span>
+    <input type="radio" name="@randomName" value="True" checked="@(Value == "true" || Value == "True")" @onclick="() => SetValue(true)">True
+</div>
+
+
+@code{
+
+
+    [Parameter]
+    public string Value { get; set; }
+
+
+    [Parameter] public EventCallback<string> OnChangeMethod { get; set; }
+
+
+    private async Task SetValue(bool value)
+    {
+        if (Value != value.ToString())
+        {
+            Value = value.ToString();
+            await OnChangeMethod.InvokeAsync(value.ToString());
+        }
+    }
+     
+    private string randomName = RandomString(5);
+
+     
+
+    private string getChecked(string value)
+    {
+        if(value == Value)
+        {
+            return "checked";
+        }
+
+        return "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+        await base.OnInitializedAsync();
+    }
+    
+
+    private static Random random = new Random();
+
+    public static string RandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+}

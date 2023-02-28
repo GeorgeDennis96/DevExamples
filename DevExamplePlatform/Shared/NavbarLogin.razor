@@ -1,0 +1,23 @@
+﻿@inject NavigationManager NavManager
+@using Shared.Components;
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar">
+
+    <a class="navbar-brand pl-4" href="/">
+        <img class="brand-img d-inline-block" src="dist/img/logo-dark.png" alt="brand" />
+    </a>
+    <ul class="navbar-nav hk-navbar-content">
+        <li class="nav-item">
+            <DevExampleButton Text="Back to DevExample.io" OnClickEvent="back" Width="150px" CustomClass="" CustomStyle="text-transform: unset !important;" Align="DevExampleButton.Alignment.Center" Margin="0" Padding="0"></DevExampleButton>
+        </li>
+    </ul>
+</nav>
+
+@code {
+
+    public void back()
+    {
+        NavManager.NavigateTo("https://devexample.io",true);
+    }
+
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="#000000" name="theme-color" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      crossorigin="anonymous"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/manifest.json" rel="manifest" />
+    <title>Dashboard UI Kit Preview</title>
+    <link href="/static/css/lib.css" rel="stylesheet" />
+    <link href="/static/css/app.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com" rel="preconnect" />
+    <link href="https://code.jquery.com" rel="preconnect" />
+    <link href="https://cdnjs.cloudflare.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="outer-events-handler navigator-container">
+        <button class="expandButton" type="button">
+          <i class="uikon">view_list</i>
+        </button>
+        <div class="list">
+          <a class="nav-link-pill" href="/"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">gallery_grid_view</i></span
+              >Screen Previews</span
+            ></a
+          ><a class="nav-link-pill"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_simple</i></span
+              >Switch Dark/Light Theme</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">rocket</i></span
+              >Installation Guide</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://developer.dashboard-ui.com/docs/react/installation"
+            target="_blank"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">view_list</i></span
+              >React Docs</span
+            ></a
+          >
+          <div class="divider-horizontal"></div>
+          <a
+            class="nav-link-pill active"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"><i class="uikon">love</i></span
+              >Get Designs (Sketch, ..)</span
+            ></a
+          ><a
+            class="nav-link-pill"
+            href="https://janlosert.com/store/dashboard-ui-kit-3.html?from=docs"
+            ><span class="nav-link-text"
+              ><span class="nav-link-left-el"
+                ><i class="uikon">inbox_paper_round</i></span
+              >Get Previews</span
+            ></a
+          >
+        </div>
+      </div>
+      <div class="page-signup-wrapper">
+        <div class="card signup-widget-wrapper">
+          <div class="signup-content">
+            <div class="card-body signup-content-left">
+              <h2>Create Your Account</h2>
+              <p class="signup-description">
+                Get started with Buildings and rent with love!
+              </p>
+              <div class="form-group-container">
+                <div class="form-group-container-horizontal">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <div class="input-group">
+                        <input class="form-control" name="name" type="text" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Surname</label>
+                      <div class="input-group">
+                        <input
+                          class="form-control"
+                          name="surname"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-group">
+                    <label>E-mail address</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        name="email"
+                        type="text"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        name="password"
+                        type="password"
+                        placeholder="·····"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <h3 class="signup-headline">What are you looking for?</h3>
+              <div class="login-card-container">
+                <button class="login-card login-card-selected" type="button">
+                  <i class="uikon">wallet</i>
+                  <p>Rent</p>
+                  <i class="uikon login-card-check">check</i></button
+                ><button class="login-card" type="button">
+                  <i class="uikon">lightbulb</i>
+                  <p>Co-work</p>
+                  <i class="uikon login-card-check">check</i></button
+                ><button class="login-card" type="button">
+                  <i class="uikon">rocket</i>
+                  <p>Invest</p>
+                  <i class="uikon login-card-check">check</i>
+                </button>
+              </div>
+              <a
+                class="btn btn-success btn-block"
+                href="/buildings/dashboard"
+                role="button"
+                >Get Started With Buildings!</a
+              >
+            </div>
+            <div class="signup-content-right">
+              <h3 class="signup-headline">
+                <i class="uikon mr">building</i> Buildings
+              </h3>
+              <p class="signup-description">
+                Architecture begins when you place two bricks carefully
+                together.
+              </p>
+              <span class="avatar avatar-sm"
+                ><span class="avatar-image-wrapper"
+                  ><img
+                    alt=""
+                    class="avatar-image"
+                    src="/static/media/a11.15f39456.jpg"/></span
+                ><span class="avatar-content"
+                  ><span class="avatar-name"
+                    >Ludwig Mies van der Rohe</span
+                  ></span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <p>Already on Buildings? Let us take you to <a>Sign In!</a></p>
+      </div>
+    </div>
+     
+  </body>
+</html>

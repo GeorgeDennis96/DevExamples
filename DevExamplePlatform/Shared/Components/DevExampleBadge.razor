@@ -1,0 +1,57 @@
+﻿
+<span class="badge badge-@GetBadgeType()" style="font-size: 100%;">@Value</span>
+
+@code {
+
+    [Parameter]
+    public string Value { get; set; }
+
+    public enum NetoBadgeType
+    {
+        Primary,
+        Secondary,
+        Success,
+        Danger,
+        Warning,
+        Info,
+        Light,
+        Dark
+    }
+
+    [Parameter]
+    public NetoBadgeType Type { get; set; } = NetoBadgeType.Primary;
+
+    public string GetBadgeType()
+    {
+        switch (Type)
+        {
+            case NetoBadgeType.Primary:
+                return "primary";
+                break;
+            case NetoBadgeType.Secondary:
+                return "secondary";
+                break;
+            case NetoBadgeType.Success:
+                return "success";
+                break;
+            case NetoBadgeType.Danger:
+                return "danger";
+                break;
+            case NetoBadgeType.Warning:
+                return "warning";
+                break;
+            case NetoBadgeType.Info:
+                return "info";
+                break;
+            case NetoBadgeType.Light:
+                return "light";
+                break;
+            case NetoBadgeType.Dark:
+                return "dark";
+                break;
+            default:
+                return "primary";
+        }
+    }
+
+}

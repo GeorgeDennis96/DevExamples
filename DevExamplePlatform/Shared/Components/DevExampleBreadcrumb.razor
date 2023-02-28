@@ -1,0 +1,37 @@
+﻿
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background-color: inherit;">
+        @foreach (var item in itemList)
+        {
+            if (item == itemList.LastOrDefault())
+            {
+                <li class="breadcrumb-item active"><a href="@item.URL">@item.Title</a></li>
+            }
+            else
+            {
+                <li class="breadcrumb-item"><a href="@item.URL">@item.Title</a></li>
+            }
+        }
+    </ol>
+</nav>
+
+@code {
+
+    [Parameter]
+    public List<BreadcrumbItem> itemList { get; set; }
+
+    public string IsActive(bool isActive)
+    {
+        if (isActive)
+        {
+            return "active";
+        }
+        return "";
+    }
+
+    public class BreadcrumbItem
+    {
+        public string Title { get; set; }
+        public string URL { get; set; }
+    }
+}

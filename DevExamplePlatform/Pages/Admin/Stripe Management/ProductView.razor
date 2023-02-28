@@ -1,0 +1,282 @@
+﻿@page "/admin/stripe/product/management/{productid}"
+@using DevExample.Platform.Services
+@using DevExample.Private.Models.Stripe
+@using Stripe;
+@using DevExample.Private.Models;
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer>
+    <AuthorizeView>
+        <Authorized>
+            @if (StripeProduct != null)
+            {
+                <div class="row">
+                    <div class="col-4">
+                        @if (IsEditting)
+                        {
+                            <h6>Name: </h6>
+                            <input type="text" class="form-control mb-3 w-50" placeholder="Name" @bind="NameEdit">
+                        }
+                        else
+                        {
+                            <p class="mb-3"><h6>Name: </h6> @StripeProduct.Name</p>
+                        }
+                        <p class="mb-3"><h6>Active: </h6> @StripeProduct.Active</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="mb-3"><h6>Created On: </h6> @StripeProduct.Created</p>
+                        <p class="mb-3"><h6>ID: <MudTooltip Text="Copy Product ID"><MudIconButton Size="Size.Small" Class="float-left" Icon="@Icons.Filled.ContentCopy" OnClick="@(() => CopyText(StripeProduct.Id))"></MudIconButton></MudTooltip></h6></p>
+                    </div>
+                    <div class="col-4">
+                        @if (IsEditting)
+                        {
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Success" Width="120px" Text="Confirm" OnClickEvent="ConfirmEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Warning" Width="120px" Text="Cancel" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                        }
+                        else
+                        {
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Edit" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            @if (StripeProduct.Active)
+                            {
+                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Disable" OnClickEvent="ToggleProduct" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            }
+                            else
+                            {
+                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Enable" OnClickEvent="ToggleProduct" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            }
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Danger" Width="120px" Text="Delete" DataTarget="#ConfirmDeleteModal" DataToggle="modal" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Product List" OnClickEvent="GoToProductList" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-md-12">
+                        @if (IsEditting)
+                        {
+                            <h6>Description: </h6>
+                            <textarea class="form-control" rows="3" style="resize:none;" @bind="DescriptionEdit"></textarea>
+                        }
+                        else
+                        {
+                            <p class="mb-3"><h6>Description: </h6> @StripeProduct.Description</p>
+                        }
+                        
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        @if (StripeProductPrices != null)
+                        {
+                            <div class="float-right p-3">
+                                <button type="button" class="btn btn-outline-info" @onclick="GoToCreatePrice">Create Price</button>
+                            </div>
+                            <MudTable Items="@StripeProductPrices" Style="box-shadow:none;" SortLabel="Sort By" T="Stripe.Price" Dense="true" RowsPerPage="10" Bordered="true" Filter="new Func<Stripe.Price,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+                                <ToolBarContent>
+                                    <MudSpacer />
+                                    <MudTextField @bind-Value="searchString1" Placeholder="Search" Immediate=true Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                </ToolBarContent>
+                                <HeaderContent>
+                                    <MudTh>ID</MudTh>
+                                    <MudTh></MudTh>
+                                    <MudTh>Nickname</MudTh>
+                                    <MudTh>Type</MudTh>
+                                    <MudTh>Usage Type</MudTh>
+                                    <MudTh>Aggregate Usage</MudTh>
+                                    <MudTh>Currency</MudTh>
+                                    <MudTh>Unit Amount</MudTh>
+                                    <MudTh>Active</MudTh>
+                                    <MudTh>Manage</MudTh>
+                                </HeaderContent>
+                                <RowTemplate Context="tableContext">
+                                    <MudTd><MudTooltip Text="Copy Price ID"><MudIconButton Size="Size.Small" Class="float-left border-0" Icon="@Icons.TwoTone.Numbers" OnClick="@(() => CopyText(tableContext.Id))"></MudIconButton></MudTooltip></MudTd>
+                                    <MudTd DataLabel="Default">
+                                        @if(tableContext.Id == StripeProduct.DefaultPriceId)
+                                        {
+                                            <a class="badge badge-light">Default Price</a>
+                                        }
+                                    </MudTd>
+                                    <MudTd DataLabel="Nickname">@tableContext.Nickname</MudTd>
+                                    <MudTd DataLabel="Type">@tableContext.Type</MudTd>
+                                    @{
+                                        string usageType = "-";
+                                        string aggregateUsage = "-";
+                                        if (tableContext.Recurring != null)
+                                        {
+                                            if (tableContext.Recurring.UsageType != null)
+                                            {
+                                                usageType = tableContext.Recurring.UsageType;
+                                                aggregateUsage = tableContext.Recurring.AggregateUsage;
+                                            }
+                                        }
+                                    }
+                                    <MudTd DataLabel="Usage Type">@usageType</MudTd>
+                                    <MudTd DataLabel="Aggr Type">@aggregateUsage</MudTd>
+                                    @{
+                                        var amount = (float)tableContext.UnitAmount / 100;
+                                    }
+                                    <MudTd DataLabel="Currency">@tableContext.Currency</MudTd>
+                                    <MudTd DataLabel="Amount">£@amount</MudTd>
+                                    <MudTd DataLabel="Active">@tableContext.Active</MudTd>
+                                    <MudTd DataLabel="Manage"><button type="button" class="btn btn-primary" @onclick="@(() => GoToPrice(tableContext.Id))">View</button></MudTd>
+                                </RowTemplate>
+                                <PagerContent>
+                                    <MudTablePager />
+                                </PagerContent>
+                            </MudTable>
+                        }
+                    </div>
+                </div>
+            }
+@*            <DevExampleButton Align="DevExampleButton.Alignment.Left" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="120px" Text="Back" OnClickEvent="GoToProductList" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>*@
+
+            <DevExampleModal @ref="ConfirmDeleteModal" Id="ConfirmDeleteModal">
+                <Header>
+                    <span>Are you sure you wish to delete this product?</span>
+                </Header>
+                <Body>
+                    <span>@StripeProduct.Id</span>
+                </Body>
+                <Footer>
+                    <button type="button" class="btn btn-outline-danger" @onclick="(() => DeleteProduct())" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                </Footer>
+            </DevExampleModal>
+
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    [Parameter]
+    public string productid { get; set; }
+
+    public Stripe.Product StripeProduct = new Stripe.Product();
+    public List<Price> StripeProductPrices = new List<Price>();
+    public DevExampleModal ConfirmDeleteModal;
+    private AccountModel DevExampleAccount = new AccountModel();
+
+    public string searchString1 { get; set; }
+    private Price selectedItem1 = null;
+
+    private bool IsEditting = false;
+
+    private string NameEdit { get; set; }
+    private string DescriptionEdit { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        DevExampleAccount = Services.AccountService.Instance.GetAccount(NameIdentifier);
+        GetProduct();
+
+        NameEdit = StripeProduct.Name;
+        DescriptionEdit = StripeProduct.Description;
+
+    }
+
+    private void GetProduct()
+    {
+        StripeProduct = PaymentService.Instance.GetProduct(productid);
+        StripeProductPrices = PaymentService.Instance.GetProductPrices(StripeProduct.Id);
+    }
+
+    private void DeleteProduct()
+    {
+        var result = PaymentService.Instance.DeleteProduct(StripeProduct.Id);
+        if (result == "Success")
+        {
+            Snackbar.Add("Product Deleted.", Severity.Success);
+            GoToProductList();
+        }
+        else
+        {
+            Snackbar.Add(result, Severity.Warning);
+        }
+    }
+
+    private async Task CopyText(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        Snackbar.Add("ID: " + text + " copied to clipboard!", Severity.Success);
+    }
+
+    private void GoToPrice(string priceId)
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management/price/"+ priceId);
+    }
+
+    private void GoToCreatePrice()
+    {
+        NavManager.NavigateTo("/admin/stripe/price/management/create/"+StripeProduct.Id);
+    }
+
+    private void ToggleProduct()
+    {
+        var result = PaymentService.Instance.ToggleProduct(StripeProduct.Id);
+
+        if (result == "Success")
+        {
+            NavManager.NavigateTo("/admin/stripe/product/management/" + productid, true);
+        }
+        else
+        {
+            Snackbar.Add(result, Severity.Warning);
+        }
+    }
+
+    public void ToggleEdit()
+    {
+        IsEditting = !IsEditting;
+    }
+
+    public void ConfirmEdit()
+    {
+        StripeUpdateProductModel updateModel = new StripeUpdateProductModel()
+        {
+            Name = NameEdit,
+            Description = DescriptionEdit,
+            Product_Id = StripeProduct.Id,
+        };
+
+        //var result = Services.PaymentService.Instance.UpdateProduct(updateModel);
+
+        //if (result == "Success")
+        //{
+        //    IsEditting = false;
+        //    Snackbar.Add("Product was successfully updated", Severity.Success);
+        //    GetProduct();
+        //}
+        //else
+        //{
+        //    Snackbar.Add(result, Severity.Warning);
+        //}
+    }
+
+    private void GoToProductList()
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management");
+    }
+
+    private bool FilterFunc1(Price price) => FilterFunc(price, searchString1);
+
+    private bool FilterFunc(Price price, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (price.Id.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (price.Nickname.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (price.Type.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+}

@@ -1,0 +1,116 @@
+﻿@inherits ComponentBase
+
+@if (Disabled)
+{
+    @if (ShowLabel)
+    {
+        <label class="@LabelClass">@LabelText</label>
+    }
+    <input id="@Id" type="@Type" class="form-control mt-@TopMargin mb-@BottomMargin @GetAlignnment() @CustomClass" style="width:@Width;" value="@Value" placeholder="@Placeholder" @oninput="OnValueChanged" readonly>
+}
+else
+{
+    @if (ShowLabel)
+    {
+        <label class="@LabelClass">@LabelText</label>
+    }
+    <input id="@Id" type="@Type" class="form-control mt-@TopMargin mb-@BottomMargin @GetAlignnment() @CustomClass" style="width:@Width;" value="@Value" placeholder="@Placeholder" @oninput="OnValueChanged">
+}
+
+@code{
+    [Parameter]
+    public string LabelClass { get; set; } = "";
+    [Parameter]
+    public string Type { get; set; } = "text";
+
+    [Parameter]
+    public string TopMargin { get; set; } = "3";
+
+    [Parameter]
+    public string BottomMargin { get; set; } = "3";
+
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    [Parameter]
+    public string Placeholder { get; set; } = "";
+    [Parameter]
+    public Alignment Align { get; set; } = Alignment.Left;
+
+    [Parameter]
+    public string Width { get; set; } = "100px";
+
+    [Parameter]
+    public string Value { get; set; } = "";
+
+    [Parameter]
+    public bool ShowLabel { get; set; } = false;
+    [Parameter]
+    public string LabelText { get; set; } = "";
+
+    [Parameter]
+    public string CustomClass { get; set; } = "";
+
+    [Parameter]
+    public List<DevExampleInput> AppendInputList { get; set; }
+
+    [Parameter]
+    public EventCallback OnInputChanged { get; set; }
+
+
+    public string GetValue()
+    {
+        return Value;
+    }
+    public void SetValue(string value)
+    {
+        Value = value;
+        StateHasChanged();
+    }
+    public void Clear()
+    {
+        Value = "";
+    }
+    private void OnValueChanged(ChangeEventArgs e)
+    {
+        if (!Disabled)
+        {
+            Value = e.Value.ToString();
+            OnInputChanged.InvokeAsync(null);
+        }
+    }
+
+    private string GetAlignnment()
+    {
+        switch (Align)
+        {
+            case Alignment.Left:
+                return "float-left";
+                break;
+            case Alignment.Center:
+                return "float-none";
+                break;
+            case Alignment.Right:
+                return "float-right";
+                break;
+
+        }
+        return "";
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //AppendInputList.Add(this);
+    }
+
+    public enum Alignment
+    {
+        Center,
+        Left,
+        Right
+    }
+}

@@ -1,0 +1,164 @@
+﻿@page "/products/view/all"
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer>
+
+            @if (ProductList != null)
+            {
+                <div class="container">
+                    <h5 class="m-3 ml-0">Subscriptions</h5>
+                    <div class="align-items-center">
+                        @foreach (var product in GetSubscribableProducts())
+                        {
+                            <div class="card w-80">
+                                <div class="card-body">
+                                    <div class="row h-100">
+                                        <div class="col-md-3 col-sm-12">
+                                            @if (product.Images.Any<string>())
+                                            {
+                                                <div class="h-100 text-center">
+                                                    <img src="@product.Images[0]" style="width:190px; height:197px!important;" class="h-100 w-100" alt="...">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="h-100">
+                                                    <MudSkeleton Style="transform:none;" Width="100%" Height="197px" />
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-9 col-sm-12 pl-md-0 pl-sm-4 pr-sm-4 mt-sm-2 mt-md-2">
+                                            <h5 class="card-title">@product.Name</h5>
+                                            <p class="card-text">@product.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    @{
+                                        var price = GetPrice(product.DefaultPriceId);
+                                        var calc = price.UnitAmountDecimal / 100;
+                                        string amount = calc.ToString();
+                                        if (price.Recurring.UsageType == "metered")
+                                        {
+                                            amount = calc.ToString() + " Per Unit";
+                                        }
+                                        var interval = price.Recurring.Interval;
+                                    }
+                                    @*The default price of the subscription is shown*@
+                                    <button type="button" class="btn btn-outline-info">£@amount / @interval</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (ProductList != null)
+            {
+                <div class="container">
+                    <h5 class="m-3 ml-0">One Time</h5>
+                    <div class="align-items-center">
+                        @foreach (var product in GetOneTimePurchaseProducts())
+                        {
+                            <div class="card w-80">
+                                <div class="card-body">
+                                    <div class="row h-100">
+                                        <div class="col-md-3 col-sm-12">
+                                            @if (product.Images.Any<string>())
+                                            {
+                                                <div class="h-100 text-center">
+                                                    <img src="@product.Images[0]" style="width:190px; height:197px!important;" class="h-100 w-100" alt="...">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="h-100">
+                                                    <MudSkeleton Style="transform:none;" Width="100%" Height="197px" />
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-9 col-sm-12 pl-md-0 pl-sm-4 pr-sm-4 mt-sm-2 mt-md-2">
+                                            <h5 class="card-title">@product.Name</h5>
+                                            <p class="card-text">@product.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    @{
+                                        var price = GetPrice(product.DefaultPriceId);
+                                        var amount = price.UnitAmount / 100;
+                                    }
+                                    <button type="button" class=" btn btn-outline-info">£@amount</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+</DashboardContainer>
+
+@code {
+    private AccountModel DevExampleAccount = new AccountModel();
+    private List<Stripe.Product> ProductList = new List<Stripe.Product>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userNameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        GetAccount(userNameIdentifier);
+
+        GetProducts();
+    }
+
+    public void GetAccount(string nameIdentifier)
+    {
+        DevExampleAccount = AccountService.Instance.GetAccount(nameIdentifier);
+    }
+
+    private void GetProducts()
+    {
+        ProductList = Services.PaymentService.Instance.GetActiveProducts();
+    }
+
+    private List<Stripe.Product> GetSubscribableProducts(){
+        if (ProductList != null)
+        {
+            if (ProductList.Count > 0)
+            {
+                return ProductList.Where(x => GetPrice(x.DefaultPriceId).Type == "recurring").ToList<Stripe.Product>();
+            }
+        }
+        return new List<Stripe.Product>();
+    }
+
+    private List<Stripe.Product> GetOneTimePurchaseProducts()
+    {
+        if (ProductList != null)
+        {
+            if (ProductList.Count > 0)
+            {
+                return ProductList.Where(x => GetPrice(x.DefaultPriceId).Type == "one_time").ToList<Stripe.Product>();
+            }
+        }
+        return new List<Stripe.Product>();
+    }
+
+    //public void GoToCheckout(string priceId)
+    //{
+    //    NavManager.NavigateTo(Services.PaymentService.Instance.CreateCheckout(priceId, DevExampleAccount.nameIdentifier));
+    //}
+
+    private Stripe.Price GetPrice(string priceId)
+    {
+        return Services.PaymentService.Instance.GetPrice(priceId);
+    }
+
+}

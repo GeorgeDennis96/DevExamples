@@ -1,0 +1,87 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavManager
+@inject IHttpContextAccessor httpContextAccessor
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+@using DevExample.Platform.Services
+@using DevExample.Private.Models
+
+<AuthorizeView>
+    <Authorized>
+        @IdentityRegistration(@context)
+        <div class="hk-wrapper hk-vertical-nav">
+            <Navbar @ref="navbar" IsMenuDisabled="@IsMenuDisabled" />
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="hk-wrapper">
+            <NavbarLogin />
+            <DefaultContainer>
+                @Body
+            </DefaultContainer>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code{
+
+    private bool AccountStateExists { get; set; } = false;
+    private string NameIdentifier { get; set; }
+    private AccountService AccountService { get; set; }
+    private AuthenticationState authState { get; set; }
+    private bool IsMenuDisabled { get; set; } = false;
+    private bool IsAdmin { get; set; } = false;
+
+    public Navbar navbar;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AccountService = new AccountService();
+
+        StateHasChanged();
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+
+    public string IdentityRegistration(AuthenticationState state)
+    {
+
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        var Name = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value;
+        var Email = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+        if (Name != null && NameIdentifier != null)
+        {
+            if (AccountService.AccountExists(NameIdentifier))
+            {
+                var account = AccountService.GetAccount(NameIdentifier);
+                IsAdmin = account.ironMan;
+                if (!account.acceptedTerms && !NavManager.Uri.Contains("terms"))
+                {
+                    NavManager.NavigateTo("/terms");
+                    IsMenuDisabled = true;
+                }
+                else
+                {
+                    IsMenuDisabled = false;
+                }
+            }
+            else
+            {
+                var account = new AccountModel() { name = Name, email = Email, nameIdentifier = NameIdentifier };
+                if (AccountService.AddAccount(account))
+                {
+                    Console.WriteLine("Added account: " + Name);
+                    NavManager.NavigateTo("/terms", true);
+                }
+            }
+        }
+        return "";
+    }
+     
+}

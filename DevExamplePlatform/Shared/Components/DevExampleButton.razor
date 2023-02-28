@@ -1,0 +1,151 @@
+﻿@inherits ComponentBase
+
+<button data-toggle="@DataToggle" data-target="@DataTarget" data-mdb-ripple-color="@RippleColour" data-dismiss="@DataDismiss" type="button" id="@Id" aria-haspopup="@HasPopup" aria-expanded="@AriaExpanded" class="btn @GetButtonType()
+@CustomClass @Padding @Margin @GetAlignment()" style="width:@Width; height:@Height; @CustomStyle " @onclick="ButtonClick">@Text @ChildContent</button>
+
+@code{
+
+    [Parameter]
+    public string Id { get; set; } = "";
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public string CustomClass { get; set; } = "";
+    [Parameter]
+    public string CustomStyle { get; set; } = "";
+    [Parameter]
+    public string Width { get; set; } = "100px";
+    [Parameter]
+    public string Height { get; set; }
+    [Parameter]
+    public string Padding { get; set; } = "p-3";
+    [Parameter]
+    public string Margin { get; set; } = "m-3";
+    [Parameter]
+    public Alignment Align { get; set; } = Alignment.Left;
+    [Parameter]
+    public NetoButtonType ButtonType { get; set; } = NetoButtonType.Outline;
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string DataToggle { get; set; }
+    [Parameter]
+    public string DataTarget { get; set; } // Must match targeted components aria-labelledby
+    [Parameter]
+    public string DataDismiss { get; set; } = "";
+    [Parameter]
+    public bool HasPopup { get; set; } = false;
+    [Parameter]
+    public bool AriaExpanded { get; set; } = false;
+    [Parameter]
+    public string RippleColour { get; set; }
+
+    private string GetAlignment()
+    {
+        switch (Align)
+        {
+            case Alignment.Left:
+                return "float-left";
+                break;
+            case Alignment.Center:
+                return "float-none";
+                break;
+            case Alignment.Right:
+                return "float-right";
+                break;
+        }
+        return "";
+    }
+
+    private string GetButtonType()
+    {
+        switch (ButtonType)
+        {
+            case NetoButtonType.Primary:
+                return "btn-primary";
+            case NetoButtonType.Success:
+                return "btn-success";
+                break;
+            case NetoButtonType.Info:
+                return "btn-info";
+                break;
+            case NetoButtonType.Warning:
+                return "btn-warning";
+                break;
+            case NetoButtonType.Error:
+                return "btn-error";
+                break;
+            case NetoButtonType.Danger:
+                return "btn-danger";
+                break;
+            case NetoButtonType.Outline:
+                return "btn-outline-info";
+                break;
+            case NetoButtonType.Outline_Primary:
+                return "btn-outline-primary";
+                break;
+            case NetoButtonType.Outline_Success:
+                return "btn-outline-success";
+                break;
+            case NetoButtonType.Outline_Error:
+                return "btn-outline-error";
+                break;
+            case NetoButtonType.Outline_Danger:
+                return "btn-outline-danger";
+                break;
+            case NetoButtonType.Outline_Warning:
+                return "btn-outline-warning";
+                break;
+            case NetoButtonType.Outline_Info:
+                return "btn-outline-info";
+                break;
+            case NetoButtonType.Outline_Dark:
+                return "btn-outline-dark";
+                break;
+            case NetoButtonType.Borderless:
+                return "btn-link";
+        }
+
+        return "btn-outline-info";
+    }
+
+    [Parameter]
+    public EventCallback OnClickEvent { get; set; }
+
+    private async Task ButtonClick()
+    {
+        await OnClickEvent.InvokeAsync(this);
+    }
+
+    public enum Alignment
+    {
+        Center,
+        Left,
+        Right
+    }
+
+    public enum NetoButtonType
+    {
+        Primary,
+        Success,
+        Error,
+        Danger,
+        Warning,
+        Info,
+        Dark,
+        Outline,
+        Outline_Primary,
+        Outline_Success,
+        Outline_Error,
+        Outline_Danger,
+        Outline_Warning,
+        Outline_Info,
+        Outline_Dark,
+        Borderless
+    }
+
+    public void SetText(string text)
+    {
+        Text = text;
+    }
+}

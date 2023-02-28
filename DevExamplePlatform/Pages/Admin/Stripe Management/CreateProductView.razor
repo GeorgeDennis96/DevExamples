@@ -1,0 +1,213 @@
+﻿@page "/admin/stripe/product/management/create"
+@using DevExample.Platform.Services
+@using DevExample.Platform.Shared.Utils
+@using DevExample.Private.Models
+@using DevExample.Platform.Shared
+@using DevExample.Private.Models.Stripe
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer ContainerTitle="Stripe Product Create">
+    <AuthorizeView>
+        <Authorized>
+            <form>
+                <div class="form-group">
+                    <h5>Name:</h5>
+                    <div>
+                        <input type="text" class="form-control w-md-50 w-sm-50 w-lg-25" placeholder="Name" @bind="ProductName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5>Description:</h5>
+                    <div>
+                        <textarea class="form-control w-md-50 w-sm-50 w-lg-25" rows="6" style="resize:none;" placeholder="Optional" @bind="ProductDescription"></textarea>
+                    </div>
+                </div>
+@*                <div class="form-group">
+                    <label>Image:</label>
+                    <InputFile id="fileInput" OnChange="UploadFile" hidden accept=".jpg, .jpeg, .png" />
+                    <MudIconButton HtmlTag="label" Color="Color.Info" Icon="@Icons.Filled.PhotoCamera" for="fileInput"></MudIconButton>
+                    <ul>
+                        @foreach (var file in files)
+                        {
+                            <li>
+                                <span>
+                                    @file.Name <code>@file.Size bytes </code>
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                </div>*@
+                <hr />
+                <div class="form-group">
+                    <div class="form-group">
+                        <h5>Price Type:</h5>
+                        <div>
+                            <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedPriceType" ItemList="TypeOfPrice" @ref="PriceTypeDropdown" Class="form-control w-md-50 w-sm-50 w-lg-25" Id="pricetype" TopMargin="0px" Width="100%"></DevExampleDropdown>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Currency Type:</h5>
+                        <div>
+                            <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedCurrency" ItemList="Currencies" @ref="CurrencyDropdown" Class="form-control w-md-50 w-sm-50 w-lg-25" Id="currencies" TopMargin="0px" Width="100%"></DevExampleDropdown>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5>Unit Amount:</h5>
+                        <div>
+                            <input type="number" class="form-control w-md-50 w-sm-50 w-lg-25" placeholder="Unit Amount" @bind="PriceUnitAmount">
+                        </div>
+                    </div>
+                </div>
+                @if (PriceTypeDropdown != null)
+                {
+                    @if (PriceTypeDropdown.SelectedValue == "recurring")
+                    {
+                        <div class="form-group">
+                            <h5>Interval</h5>
+                            <div>
+                                <DevExampleDropdown ShowLabel="false" @bind-SelectedValue="@SelectedInterval" ItemList="Intervals" @ref="IntervalsDropdown" Class="form-control w-md-50 w-sm-50 w-lg-25" Id="intervals" TopMargin="0px" Width="100%"></DevExampleDropdown>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5>Interval Count</h5>
+                            <div>
+                                <input type="number" class="form-control w-md-50 w-sm-50 w-lg-25" placeholder="Interval Count" @bind="IntervalCount">
+                            </div>
+                        </div>
+                    }
+                }
+            </form>
+            <button type="button" class="btn btn-outline-info float-left" style="width:150px" @onclick="GoBack">Back</button>
+            <button type="submit" class="btn btn-outline-info float-right" style="width:150px" @onclick="Create">Create</button>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    public DevExampleDropdown CurrencyDropdown { get; set; }
+    public List<DevExampleDropdown.SelectItem> Currencies = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedCurrency { get; set; } = "gbp";
+
+    public DevExampleDropdown PriceTypeDropdown { get; set; }
+    public List<DevExampleDropdown.SelectItem> TypeOfPrice = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedPriceType { get; set; } = "one_time";
+
+    public DevExampleDropdown IntervalsDropdown { get; set; }
+    public List<DevExampleDropdown.SelectItem> Intervals = new List<DevExampleDropdown.SelectItem>();
+    public string SelectedInterval { get; set; } = "day";
+    public string IntervalCount { get; set; } = "1";
+
+    private string ImageData { get; set; }
+    private string ProductName { get; set; }
+    private string ProductDescription { get; set; }
+    private int PriceUnitAmount { get; set; }
+    //IList<IBrowserFile> files = new List<IBrowserFile>();
+
+    private AccountModel DevExampleAccount = new AccountModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        DevExampleAccount = Services.AccountService.Instance.GetAccount(NameIdentifier);
+
+        GetCurrency();
+        GetPriceTypes();
+        GetIntervals();
+    }
+
+    private void Create()
+    {
+        StripeProductModel productModel = new StripeProductModel()
+        {
+            Name = ProductName,
+            Description = ProductDescription,
+            Active = true,
+            //Image_Data = ImageData
+        };
+
+        StripePriceModel priceModel = new StripePriceModel();
+
+        if (PriceTypeDropdown.GetSelectedValue() == "recurring")
+        {
+            priceModel.Interval = SelectedInterval;
+            priceModel.Interval_Count = IntervalCount;
+            priceModel.Currency = SelectedCurrency;
+            priceModel.Active = true;
+            priceModel.Type = "recurring";
+            priceModel.Unit_Amount = PriceUnitAmount;
+        }
+        else if (PriceTypeDropdown.GetSelectedValue() == "one_time")
+        {
+            priceModel.Currency = SelectedCurrency;
+            priceModel.Active = true;
+            priceModel.Type = "one_time";
+            priceModel.Unit_Amount = PriceUnitAmount;
+        }
+        //var result = PaymentService.Instance.CreateStripeProduct(productModel, priceModel);
+        //if (result == "Success")
+        //{
+        //    Snackbar.Add("Product Added.", Severity.Success);
+        //    GoBack();
+        //}
+        //else
+        //{
+        //    Snackbar.Add(result, Severity.Warning);
+        //}
+    }
+
+    //private async void UploadFile(InputFileChangeEventArgs e)
+    //{
+
+    //    files.Clear();
+
+    //    files.Add(e.File);
+
+    //    if (e.File != null)
+    //    {
+    //        var resizedImage = await e.File.RequestImageFileAsync(e.File.ContentType, 512, 512);
+
+    //        var buffer = new byte[e.File.Size];
+    //        var fileContent = new StreamContent(resizedImage.OpenReadStream(1024 * 1024 * 15));
+    //        buffer = await fileContent.ReadAsByteArrayAsync();
+
+    //        var imageData = await ImageConversion.ConvertBufferToBase64(buffer, e.File.ContentType);
+
+    //        ImageData = imageData;
+
+    //        OnInitialized();
+    //    }
+    //}
+
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management");
+    }
+
+    private void GetPriceTypes()
+    {
+        TypeOfPrice.Add(new DevExampleDropdown.SelectItem() { Name = "One Time", Value = "one_time" });
+        TypeOfPrice.Add(new DevExampleDropdown.SelectItem() { Name = "Recurring", Value = "recurring" });
+    }
+
+    private void GetIntervals()
+    {
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Day", Value = "day" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Week", Value = "week" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Month", Value = "month" });
+        Intervals.Add(new DevExampleDropdown.SelectItem() { Name = "Year", Value = "year" });
+    }
+
+    private void GetCurrency()
+    {
+        Currencies.Add(new DevExampleDropdown.SelectItem() { Name = "GBP - £", Value = "gbp" });
+        Currencies.Add(new DevExampleDropdown.SelectItem() { Name = "USD - $", Value = "usd" });
+    }
+}

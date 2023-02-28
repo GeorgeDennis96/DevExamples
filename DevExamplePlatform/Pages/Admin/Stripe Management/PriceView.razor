@@ -1,0 +1,190 @@
+@page "/admin/stripe/product/management/price/{priceid}"
+@using DevExample.Platform.Services
+@using Stripe;
+@using DevExample.Private.Models;
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<DashboardContainer>
+    <AuthorizeView>
+        <Authorized>
+
+            @if (StripePrice != null)
+            {
+                <div class="row">
+                    <div class="col-4">
+                        <p class="mb-3"><h6>Attached to product: </h6> @StripePrice.ProductId</p>
+                        @{
+                            var usageType = "";
+
+                            if (StripePrice.Recurring != null)
+                            {
+                                if (StripePrice.Recurring.UsageType != null)
+                                {
+                                    usageType = StripePrice.Recurring.UsageType;
+                                }
+                            }
+                        }
+                        @if (StripePrice.Recurring != null)
+                        {
+                            <p class="mb-3"><h6>Usage Type:</h6> @usageType</p>
+                            @if (StripePrice.Recurring.UsageType == "metered")
+                            {
+                                <p class="mb-3"><h6>Aggregate Usage:</h6> @StripePrice.Recurring.AggregateUsage</p>
+                            }
+                        }
+                        <p class="mb-3"><h6>Active: </h6> @StripePrice.Active</p>
+                        <p class="mb-3"><h6>Currency: </h6> @StripePrice.Currency</p>
+                        @{
+                            var amount = StripePrice.UnitAmountDecimal / 100;
+                        }
+                        <p class="mb-3"><h6>Unit Amount:</h6>@amount</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="mb-3"><h6>Created On: </h6> @StripePrice.Created</p>
+                        @if (IsEditting)
+                        {
+                            <h6>Nickname: </h6>
+                            <input type="text" class="form-control mb-3 w-50" placeholder="Nickname" @bind="NicknameEdit">
+                        }
+                        else
+                        {
+                            <p class="mb-3"><h6>Nickname: </h6> @StripePrice.Nickname</p>
+                        }
+                        <p class="mb-3"><h6>ID: <MudTooltip Text="Copy Price ID"><MudIconButton Size="Size.Small" Class="float-left" Icon="@Icons.Filled.ContentCopy" OnClick="@(() => CopyText(StripePrice.Id))"></MudIconButton></MudTooltip></h6></p>
+
+                        @if (StripeProduct != null && StripePrice != null)
+                        {
+                            @if (StripeProduct.DefaultPriceId == StripePrice.Id)
+                            {
+                                <p class="mb-3"><h6><a class="badge badge-light">Default Price</a></h6></p>
+                            }
+                        }
+
+                    </div>
+                    <div class="col-4">
+                        @if (IsEditting)
+                        {
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Success" Width="150px" Text="Confirm" OnClickEvent="ConfirmEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Warning" Width="150px" Text="Cancel" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                        }
+                        else
+                        {
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Edit" OnClickEvent="ToggleEdit" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            @if (StripePrice.Active)
+                            {
+                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Disable" OnClickEvent="TogglePrice" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            }
+                            else
+                            {
+                                <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Enable" OnClickEvent="TogglePrice" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            }
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Price List" OnClickEvent="GoToPriceList" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Go To Product" OnClickEvent="GoToProduct" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                            <DevExampleButton Align="DevExampleButton.Alignment.Right" ButtonType="DevExampleButton.NetoButtonType.Outline_Info" Width="150px" Text="Set Default Price " OnClickEvent="SetDefaultPrice" Margin="m-1" Padding="p-2" CustomClass="mt-2"></DevExampleButton>
+                        }
+                    </div>
+                </div>
+            }
+
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    [Parameter]
+    public string priceid {get; set;}
+
+    private Price StripePrice = new Price();
+    private Product StripeProduct = new Product();
+    private AccountModel DevExampleAccount = new AccountModel();
+
+    private bool IsEditting = false;
+
+    private string NicknameEdit { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var NameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+        DevExampleAccount = Services.AccountService.Instance.GetAccount(NameIdentifier);
+        GetPrice();
+        GetProduct();
+    }
+
+    private async Task CopyText(string text)
+    {
+        await Clipboard.CopyTextToClipboard(JSRuntime, text);
+        Snackbar.Add("ID: " + text + " copied to clipboard!", Severity.Success);
+    }
+
+    private void ToggleEdit()
+    {
+        IsEditting = !IsEditting;
+        NicknameEdit = StripePrice.Nickname;
+    }
+
+    private void TogglePrice()
+    {
+        var result = PaymentService.Instance.TogglePrice(StripePrice.Id);
+
+        if (result == "Success")
+        {
+            Snackbar.Add("Price active has been set.", Severity.Success);
+            Snackbar.Configuration.ClearAfterNavigation = false;
+            NavManager.NavigateTo("/admin/stripe/product/management/price/" + priceid, true);
+        }
+        else
+        {
+            Snackbar.Add(result, Severity.Warning);
+        }
+    }
+
+    private void ConfirmEdit()
+    {
+        var result = Services.PaymentService.Instance.UpdatePriceNickname(priceid, NicknameEdit);
+        if (result == "Success")
+        {
+            Snackbar.Add("Edit successful.", Severity.Success);
+            Snackbar.Configuration.ClearAfterNavigation = false;
+            NavManager.NavigateTo("/admin/stripe/product/management/price/" + priceid, true);
+        }
+        else
+        {
+            Snackbar.Add(result, Severity.Success);
+        }
+    }
+
+    public void SetDefaultPrice()
+    {
+        Services.PaymentService.Instance.SetDefaultPrice(priceid,StripePrice.ProductId);
+        NavManager.NavigateTo(NavManager.Uri, true);
+    }
+
+    private void GoToProduct()
+    {
+        NavManager.NavigateTo("/admin/stripe/product/management/"+ StripePrice.ProductId);
+    }
+
+    private void GoToPriceList()
+    {
+        NavManager.NavigateTo("/admin/stripe/price/management");
+    }
+
+    public void GetPrice()
+    {
+        StripePrice = Services.PaymentService.Instance.GetPrice(priceid);
+    }
+
+    public void GetProduct()
+    {
+        StripeProduct = Services.PaymentService.Instance.GetProduct(StripePrice.ProductId);
+    }
+
+}

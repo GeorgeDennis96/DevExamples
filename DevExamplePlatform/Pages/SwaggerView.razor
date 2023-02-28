@@ -1,0 +1,20 @@
+﻿@page "/swaggerview"
+@using Microsoft.AspNetCore.Authentication 
+@using Microsoft.AspNetCore.Http
+<AuthorizeView>
+    <Authorized>
+       <div style="height:100vh; display:block; overflow:visible">
+       <iframe src="/swagger" style="border:0px #ffffff none;" name="swaggerview" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="100%" width="100%" allowfullscreen></iframe>
+   </div>
+   </Authorized>
+    <NotAuthorized>
+        <a href="/Account/Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    private string AccessToken { get; set; } = ""; 
+    protected override async Task OnInitializedAsync()
+    { 
+        await base.OnInitializedAsync();
+    }
+}

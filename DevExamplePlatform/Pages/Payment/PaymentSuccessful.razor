@@ -1,0 +1,31 @@
+﻿@page "/payment/successful"
+
+<DashboardContainer ContainerTitle="" ContainerDescription="">
+    <AuthorizeView>
+        <Authorized>
+            <div class="container" style="height:70vh">
+                <div class="row">
+                    <div class="col text-center">
+                        <p>
+                            <h5>Your payment was successful</h5><br />
+                            Information relating to you payment can be found <MudLink Href="/account/Invoices">here.</MudLink>
+                        </p>
+                    </div>
+                </div>
+                <hr class="m-5" />
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</DashboardContainer>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+}
