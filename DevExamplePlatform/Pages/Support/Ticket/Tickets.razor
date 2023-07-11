@@ -79,7 +79,7 @@
         </div>
     }
     </div>
-    </div>
+</div>
             </Authorized>
         <NotAuthorized>
             <a href="/Account/Login">Log in</a>
@@ -97,15 +97,12 @@
     private IEnumerable<TicketModel> TicketList = new List<TicketModel>();
     private string CopiedID;
     private string AccessToken { get; set; } = "";
-    private bool IsAdmin = false;
 
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userNameIdentifier = state.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
-        var isAdmin = AccountService.Instance.IsIronMan(userNameIdentifier);
-        IsAdmin = isAdmin;
-        if (isAdmin)
+        if (AccountService.Instance.IsIronMan(userNameIdentifier))
         {
             TicketList = TicketService.Instance.GetAllTickets(userNameIdentifier);
         }

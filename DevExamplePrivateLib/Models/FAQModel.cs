@@ -24,7 +24,7 @@
 //        [JsonProperty]
 //        [AutoUI("textbox")]
 //        public string AddedBy { get; set; }
-        
+      
 //        [JsonProperty]
 //        [AutoUI("textbox", ReadOnly:true)]
 //        public string AddedDate { get; set; } = DateTime.Now.ToString("MM/dd/yyyy HH:mm");

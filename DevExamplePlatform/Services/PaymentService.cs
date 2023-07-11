@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Stripe;
 using Stripe.Checkout;
 using System.Linq;
+using DevExample.Private.Models.Stripe;
 
 namespace DevExample.Platform.Services
 {
@@ -136,9 +137,9 @@ namespace DevExample.Platform.Services
         //    if (Services.AccountService.Instance.AccountExists(userNameIdentifier))
         //    {
         //        var 
-                  
-                  
-                  
+                
+                
+                
         //            Account = Services.AccountService.Instance.GetAccount(userNameIdentifier);
 
         //        StripeConfiguration.ApiKey = StripeAPIKey;
@@ -164,114 +165,114 @@ namespace DevExample.Platform.Services
         //    return null;
         //}
 
-        //public List<string> GetAllPriceIDs(int limit = 5)
-        //{
-        //    StripeConfiguration.ApiKey = StripeAPIKey;
+        public List<string> GetAllPriceIDs(int limit = 5)
+        {
+            StripeConfiguration.ApiKey = StripeAPIKey;
 
-        //    var options = new PriceListOptions { Limit = limit };
-        //    var service = new PriceService();
-        //    StripeList<Price> prices = service.List(options);
+            var options = new PriceListOptions { Limit = limit };
+            var service = new PriceService();
+            StripeList<Price> prices = service.List(options);
 
-        //    List<string> ids = new List<string>();
-        //    foreach (var priceIDs in prices)
-        //    {
-        //        ids.Add(priceIDs.Id);
-        //    }
-        //    return ids;
-        //}
-        //public string CreateCheckout(string priceID, string userNameIdentifier, string successURL = "http://localhost:5000/payment/successful", string cancelUrl = "http://localhost:5000/payment/failed")
-        //{
-        //    StripeConfiguration.ApiKey = StripeAPIKey;
+            List<string> ids = new List<string>();
+            foreach (var priceIDs in prices)
+            {
+                ids.Add(priceIDs.Id);
+            }
+            return ids;
+        }
+        public string CreateCheckout(string priceID, string userNameIdentifier, string successURL = "http://localhost:5000/payment/successful", string cancelUrl = "http://localhost:5000/payment/failed")
+        {
+            StripeConfiguration.ApiKey = StripeAPIKey;
 
-        //    var account = AccountService.Instance.GetAccount(userNameIdentifier);
-        //    string customerID = null;
-        //    if (account.stripeCustomerId == null)
-        //    {
-        //        var newStripeCustomerID = CreateStripeAccount(userNameIdentifier);
-        //        account.stripeCustomerId = newStripeCustomerID;
-        //        AccountService.Instance.SetStripeCustomerID(userNameIdentifier, newStripeCustomerID);
-        //    }
-        //    else
-        //    {
-        //        customerID = account.stripeCustomerId;
-        //    }
+            var account = AccountService.Instance.GetAccount(userNameIdentifier);
+            string customerID = null;
+            if (account.stripeCustomerId == null)
+            {
+                var newStripeCustomerID = CreateStripeAccount(userNameIdentifier);
+                account.stripeCustomerId = newStripeCustomerID;
+                AccountService.Instance.SetStripeCustomerID(userNameIdentifier, newStripeCustomerID);
+            }
+            else
+            {
+                customerID = account.stripeCustomerId;
+            }
 
-        //    var priceService = new PriceService();
-        //    var price = priceService.Get(priceID);
+            var priceService = new PriceService();
+            var price = priceService.Get(priceID);
 
-        //    if (price != null)
-        //    {
-        //        if (price.Type == "recurring")
-        //        {
-        //            var options = new SessionCreateOptions();
-        //            if (price.Recurring.UsageType == "metered")
-        //            {
-        //                options = new SessionCreateOptions
-        //                {
-        //                    Mode = "subscription",
-        //                    SuccessUrl = successURL,
-        //                    CancelUrl = cancelUrl,
-        //                    LineItems = new List<SessionLineItemOptions>
-        //                    {
-        //                        new SessionLineItemOptions
-        //                        {
-        //                            Price = priceID,
-        //                        },
-        //                    },
-        //                    Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
-        //                    Customer = customerID,
-        //                    SubscriptionData = new SessionSubscriptionDataOptions() { TrialPeriodDays = price.Recurring.TrialPeriodDays }
-        //                };
-        //            }
-        //            else
-        //            {
-        //                options = new SessionCreateOptions
-        //                {
-        //                    Mode = "subscription",
-        //                    SuccessUrl = successURL,
-        //                    CancelUrl = cancelUrl,
-        //                    LineItems = new List<SessionLineItemOptions>
-        //                    {
-        //                        new SessionLineItemOptions
-        //                        {
-        //                            Price = priceID,
-        //                            Quantity = 1,
-        //                        },
-        //                    },
-        //                    Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
-        //                    Customer = customerID,
-        //                    SubscriptionData = new SessionSubscriptionDataOptions() { TrialPeriodDays = price.Recurring.TrialPeriodDays }
-        //                };
-        //            }
-        //            var service = new SessionService();
-        //            var result = service.Create(options);
-        //            return result.Url;
-        //        }
-        //        else if (price.Type == "one_time")
-        //        {
-        //            var options = new SessionCreateOptions
-        //            {
-        //                Mode = "payment",
-        //                SuccessUrl = successURL,
-        //                CancelUrl = cancelUrl,
-        //                LineItems = new List<SessionLineItemOptions>
-        //                    {
-        //                        new SessionLineItemOptions
-        //                        {
-        //                            Price = priceID,
-        //                            Quantity = 1
-        //                        },
-        //                    },
-        //                Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
-        //                Customer = customerID,
-        //            };
-        //            var service = new SessionService();
-        //            var result = service.Create(options);
-        //            return result.Url;
-        //        }
-        //    }
-        //    return "Failed";
-        //}
+            if (price != null)
+            {
+                if (price.Type == "recurring")
+                {
+                    var options = new SessionCreateOptions();
+                    if (price.Recurring.UsageType == "metered")
+                    {
+                        options = new SessionCreateOptions
+                        {
+                            Mode = "subscription",
+                            SuccessUrl = successURL,
+                            CancelUrl = cancelUrl,
+                            LineItems = new List<SessionLineItemOptions>
+                            {
+                                new SessionLineItemOptions
+                                {
+                                    Price = priceID,
+                                },
+                            },
+                            Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
+                            Customer = customerID,
+                            SubscriptionData = new SessionSubscriptionDataOptions() { TrialPeriodDays = price.Recurring.TrialPeriodDays }
+                        };
+                    }
+                    else
+                    {
+                        options = new SessionCreateOptions
+                        {
+                            Mode = "subscription",
+                            SuccessUrl = successURL,
+                            CancelUrl = cancelUrl,
+                            LineItems = new List<SessionLineItemOptions>
+                            {
+                                new SessionLineItemOptions
+                                {
+                                    Price = priceID,
+                                    Quantity = 1,
+                                },
+                            },
+                            Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
+                            Customer = customerID,
+                            SubscriptionData = new SessionSubscriptionDataOptions() { TrialPeriodDays = price.Recurring.TrialPeriodDays }
+                        };
+                    }
+                    var service = new SessionService();
+                    var result = service.Create(options);
+                    return result.Url;
+                }
+                else if (price.Type == "one_time")
+                {
+                    var options = new SessionCreateOptions
+                    {
+                        Mode = "payment",
+                        SuccessUrl = successURL,
+                        CancelUrl = cancelUrl,
+                        LineItems = new List<SessionLineItemOptions>
+                            {
+                                new SessionLineItemOptions
+                                {
+                                    Price = priceID,
+                                    Quantity = 1
+                                },
+                            },
+                        Metadata = new Dictionary<string, string>() { { "usermameidentifier", userNameIdentifier } },
+                        Customer = customerID,
+                    };
+                    var service = new SessionService();
+                    var result = service.Create(options);
+                    return result.Url;
+                }
+            }
+            return "Failed";
+        }
 
         public bool CancelSubscription(string subscriptionId, string customerId)
         { 
@@ -425,98 +426,98 @@ namespace DevExample.Platform.Services
             return total;
         }
 
-        //public string CreateStripeProduct(StripeProductModel product, StripePriceModel price)
-        //{
-        //    StripeConfiguration.ApiKey = StripeAPIKey;
+        public string CreateStripeProduct(StripeProductModel product, StripePriceModel price)
+        {
+            StripeConfiguration.ApiKey = StripeAPIKey;
 
-        //    if (price.Type == "one_time")
-        //    {
-        //        var options = new ProductCreateOptions()
-        //        {
-        //            Name = product.Name,
-        //            Active = product.Active,
-        //            Description = product.Description,
-        //            StatementDescriptor = product.Statement_Descriptor,
-        //            DefaultPriceData = new ProductDefaultPriceDataOptions()
-        //            {
-        //                Currency = price.Currency,
-        //                UnitAmount = price.Unit_Amount,
-        //            },
-        //        };
+            if (price.Type == "one_time")
+            {
+                var options = new ProductCreateOptions()
+                {
+                    Name = product.Name,
+                    Active = product.Active,
+                    Description = product.Description,
+                    StatementDescriptor = product.Statement_Descriptor,
+                    DefaultPriceData = new ProductDefaultPriceDataOptions()
+                    {
+                        Currency = price.Currency,
+                        UnitAmount = price.Unit_Amount,
+                    },
+                };
 
-        //        var service = new Stripe.ProductService();
-        //        try
-        //        {
-        //            service.Create(options);
-        //            return "Success";
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return ex.Message;
-        //            throw;
-        //        }
-        //    }
-        //    else if (price.Type == "recurring")
-        //    {
-        //        var options = new ProductCreateOptions()
-        //        {
-        //            Name = product.Name,
-        //            Active = product.Active,
-        //            Description = product.Description,
-        //            StatementDescriptor = product.Statement_Descriptor,
-        //            DefaultPriceData = new ProductDefaultPriceDataOptions()
-        //            {
-        //                Currency = price.Currency,
-        //                UnitAmount = price.Unit_Amount,
-        //                Recurring = new ProductDefaultPriceDataRecurringOptions() { Interval = price.Interval }
-        //            },
-        //        };
-        //        var service = new Stripe.ProductService();
-        //        try
-        //        {
-        //            service.Create(options);
-        //            return "Success";
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return ex.Message;
-        //            throw;
-        //        }
-        //    }
-        //    return "Failed";
-        //}
+                var service = new Stripe.ProductService();
+                try
+                {
+                    service.Create(options);
+                    return "Success";
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                    throw;
+                }
+            }
+            else if (price.Type == "recurring")
+            {
+                var options = new ProductCreateOptions()
+                {
+                    Name = product.Name,
+                    Active = product.Active,
+                    Description = product.Description,
+                    StatementDescriptor = product.Statement_Descriptor,
+                    DefaultPriceData = new ProductDefaultPriceDataOptions()
+                    {
+                        Currency = price.Currency,
+                        UnitAmount = price.Unit_Amount,
+                        Recurring = new ProductDefaultPriceDataRecurringOptions() { Interval = price.Interval }
+                    },
+                };
+                var service = new Stripe.ProductService();
+                try
+                {
+                    service.Create(options);
+                    return "Success";
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                    throw;
+                }
+            }
+            return "Failed";
+        }
 
-        //public string UpdateProduct(StripeUpdateProductModel updateModel)
-        //{
-        //    StripeConfiguration.ApiKey = StripeAPIKey;
+        public string UpdateProduct(StripeUpdateProductModel updateModel)
+        {
+            StripeConfiguration.ApiKey = StripeAPIKey;
 
-        //    var service = new Stripe.ProductService();
-        //    var options = new ProductUpdateOptions();
+            var service = new Stripe.ProductService();
+            var options = new ProductUpdateOptions();
 
-        //    if (updateModel.Name != String.Empty)
-        //    {
-        //        options.Name = updateModel.Name;
-        //    }
-        //    if (updateModel.Description != String.Empty)
-        //    {
-        //        options.Description = updateModel.Description;
-        //    }
-        //    if (updateModel.Default_Price_Id != String.Empty)
-        //    {
-        //        options.DefaultPrice = updateModel.Default_Price_Id;
-        //    }
+            if (updateModel.Name != String.Empty)
+            {
+                options.Name = updateModel.Name;
+            }
+            if (updateModel.Description != String.Empty)
+            {
+                options.Description = updateModel.Description;
+            }
+            if (updateModel.Default_Price_Id != String.Empty)
+            {
+                options.DefaultPrice = updateModel.Default_Price_Id;
+            }
 
-        //    try
-        //    {
-        //        service.Update(updateModel.Product_Id, options);
-        //        return "Success";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //        throw;
-        //    }
-        //}
+            try
+            {
+                service.Update(updateModel.Product_Id, options);
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+                throw;
+            }
+        }
 
         public string DeleteProduct(string productId)
         {
@@ -674,24 +675,24 @@ namespace DevExample.Platform.Services
             return prices.Data;
         }
 
-        //public string CreateStripeAccount(string userNameIdentifier)
-        //{
-        //    var account = Services.AccountService.Instance.GetAccount(userNameIdentifier);
+        public string CreateStripeAccount(string userNameIdentifier)
+        {
+            var account = Services.AccountService.Instance.GetAccount(userNameIdentifier);
 
-        //    StripeConfiguration.ApiKey = StripeAPIKey;
+            StripeConfiguration.ApiKey = StripeAPIKey;
 
-        //    var options = new CustomerCreateOptions
-        //    {
-        //        Email = account.email,
-        //        Name = account.name
-        //    };
-        //    var service = new CustomerService();
-        //    var result = service.Create(options);
+            var options = new CustomerCreateOptions
+            {
+                Email = account.email,
+                Name = account.name
+            };
+            var service = new CustomerService();
+            var result = service.Create(options);
 
-        //    AccountService.Instance.SetStripeCustomerID(userNameIdentifier, result.Id);
+            AccountService.Instance.SetStripeCustomerID(userNameIdentifier, result.Id);
 
-        //    return result.Id;
-        //}
+            return result.Id;
+        }
 
         public string SetDefaultPrice(string priceId, string productId)
         {

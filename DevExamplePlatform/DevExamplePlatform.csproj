@@ -13,9 +13,13 @@
 		<StartupObject>DevExample.Platform.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Data\**" />
 	  <Compile Remove="Pages\Demo\**" />
+	  <Content Remove="Data\**" />
 	  <Content Remove="Pages\Demo\**" />
+	  <EmbeddedResource Remove="Data\**" />
 	  <EmbeddedResource Remove="Pages\Demo\**" />
+	  <None Remove="Data\**" />
 	  <None Remove="Pages\Demo\**" />
 	</ItemGroup>
 	<ItemGroup>
@@ -40,12 +44,11 @@
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="wwwroot\html\src\scss\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\George\Documents\DevExamples\DevExamplePrivateLib\DevExamplePrivateLib.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="C:\Users\George\Documents\C#\DevExamples\DevExamplePrivateLib\DevExamplePrivateLib.csproj" />
+	</ItemGroup>
   <ItemGroup>
     <Content Update="wwwroot\html\dist\css\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

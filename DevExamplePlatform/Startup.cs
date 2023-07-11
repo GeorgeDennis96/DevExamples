@@ -1,9 +1,4 @@
 using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MudBlazor;
 using MudBlazor.Services;
@@ -101,7 +94,7 @@ namespace DevExample.Platform
             // SERVICES
             AccountService accountService = new AccountService();
             TicketService ticket = new TicketService();
-            FAQService fAQService = new FAQService();
+            //FAQService fAQService = new FAQService();
             PaymentService stripe = new PaymentService();
 
             var contact = new OpenApiContact()

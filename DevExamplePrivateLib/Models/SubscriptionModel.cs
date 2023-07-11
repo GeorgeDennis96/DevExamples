@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 namespace DevExample.Private.Models
 {
 
-
-
     public class SubscriptionModel
     {
 
@@ -29,12 +27,12 @@ namespace DevExample.Private.Models
         
     }
 
-public static class SubscriptionType
-{
-    public static String OneTimePayment { get { return "onetime"; } }
-    public static String RecurringPayment { get { return "recurring"; } }
-    public static String RecurringMeteredPayment { get { return "metered"; } }
-
-}
+    public static class SubscriptionType
+    {
+        public static string OneTimePayment { get { return "onetime"; } }
+        public static string RecurringPayment { get { return "recurring"; } }
+        public static string RecurringMeteredPayment { get { return "metered"; } }
+    
+    }
 
 }

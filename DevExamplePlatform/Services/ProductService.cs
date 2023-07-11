@@ -25,7 +25,6 @@ namespace DevExample.Platform.Services
 
         public MongoDBClient MDBClient;
 
-
         public bool AddProduct(ProductModel model)
         {
             try
@@ -40,7 +39,6 @@ namespace DevExample.Platform.Services
             {
                 Console.WriteLine(ex.Message);
             }
-
             return false;
         }
 
